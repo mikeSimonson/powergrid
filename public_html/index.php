@@ -16,7 +16,6 @@ $app->post('/register', function() {
   $username_pcre_range = '{' . $username_min_len . ',' . $username_max_len . '}';
   $username_match_pattern = '/^\w' . $username_pcre_range . '$/';
 
-  $pwd_normal_chars = '[:alnum:]';
   $pwd_special_chars = '!@#$%^&*()';
   $pwd_min_len = 8;
   $pwd_max_len = 40;
