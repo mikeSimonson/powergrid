@@ -1,0 +1,16 @@
+<database name="powergrid" defaultIdMethod="native">
+  <table name="user" phpName="User">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="email" type="varchar" size="254" required="true"/>
+    <column name="username" type="varchar" size="64" require="true"/>
+    <column name="password" type="varchar" size="64" required="true"/>
+  </table>
+  <table name="game" phpName="Game">
+  </table>
+  <table name="player" phpName="Player">
+  </table>
+  <table name="resourceMarket" phpName="ResourceMarket">
+  </table>
+  <table name="playerWallet" phpName="PlayerWallet">
+  </table>
+</database>
