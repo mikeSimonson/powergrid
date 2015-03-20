@@ -18,6 +18,7 @@
     </foreign-key>
     <column name="turn_number" type="integer" required="true"/>
     <column name="step_number" type="integer" required="true"/>
+    <column name="card_limit" type="integer" required="true"/>
   </table>
   <table name="game" phpName="Game">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
@@ -124,6 +125,16 @@
     </foreign-key>
     <foreign-key foreignTable="city" phpName="City" refPhpName="PlayerCity">
       <reference local="city_id" foreign="id"/>
+    </foreign-key>
+  </table>
+  <table name="player_card" phpName="PlayerCard">
+    <column name="player_id" type="integer" required="true" primaryKey="true"/>
+    <column name="card_id" type="integer" required="true" primaryKey="true"/>
+    <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerCard">
+      <reference local="player_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="card" phpName="Card" refPhpName="PlayerCard">
+      <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="game_city" phpName="GameCity">
