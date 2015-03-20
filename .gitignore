@@ -1,3 +1,5 @@
 puphpet/files/dot/ssh/*
 .vagrant
 vendor
+.idea/
+.phpcomplete_extended/
