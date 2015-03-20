@@ -72,26 +72,51 @@
       <reference local="map_id" foreign="id"/>
     </foreign-key>
   </table>
+  <table name="card_status" phpName="CardStatus">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="64"/>
+  </table>
 
   <!-- Relation tables -->
 
   <table name="game_card" phpName="GameCard">
+    <column name="game_id" type="integer" required="true" primaryKey="true"/>
+    <column name="card_id" type="integer" required="true" primaryKey="true"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCard">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="card" phpName="Game" refPhpName="GameCard">
+    <foreign-key foreignTable="card" phpName="Card" refPhpName="GameCard">
       <reference local="card_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="card_status" phpName="CardStatus" refPhpName="Gamecard">
+      <reference local="card_status_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="player_resource" phpName="PlayerResource">
+    <column name="player_id" type="integer" required="true" primaryKey="true"/>
+    <column name="resource_type_id" type="integer" required="true" primaryKey="true"/>
     <foreign-key foreignTable="resource_type" phpName="ResourceType" refPhpName="PlayerResource">
       <reference local="resource_type_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerResource">
       <reference local="player_id" foreign="id"/>
     </foreign-key>
+
+    <column name="quantity" type="integer" required="true"/>
+  </table>
+  <table name="player_city" phpName="PlayerCity">
+    <column name="player_id" type="integer" required="true" primaryKey="true"/>
+    <column name="city_id" type="integer" required="true" primaryKey="true"/>
+    <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerCity">
+      <reference local="player_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="city" phpName="City" refPhpName="PlayerCity">
+      <reference local="city_id" foreign="id"/>
+    </foreign-key>
   </table>
   <table name="game_city" phpName="GameCity">
+    <column name="game_id" type="integer" required="true" primaryKey="true"/>
+    <column name="city_id" type="integer" required="true" primaryKey="true"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCity">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
