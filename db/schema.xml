@@ -16,6 +16,8 @@
     <foreign-key foreignTable="wallet" phpName="Wallet" refPhpName="Player">
       <reference local="wallet_id" foreign="id"/>
     </foreign-key>
+    <column name="turn_number" type="integer" required="true"/>
+    <column name="step_number" type="integer" required="true"/>
   </table>
   <table name="game" phpName="Game">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
