@@ -2,5 +2,5 @@
 vendor
 .idea/
 .phpcomplete_extended/
-id_rsa
-id_rsa.pub
+id_rsa*
+root_id_rsa*
