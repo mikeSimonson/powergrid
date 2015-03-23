@@ -1,0 +1,24 @@
+{
+    "propel": {
+        "database": {
+            "connections": {
+                "powergrid": {
+                    "adapter": "mysql",
+                    "classname": "Propel\\Runtime\\Connection\\ConnectionWrapper",
+                    "dsn": "mysql:host=localhost;dbname=dbname",
+                    "user": "dbuser",
+                    "password": "123",
+                    "attributes": []
+                }
+            }
+        },
+        "runtime": {
+            "defaultConnection": "powergrid",
+            "connections": ["powergrid"]
+        },
+        "generator": {
+            "defaultConnection": "powergrid",
+            "connections": ["powergrid"]
+        }
+    }
+}
