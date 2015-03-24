@@ -27,7 +27,7 @@
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="turn_number" type="integer" required="true"/>
     <column name="step_number" type="integer" required="true"/>
-    <column name="next_player_id" type="integer" required="true" autoIncrement="true"/>
+    <column name="next_player_id" type="integer" required="true"/>
     <column name="owner_id" type="integer" required="true"/>
     <column name="bank_id" type="integer" required="true"/>
     <column name="map_id" type="integer" required="true"/>

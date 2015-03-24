@@ -96,6 +96,12 @@ abstract class Game implements ActiveRecordInterface
     protected $step_number;
 
     /**
+     * The value for the next_player_id field.
+     * @var        int
+     */
+    protected $next_player_id;
+
+    /**
      * The value for the owner_id field.
      * @var        int
      */
@@ -112,6 +118,11 @@ abstract class Game implements ActiveRecordInterface
      * @var        int
      */
     protected $map_id;
+
+    /**
+     * @var        ChildPlayer
+     */
+    protected $aPlayer;
 
     /**
      * @var        ChildUser
@@ -444,6 +455,16 @@ abstract class Game implements ActiveRecordInterface
     }
 
     /**
+     * Get the [next_player_id] column value.
+     *
+     * @return int
+     */
+    public function getNextPlayerId()
+    {
+        return $this->next_player_id;
+    }
+
+    /**
      * Get the [owner_id] column value.
      *
      * @return int
@@ -532,6 +553,30 @@ abstract class Game implements ActiveRecordInterface
 
         return $this;
     } // setStepNumber()
+
+    /**
+     * Set the value of [next_player_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\Game The current object (for fluent API support)
+     */
+    public function setNextPlayerId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->next_player_id !== $v) {
+            $this->next_player_id = $v;
+            $this->modifiedColumns[GameTableMap::COL_NEXT_PLAYER_ID] = true;
+        }
+
+        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
+            $this->aPlayer = null;
+        }
+
+        return $this;
+    } // setNextPlayerId()
 
     /**
      * Set the value of [owner_id] column.
@@ -650,13 +695,16 @@ abstract class Game implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : GameTableMap::translateFieldName('StepNumber', TableMap::TYPE_PHPNAME, $indexType)];
             $this->step_number = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : GameTableMap::translateFieldName('OwnerId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 3 + $startcol : GameTableMap::translateFieldName('NextPlayerId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->next_player_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : GameTableMap::translateFieldName('OwnerId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->owner_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 4 + $startcol : GameTableMap::translateFieldName('BankId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : GameTableMap::translateFieldName('BankId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->bank_id = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 5 + $startcol : GameTableMap::translateFieldName('MapId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : GameTableMap::translateFieldName('MapId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->map_id = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
@@ -666,7 +714,7 @@ abstract class Game implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 6; // 6 = GameTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 7; // 7 = GameTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Game'), 0, $e);
@@ -688,6 +736,9 @@ abstract class Game implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
+        if ($this->aPlayer !== null && $this->next_player_id !== $this->aPlayer->getId()) {
+            $this->aPlayer = null;
+        }
         if ($this->aUser !== null && $this->owner_id !== $this->aUser->getId()) {
             $this->aUser = null;
         }
@@ -736,6 +787,7 @@ abstract class Game implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aPlayer = null;
             $this->aUser = null;
             $this->aBank = null;
             $this->aMap = null;
@@ -852,6 +904,13 @@ abstract class Game implements ActiveRecordInterface
             // were passed to this object by their corresponding set
             // method.  This object relates to these object(s) by a
             // foreign key reference.
+
+            if ($this->aPlayer !== null) {
+                if ($this->aPlayer->isModified() || $this->aPlayer->isNew()) {
+                    $affectedRows += $this->aPlayer->save($con);
+                }
+                $this->setPlayer($this->aPlayer);
+            }
 
             if ($this->aUser !== null) {
                 if ($this->aUser->isModified() || $this->aUser->isNew()) {
@@ -1005,6 +1064,9 @@ abstract class Game implements ActiveRecordInterface
         if ($this->isColumnModified(GameTableMap::COL_STEP_NUMBER)) {
             $modifiedColumns[':p' . $index++]  = 'step_number';
         }
+        if ($this->isColumnModified(GameTableMap::COL_NEXT_PLAYER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'next_player_id';
+        }
         if ($this->isColumnModified(GameTableMap::COL_OWNER_ID)) {
             $modifiedColumns[':p' . $index++]  = 'owner_id';
         }
@@ -1033,6 +1095,9 @@ abstract class Game implements ActiveRecordInterface
                         break;
                     case 'step_number':
                         $stmt->bindValue($identifier, $this->step_number, PDO::PARAM_INT);
+                        break;
+                    case 'next_player_id':
+                        $stmt->bindValue($identifier, $this->next_player_id, PDO::PARAM_INT);
                         break;
                     case 'owner_id':
                         $stmt->bindValue($identifier, $this->owner_id, PDO::PARAM_INT);
@@ -1115,12 +1180,15 @@ abstract class Game implements ActiveRecordInterface
                 return $this->getStepNumber();
                 break;
             case 3:
-                return $this->getOwnerId();
+                return $this->getNextPlayerId();
                 break;
             case 4:
-                return $this->getBankId();
+                return $this->getOwnerId();
                 break;
             case 5:
+                return $this->getBankId();
+                break;
+            case 6:
                 return $this->getMapId();
                 break;
             default:
@@ -1156,9 +1224,10 @@ abstract class Game implements ActiveRecordInterface
             $keys[0] => $this->getId(),
             $keys[1] => $this->getTurnNumber(),
             $keys[2] => $this->getStepNumber(),
-            $keys[3] => $this->getOwnerId(),
-            $keys[4] => $this->getBankId(),
-            $keys[5] => $this->getMapId(),
+            $keys[3] => $this->getNextPlayerId(),
+            $keys[4] => $this->getOwnerId(),
+            $keys[5] => $this->getBankId(),
+            $keys[6] => $this->getMapId(),
         );
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
@@ -1166,6 +1235,21 @@ abstract class Game implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aPlayer) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'player';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'player';
+                        break;
+                    default:
+                        $key = 'Player';
+                }
+
+                $result[$key] = $this->aPlayer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->aUser) {
 
                 switch ($keyType) {
@@ -1330,12 +1414,15 @@ abstract class Game implements ActiveRecordInterface
                 $this->setStepNumber($value);
                 break;
             case 3:
-                $this->setOwnerId($value);
+                $this->setNextPlayerId($value);
                 break;
             case 4:
-                $this->setBankId($value);
+                $this->setOwnerId($value);
                 break;
             case 5:
+                $this->setBankId($value);
+                break;
+            case 6:
                 $this->setMapId($value);
                 break;
         } // switch()
@@ -1374,13 +1461,16 @@ abstract class Game implements ActiveRecordInterface
             $this->setStepNumber($arr[$keys[2]]);
         }
         if (array_key_exists($keys[3], $arr)) {
-            $this->setOwnerId($arr[$keys[3]]);
+            $this->setNextPlayerId($arr[$keys[3]]);
         }
         if (array_key_exists($keys[4], $arr)) {
-            $this->setBankId($arr[$keys[4]]);
+            $this->setOwnerId($arr[$keys[4]]);
         }
         if (array_key_exists($keys[5], $arr)) {
-            $this->setMapId($arr[$keys[5]]);
+            $this->setBankId($arr[$keys[5]]);
+        }
+        if (array_key_exists($keys[6], $arr)) {
+            $this->setMapId($arr[$keys[6]]);
         }
     }
 
@@ -1431,6 +1521,9 @@ abstract class Game implements ActiveRecordInterface
         }
         if ($this->isColumnModified(GameTableMap::COL_STEP_NUMBER)) {
             $criteria->add(GameTableMap::COL_STEP_NUMBER, $this->step_number);
+        }
+        if ($this->isColumnModified(GameTableMap::COL_NEXT_PLAYER_ID)) {
+            $criteria->add(GameTableMap::COL_NEXT_PLAYER_ID, $this->next_player_id);
         }
         if ($this->isColumnModified(GameTableMap::COL_OWNER_ID)) {
             $criteria->add(GameTableMap::COL_OWNER_ID, $this->owner_id);
@@ -1527,6 +1620,9 @@ abstract class Game implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
+        $copyObj->setTurnNumber($this->getTurnNumber());
+        $copyObj->setStepNumber($this->getStepNumber());
+        $copyObj->setNextPlayerId($this->getNextPlayerId());
         $copyObj->setOwnerId($this->getOwnerId());
         $copyObj->setBankId($this->getBankId());
         $copyObj->setMapId($this->getMapId());
@@ -1571,8 +1667,6 @@ abstract class Game implements ActiveRecordInterface
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setId(NULL); // this is a auto-increment column, so set to default value
-            $copyObj->setTurnNumber(NULL); // this is a auto-increment column, so set to default value
-            $copyObj->setStepNumber(NULL); // this is a auto-increment column, so set to default value
         }
     }
 
@@ -1596,6 +1690,57 @@ abstract class Game implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildPlayer object.
+     *
+     * @param  ChildPlayer $v
+     * @return $this|\Game The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setPlayer(ChildPlayer $v = null)
+    {
+        if ($v === null) {
+            $this->setNextPlayerId(NULL);
+        } else {
+            $this->setNextPlayerId($v->getId());
+        }
+
+        $this->aPlayer = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildPlayer object, it will not be re-added.
+        if ($v !== null) {
+            $v->addTurnOrder($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildPlayer object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildPlayer The associated ChildPlayer object.
+     * @throws PropelException
+     */
+    public function getPlayer(ConnectionInterface $con = null)
+    {
+        if ($this->aPlayer === null && ($this->next_player_id !== null)) {
+            $this->aPlayer = ChildPlayerQuery::create()->findPk($this->next_player_id, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aPlayer->addTurnOrders($this);
+             */
+        }
+
+        return $this->aPlayer;
     }
 
     /**
@@ -3057,6 +3202,9 @@ abstract class Game implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aPlayer) {
+            $this->aPlayer->removeTurnOrder($this);
+        }
         if (null !== $this->aUser) {
             $this->aUser->removeGame($this);
         }
@@ -3069,6 +3217,7 @@ abstract class Game implements ActiveRecordInterface
         $this->id = null;
         $this->turn_number = null;
         $this->step_number = null;
+        $this->next_player_id = null;
         $this->owner_id = null;
         $this->bank_id = null;
         $this->map_id = null;
@@ -3122,6 +3271,7 @@ abstract class Game implements ActiveRecordInterface
         $this->collTurnOrders = null;
         $this->collGameCards = null;
         $this->collGameCities = null;
+        $this->aPlayer = null;
         $this->aUser = null;
         $this->aBank = null;
         $this->aMap = null;

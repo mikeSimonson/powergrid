@@ -59,13 +59,18 @@ CREATE TABLE `game`
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `turn_number` INTEGER NOT NULL,
     `step_number` INTEGER NOT NULL,
+    `next_player_id` INTEGER NOT NULL,
     `owner_id` INTEGER NOT NULL,
     `bank_id` INTEGER NOT NULL,
     `map_id` INTEGER NOT NULL,
     PRIMARY KEY (`id`),
+    INDEX `game_fi_33ffcb` (`next_player_id`),
     INDEX `game_fi_ac5b84` (`owner_id`),
     INDEX `game_fi_4fe2a0` (`bank_id`),
     INDEX `game_fi_5b07f3` (`map_id`),
+    CONSTRAINT `game_fk_33ffcb`
+        FOREIGN KEY (`next_player_id`)
+        REFERENCES `player` (`id`),
     CONSTRAINT `game_fk_ac5b84`
         FOREIGN KEY (`owner_id`)
         REFERENCES `user` (`id`),
@@ -258,11 +263,11 @@ DROP TABLE IF EXISTS `player_resource`;
 
 CREATE TABLE `player_resource`
 (
-    `player_id` INTEGER NOT NULL,
     `resource_type_id` INTEGER NOT NULL,
+    `player_id` INTEGER NOT NULL,
     `quantity` INTEGER NOT NULL,
-    PRIMARY KEY (`player_id`,`resource_type_id`),
-    INDEX `player_resource_fi_1dbfab` (`resource_type_id`),
+    PRIMARY KEY (`resource_type_id`,`player_id`),
+    INDEX `player_resource_fi_97a1b7` (`player_id`),
     CONSTRAINT `player_resource_fk_1dbfab`
         FOREIGN KEY (`resource_type_id`)
         REFERENCES `resource_type` (`id`),

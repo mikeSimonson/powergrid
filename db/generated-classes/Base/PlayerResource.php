@@ -64,16 +64,16 @@ abstract class PlayerResource implements ActiveRecordInterface
     protected $virtualColumns = array();
 
     /**
-     * The value for the player_id field.
-     * @var        int
-     */
-    protected $player_id;
-
-    /**
      * The value for the resource_type_id field.
      * @var        int
      */
     protected $resource_type_id;
+
+    /**
+     * The value for the player_id field.
+     * @var        int
+     */
+    protected $player_id;
 
     /**
      * The value for the quantity field.
@@ -317,16 +317,6 @@ abstract class PlayerResource implements ActiveRecordInterface
     }
 
     /**
-     * Get the [player_id] column value.
-     *
-     * @return int
-     */
-    public function getPlayerId()
-    {
-        return $this->player_id;
-    }
-
-    /**
      * Get the [resource_type_id] column value.
      *
      * @return int
@@ -334,6 +324,16 @@ abstract class PlayerResource implements ActiveRecordInterface
     public function getResourceTypeId()
     {
         return $this->resource_type_id;
+    }
+
+    /**
+     * Get the [player_id] column value.
+     *
+     * @return int
+     */
+    public function getPlayerId()
+    {
+        return $this->player_id;
     }
 
     /**
@@ -345,30 +345,6 @@ abstract class PlayerResource implements ActiveRecordInterface
     {
         return $this->quantity;
     }
-
-    /**
-     * Set the value of [player_id] column.
-     *
-     * @param int $v new value
-     * @return $this|\PlayerResource The current object (for fluent API support)
-     */
-    public function setPlayerId($v)
-    {
-        if ($v !== null) {
-            $v = (int) $v;
-        }
-
-        if ($this->player_id !== $v) {
-            $this->player_id = $v;
-            $this->modifiedColumns[PlayerResourceTableMap::COL_PLAYER_ID] = true;
-        }
-
-        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
-            $this->aPlayer = null;
-        }
-
-        return $this;
-    } // setPlayerId()
 
     /**
      * Set the value of [resource_type_id] column.
@@ -393,6 +369,30 @@ abstract class PlayerResource implements ActiveRecordInterface
 
         return $this;
     } // setResourceTypeId()
+
+    /**
+     * Set the value of [player_id] column.
+     *
+     * @param int $v new value
+     * @return $this|\PlayerResource The current object (for fluent API support)
+     */
+    public function setPlayerId($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->player_id !== $v) {
+            $this->player_id = $v;
+            $this->modifiedColumns[PlayerResourceTableMap::COL_PLAYER_ID] = true;
+        }
+
+        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
+            $this->aPlayer = null;
+        }
+
+        return $this;
+    } // setPlayerId()
 
     /**
      * Set the value of [quantity] column.
@@ -450,11 +450,11 @@ abstract class PlayerResource implements ActiveRecordInterface
     {
         try {
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PlayerResourceTableMap::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->player_id = (null !== $col) ? (int) $col : null;
-
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PlayerResourceTableMap::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)];
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : PlayerResourceTableMap::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)];
             $this->resource_type_id = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : PlayerResourceTableMap::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->player_id = (null !== $col) ? (int) $col : null;
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : PlayerResourceTableMap::translateFieldName('Quantity', TableMap::TYPE_PHPNAME, $indexType)];
             $this->quantity = (null !== $col) ? (int) $col : null;
@@ -488,11 +488,11 @@ abstract class PlayerResource implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aPlayer !== null && $this->player_id !== $this->aPlayer->getId()) {
-            $this->aPlayer = null;
-        }
         if ($this->aResourceType !== null && $this->resource_type_id !== $this->aResourceType->getId()) {
             $this->aResourceType = null;
+        }
+        if ($this->aPlayer !== null && $this->player_id !== $this->aPlayer->getId()) {
+            $this->aPlayer = null;
         }
     } // ensureConsistency
 
@@ -686,11 +686,11 @@ abstract class PlayerResource implements ActiveRecordInterface
 
 
          // check the columns in natural order for more readable SQL queries
-        if ($this->isColumnModified(PlayerResourceTableMap::COL_PLAYER_ID)) {
-            $modifiedColumns[':p' . $index++]  = 'player_id';
-        }
         if ($this->isColumnModified(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID)) {
             $modifiedColumns[':p' . $index++]  = 'resource_type_id';
+        }
+        if ($this->isColumnModified(PlayerResourceTableMap::COL_PLAYER_ID)) {
+            $modifiedColumns[':p' . $index++]  = 'player_id';
         }
         if ($this->isColumnModified(PlayerResourceTableMap::COL_QUANTITY)) {
             $modifiedColumns[':p' . $index++]  = 'quantity';
@@ -706,11 +706,11 @@ abstract class PlayerResource implements ActiveRecordInterface
             $stmt = $con->prepare($sql);
             foreach ($modifiedColumns as $identifier => $columnName) {
                 switch ($columnName) {
-                    case 'player_id':
-                        $stmt->bindValue($identifier, $this->player_id, PDO::PARAM_INT);
-                        break;
                     case 'resource_type_id':
                         $stmt->bindValue($identifier, $this->resource_type_id, PDO::PARAM_INT);
+                        break;
+                    case 'player_id':
+                        $stmt->bindValue($identifier, $this->player_id, PDO::PARAM_INT);
                         break;
                     case 'quantity':
                         $stmt->bindValue($identifier, $this->quantity, PDO::PARAM_INT);
@@ -771,10 +771,10 @@ abstract class PlayerResource implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                return $this->getPlayerId();
+                return $this->getResourceTypeId();
                 break;
             case 1:
-                return $this->getResourceTypeId();
+                return $this->getPlayerId();
                 break;
             case 2:
                 return $this->getQuantity();
@@ -809,8 +809,8 @@ abstract class PlayerResource implements ActiveRecordInterface
         $alreadyDumpedObjects['PlayerResource'][$this->hashCode()] = true;
         $keys = PlayerResourceTableMap::getFieldNames($keyType);
         $result = array(
-            $keys[0] => $this->getPlayerId(),
-            $keys[1] => $this->getResourceTypeId(),
+            $keys[0] => $this->getResourceTypeId(),
+            $keys[1] => $this->getPlayerId(),
             $keys[2] => $this->getQuantity(),
         );
         $virtualColumns = $this->virtualColumns;
@@ -884,10 +884,10 @@ abstract class PlayerResource implements ActiveRecordInterface
     {
         switch ($pos) {
             case 0:
-                $this->setPlayerId($value);
+                $this->setResourceTypeId($value);
                 break;
             case 1:
-                $this->setResourceTypeId($value);
+                $this->setPlayerId($value);
                 break;
             case 2:
                 $this->setQuantity($value);
@@ -919,10 +919,10 @@ abstract class PlayerResource implements ActiveRecordInterface
         $keys = PlayerResourceTableMap::getFieldNames($keyType);
 
         if (array_key_exists($keys[0], $arr)) {
-            $this->setPlayerId($arr[$keys[0]]);
+            $this->setResourceTypeId($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setResourceTypeId($arr[$keys[1]]);
+            $this->setPlayerId($arr[$keys[1]]);
         }
         if (array_key_exists($keys[2], $arr)) {
             $this->setQuantity($arr[$keys[2]]);
@@ -968,11 +968,11 @@ abstract class PlayerResource implements ActiveRecordInterface
     {
         $criteria = new Criteria(PlayerResourceTableMap::DATABASE_NAME);
 
-        if ($this->isColumnModified(PlayerResourceTableMap::COL_PLAYER_ID)) {
-            $criteria->add(PlayerResourceTableMap::COL_PLAYER_ID, $this->player_id);
-        }
         if ($this->isColumnModified(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID)) {
             $criteria->add(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $this->resource_type_id);
+        }
+        if ($this->isColumnModified(PlayerResourceTableMap::COL_PLAYER_ID)) {
+            $criteria->add(PlayerResourceTableMap::COL_PLAYER_ID, $this->player_id);
         }
         if ($this->isColumnModified(PlayerResourceTableMap::COL_QUANTITY)) {
             $criteria->add(PlayerResourceTableMap::COL_QUANTITY, $this->quantity);
@@ -994,8 +994,8 @@ abstract class PlayerResource implements ActiveRecordInterface
     public function buildPkeyCriteria()
     {
         $criteria = ChildPlayerResourceQuery::create();
-        $criteria->add(PlayerResourceTableMap::COL_PLAYER_ID, $this->player_id);
         $criteria->add(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $this->resource_type_id);
+        $criteria->add(PlayerResourceTableMap::COL_PLAYER_ID, $this->player_id);
 
         return $criteria;
     }
@@ -1008,8 +1008,8 @@ abstract class PlayerResource implements ActiveRecordInterface
      */
     public function hashCode()
     {
-        $validPk = null !== $this->getPlayerId() &&
-            null !== $this->getResourceTypeId();
+        $validPk = null !== $this->getResourceTypeId() &&
+            null !== $this->getPlayerId();
 
         $validPrimaryKeyFKs = 2;
         $primaryKeyFKs = [];
@@ -1045,8 +1045,8 @@ abstract class PlayerResource implements ActiveRecordInterface
     public function getPrimaryKey()
     {
         $pks = array();
-        $pks[0] = $this->getPlayerId();
-        $pks[1] = $this->getResourceTypeId();
+        $pks[0] = $this->getResourceTypeId();
+        $pks[1] = $this->getPlayerId();
 
         return $pks;
     }
@@ -1059,8 +1059,8 @@ abstract class PlayerResource implements ActiveRecordInterface
      */
     public function setPrimaryKey($keys)
     {
-        $this->setPlayerId($keys[0]);
-        $this->setResourceTypeId($keys[1]);
+        $this->setResourceTypeId($keys[0]);
+        $this->setPlayerId($keys[1]);
     }
 
     /**
@@ -1069,7 +1069,7 @@ abstract class PlayerResource implements ActiveRecordInterface
      */
     public function isPrimaryKeyNull()
     {
-        return (null === $this->getPlayerId()) && (null === $this->getResourceTypeId());
+        return (null === $this->getResourceTypeId()) && (null === $this->getPlayerId());
     }
 
     /**
@@ -1085,8 +1085,8 @@ abstract class PlayerResource implements ActiveRecordInterface
      */
     public function copyInto($copyObj, $deepCopy = false, $makeNew = true)
     {
-        $copyObj->setPlayerId($this->getPlayerId());
         $copyObj->setResourceTypeId($this->getResourceTypeId());
+        $copyObj->setPlayerId($this->getPlayerId());
         $copyObj->setQuantity($this->getQuantity());
         if ($makeNew) {
             $copyObj->setNew(true);
@@ -1230,8 +1230,8 @@ abstract class PlayerResource implements ActiveRecordInterface
         if (null !== $this->aPlayer) {
             $this->aPlayer->removePlayerResource($this);
         }
-        $this->player_id = null;
         $this->resource_type_id = null;
+        $this->player_id = null;
         $this->quantity = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();

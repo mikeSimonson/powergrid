@@ -133,6 +133,12 @@ abstract class Player implements ActiveRecordInterface
     protected $aWallet;
 
     /**
+     * @var        ObjectCollection|ChildGame[] Collection to store aggregation of ChildGame objects.
+     */
+    protected $collTurnOrders;
+    protected $collTurnOrdersPartial;
+
+    /**
      * @var        ObjectCollection|ChildTurnOrder[] Collection to store aggregation of ChildTurnOrder objects.
      */
     protected $collTurnOrders;
@@ -163,6 +169,12 @@ abstract class Player implements ActiveRecordInterface
      * @var boolean
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|ChildGame[]
+     */
+    protected $turnOrdersScheduledForDeletion = null;
 
     /**
      * An array of objects scheduled for deletion.
@@ -766,6 +778,8 @@ abstract class Player implements ActiveRecordInterface
             $this->aWallet = null;
             $this->collTurnOrders = null;
 
+            $this->collTurnOrders = null;
+
             $this->collPlayerResources = null;
 
             $this->collPlayerCities = null;
@@ -906,6 +920,23 @@ abstract class Player implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
+            }
+
+            if ($this->turnOrdersScheduledForDeletion !== null) {
+                if (!$this->turnOrdersScheduledForDeletion->isEmpty()) {
+                    \GameQuery::create()
+                        ->filterByPrimaryKeys($this->turnOrdersScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->turnOrdersScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collTurnOrders !== null) {
+                foreach ($this->collTurnOrders as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             if ($this->turnOrdersScheduledForDeletion !== null) {
@@ -1226,6 +1257,21 @@ abstract class Player implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aWallet->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collTurnOrders) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'games';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'games';
+                        break;
+                    default:
+                        $key = 'Games';
+                }
+
+                $result[$key] = $this->collTurnOrders->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
             }
             if (null !== $this->collTurnOrders) {
 
@@ -1555,6 +1601,12 @@ abstract class Player implements ActiveRecordInterface
                 }
             }
 
+            foreach ($this->getTurnOrders() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addTurnOrder($relObj->copy($deepCopy));
+                }
+            }
+
             foreach ($this->getPlayerResources() as $relObj) {
                 if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
                     $copyObj->addPlayerResource($relObj->copy($deepCopy));
@@ -1770,6 +1822,9 @@ abstract class Player implements ActiveRecordInterface
         if ('TurnOrder' == $relationName) {
             return $this->initTurnOrders();
         }
+        if ('TurnOrder' == $relationName) {
+            return $this->initTurnOrders();
+        }
         if ('PlayerResource' == $relationName) {
             return $this->initPlayerResources();
         }
@@ -1779,6 +1834,299 @@ abstract class Player implements ActiveRecordInterface
         if ('PlayerCard' == $relationName) {
             return $this->initPlayerCards();
         }
+    }
+
+    /**
+     * Clears out the collTurnOrders collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return void
+     * @see        addTurnOrders()
+     */
+    public function clearTurnOrders()
+    {
+        $this->collTurnOrders = null; // important to set this to NULL since that means it is uninitialized
+    }
+
+    /**
+     * Reset is the collTurnOrders collection loaded partially.
+     */
+    public function resetPartialTurnOrders($v = true)
+    {
+        $this->collTurnOrdersPartial = $v;
+    }
+
+    /**
+     * Initializes the collTurnOrders collection.
+     *
+     * By default this just sets the collTurnOrders collection to an empty array (like clearcollTurnOrders());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param      boolean $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initTurnOrders($overrideExisting = true)
+    {
+        if (null !== $this->collTurnOrders && !$overrideExisting) {
+            return;
+        }
+        $this->collTurnOrders = new ObjectCollection();
+        $this->collTurnOrders->setModel('\Game');
+    }
+
+    /**
+     * Gets an array of ChildGame objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildPlayer is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @return ObjectCollection|ChildGame[] List of ChildGame objects
+     * @throws PropelException
+     */
+    public function getTurnOrders(Criteria $criteria = null, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTurnOrdersPartial && !$this->isNew();
+        if (null === $this->collTurnOrders || null !== $criteria  || $partial) {
+            if ($this->isNew() && null === $this->collTurnOrders) {
+                // return empty collection
+                $this->initTurnOrders();
+            } else {
+                $collTurnOrders = ChildGameQuery::create(null, $criteria)
+                    ->filterByPlayer($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collTurnOrdersPartial && count($collTurnOrders)) {
+                        $this->initTurnOrders(false);
+
+                        foreach ($collTurnOrders as $obj) {
+                            if (false == $this->collTurnOrders->contains($obj)) {
+                                $this->collTurnOrders->append($obj);
+                            }
+                        }
+
+                        $this->collTurnOrdersPartial = true;
+                    }
+
+                    return $collTurnOrders;
+                }
+
+                if ($partial && $this->collTurnOrders) {
+                    foreach ($this->collTurnOrders as $obj) {
+                        if ($obj->isNew()) {
+                            $collTurnOrders[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collTurnOrders = $collTurnOrders;
+                $this->collTurnOrdersPartial = false;
+            }
+        }
+
+        return $this->collTurnOrders;
+    }
+
+    /**
+     * Sets a collection of ChildGame objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param      Collection $turnOrders A Propel collection.
+     * @param      ConnectionInterface $con Optional connection object
+     * @return $this|ChildPlayer The current object (for fluent API support)
+     */
+    public function setTurnOrders(Collection $turnOrders, ConnectionInterface $con = null)
+    {
+        /** @var ChildGame[] $turnOrdersToDelete */
+        $turnOrdersToDelete = $this->getTurnOrders(new Criteria(), $con)->diff($turnOrders);
+
+
+        $this->turnOrdersScheduledForDeletion = $turnOrdersToDelete;
+
+        foreach ($turnOrdersToDelete as $turnOrderRemoved) {
+            $turnOrderRemoved->setPlayer(null);
+        }
+
+        $this->collTurnOrders = null;
+        foreach ($turnOrders as $turnOrder) {
+            $this->addTurnOrder($turnOrder);
+        }
+
+        $this->collTurnOrders = $turnOrders;
+        $this->collTurnOrdersPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related Game objects.
+     *
+     * @param      Criteria $criteria
+     * @param      boolean $distinct
+     * @param      ConnectionInterface $con
+     * @return int             Count of related Game objects.
+     * @throws PropelException
+     */
+    public function countTurnOrders(Criteria $criteria = null, $distinct = false, ConnectionInterface $con = null)
+    {
+        $partial = $this->collTurnOrdersPartial && !$this->isNew();
+        if (null === $this->collTurnOrders || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collTurnOrders) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getTurnOrders());
+            }
+
+            $query = ChildGameQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByPlayer($this)
+                ->count($con);
+        }
+
+        return count($this->collTurnOrders);
+    }
+
+    /**
+     * Method called to associate a ChildGame object to this object
+     * through the ChildGame foreign key attribute.
+     *
+     * @param  ChildGame $l ChildGame
+     * @return $this|\Player The current object (for fluent API support)
+     */
+    public function addTurnOrder(ChildGame $l)
+    {
+        if ($this->collTurnOrders === null) {
+            $this->initTurnOrders();
+            $this->collTurnOrdersPartial = true;
+        }
+
+        if (!$this->collTurnOrders->contains($l)) {
+            $this->doAddTurnOrder($l);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param ChildGame $turnOrder The ChildGame object to add.
+     */
+    protected function doAddTurnOrder(ChildGame $turnOrder)
+    {
+        $this->collTurnOrders[]= $turnOrder;
+        $turnOrder->setPlayer($this);
+    }
+
+    /**
+     * @param  ChildGame $turnOrder The ChildGame object to remove.
+     * @return $this|ChildPlayer The current object (for fluent API support)
+     */
+    public function removeTurnOrder(ChildGame $turnOrder)
+    {
+        if ($this->getTurnOrders()->contains($turnOrder)) {
+            $pos = $this->collTurnOrders->search($turnOrder);
+            $this->collTurnOrders->remove($pos);
+            if (null === $this->turnOrdersScheduledForDeletion) {
+                $this->turnOrdersScheduledForDeletion = clone $this->collTurnOrders;
+                $this->turnOrdersScheduledForDeletion->clear();
+            }
+            $this->turnOrdersScheduledForDeletion[]= clone $turnOrder;
+            $turnOrder->setPlayer(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Player is new, it will return
+     * an empty collection; or if this Player has previously
+     * been saved, it will retrieve related TurnOrders from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Player.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildGame[] List of ChildGame objects
+     */
+    public function getTurnOrdersJoinUser(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildGameQuery::create(null, $criteria);
+        $query->joinWith('User', $joinBehavior);
+
+        return $this->getTurnOrders($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Player is new, it will return
+     * an empty collection; or if this Player has previously
+     * been saved, it will retrieve related TurnOrders from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Player.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildGame[] List of ChildGame objects
+     */
+    public function getTurnOrdersJoinBank(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildGameQuery::create(null, $criteria);
+        $query->joinWith('Bank', $joinBehavior);
+
+        return $this->getTurnOrders($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Player is new, it will return
+     * an empty collection; or if this Player has previously
+     * been saved, it will retrieve related TurnOrders from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Player.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildGame[] List of ChildGame objects
+     */
+    public function getTurnOrdersJoinMap(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildGameQuery::create(null, $criteria);
+        $query->joinWith('Map', $joinBehavior);
+
+        return $this->getTurnOrders($query, $con);
     }
 
     /**
@@ -2808,6 +3156,11 @@ abstract class Player implements ActiveRecordInterface
                     $o->clearAllReferences($deep);
                 }
             }
+            if ($this->collTurnOrders) {
+                foreach ($this->collTurnOrders as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
             if ($this->collPlayerResources) {
                 foreach ($this->collPlayerResources as $o) {
                     $o->clearAllReferences($deep);
@@ -2825,6 +3178,7 @@ abstract class Player implements ActiveRecordInterface
             }
         } // if ($deep)
 
+        $this->collTurnOrders = null;
         $this->collTurnOrders = null;
         $this->collPlayerResources = null;
         $this->collPlayerCities = null;

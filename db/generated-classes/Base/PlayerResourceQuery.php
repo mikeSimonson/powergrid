@@ -20,12 +20,12 @@ use Propel\Runtime\Exception\PropelException;
  *
  *
  *
- * @method     ChildPlayerResourceQuery orderByPlayerId($order = Criteria::ASC) Order by the player_id column
  * @method     ChildPlayerResourceQuery orderByResourceTypeId($order = Criteria::ASC) Order by the resource_type_id column
+ * @method     ChildPlayerResourceQuery orderByPlayerId($order = Criteria::ASC) Order by the player_id column
  * @method     ChildPlayerResourceQuery orderByQuantity($order = Criteria::ASC) Order by the quantity column
  *
- * @method     ChildPlayerResourceQuery groupByPlayerId() Group by the player_id column
  * @method     ChildPlayerResourceQuery groupByResourceTypeId() Group by the resource_type_id column
+ * @method     ChildPlayerResourceQuery groupByPlayerId() Group by the player_id column
  * @method     ChildPlayerResourceQuery groupByQuantity() Group by the quantity column
  *
  * @method     ChildPlayerResourceQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -45,20 +45,20 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPlayerResource findOne(ConnectionInterface $con = null) Return the first ChildPlayerResource matching the query
  * @method     ChildPlayerResource findOneOrCreate(ConnectionInterface $con = null) Return the first ChildPlayerResource matching the query, or a new ChildPlayerResource object populated from the query conditions when no match is found
  *
- * @method     ChildPlayerResource findOneByPlayerId(int $player_id) Return the first ChildPlayerResource filtered by the player_id column
  * @method     ChildPlayerResource findOneByResourceTypeId(int $resource_type_id) Return the first ChildPlayerResource filtered by the resource_type_id column
+ * @method     ChildPlayerResource findOneByPlayerId(int $player_id) Return the first ChildPlayerResource filtered by the player_id column
  * @method     ChildPlayerResource findOneByQuantity(int $quantity) Return the first ChildPlayerResource filtered by the quantity column *
 
  * @method     ChildPlayerResource requirePk($key, ConnectionInterface $con = null) Return the ChildPlayerResource by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPlayerResource requireOne(ConnectionInterface $con = null) Return the first ChildPlayerResource matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildPlayerResource requireOneByPlayerId(int $player_id) Return the first ChildPlayerResource filtered by the player_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPlayerResource requireOneByResourceTypeId(int $resource_type_id) Return the first ChildPlayerResource filtered by the resource_type_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildPlayerResource requireOneByPlayerId(int $player_id) Return the first ChildPlayerResource filtered by the player_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildPlayerResource requireOneByQuantity(int $quantity) Return the first ChildPlayerResource filtered by the quantity column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildPlayerResource[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildPlayerResource objects based on current ModelCriteria
- * @method     ChildPlayerResource[]|ObjectCollection findByPlayerId(int $player_id) Return ChildPlayerResource objects filtered by the player_id column
  * @method     ChildPlayerResource[]|ObjectCollection findByResourceTypeId(int $resource_type_id) Return ChildPlayerResource objects filtered by the resource_type_id column
+ * @method     ChildPlayerResource[]|ObjectCollection findByPlayerId(int $player_id) Return ChildPlayerResource objects filtered by the player_id column
  * @method     ChildPlayerResource[]|ObjectCollection findByQuantity(int $quantity) Return ChildPlayerResource objects filtered by the quantity column
  * @method     ChildPlayerResource[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
@@ -112,7 +112,7 @@ abstract class PlayerResourceQuery extends ModelCriteria
      * $obj = $c->findPk(array(12, 34), $con);
      * </code>
      *
-     * @param array[$player_id, $resource_type_id] $key Primary key to use for the query
+     * @param array[$resource_type_id, $player_id] $key Primary key to use for the query
      * @param ConnectionInterface $con an optional connection object
      *
      * @return ChildPlayerResource|array|mixed the result, formatted by the current formatter
@@ -152,7 +152,7 @@ abstract class PlayerResourceQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT player_id, resource_type_id, quantity FROM player_resource WHERE player_id = :p0 AND resource_type_id = :p1';
+        $sql = 'SELECT resource_type_id, player_id, quantity FROM player_resource WHERE resource_type_id = :p0 AND player_id = :p1';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key[0], PDO::PARAM_INT);
@@ -226,8 +226,8 @@ abstract class PlayerResourceQuery extends ModelCriteria
      */
     public function filterByPrimaryKey($key)
     {
-        $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $key[0], Criteria::EQUAL);
-        $this->addUsingAlias(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $key[1], Criteria::EQUAL);
+        $this->addUsingAlias(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $key[0], Criteria::EQUAL);
+        $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $key[1], Criteria::EQUAL);
 
         return $this;
     }
@@ -245,56 +245,13 @@ abstract class PlayerResourceQuery extends ModelCriteria
             return $this->add(null, '1<>1', Criteria::CUSTOM);
         }
         foreach ($keys as $key) {
-            $cton0 = $this->getNewCriterion(PlayerResourceTableMap::COL_PLAYER_ID, $key[0], Criteria::EQUAL);
-            $cton1 = $this->getNewCriterion(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $key[1], Criteria::EQUAL);
+            $cton0 = $this->getNewCriterion(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $key[0], Criteria::EQUAL);
+            $cton1 = $this->getNewCriterion(PlayerResourceTableMap::COL_PLAYER_ID, $key[1], Criteria::EQUAL);
             $cton0->addAnd($cton1);
             $this->addOr($cton0);
         }
 
         return $this;
-    }
-
-    /**
-     * Filter the query on the player_id column
-     *
-     * Example usage:
-     * <code>
-     * $query->filterByPlayerId(1234); // WHERE player_id = 1234
-     * $query->filterByPlayerId(array(12, 34)); // WHERE player_id IN (12, 34)
-     * $query->filterByPlayerId(array('min' => 12)); // WHERE player_id > 12
-     * </code>
-     *
-     * @see       filterByPlayer()
-     *
-     * @param     mixed $playerId The value to use as filter.
-     *              Use scalar values for equality.
-     *              Use array values for in_array() equivalent.
-     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
-     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @return $this|ChildPlayerResourceQuery The current query, for fluid interface
-     */
-    public function filterByPlayerId($playerId = null, $comparison = null)
-    {
-        if (is_array($playerId)) {
-            $useMinMax = false;
-            if (isset($playerId['min'])) {
-                $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId['min'], Criteria::GREATER_EQUAL);
-                $useMinMax = true;
-            }
-            if (isset($playerId['max'])) {
-                $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId['max'], Criteria::LESS_EQUAL);
-                $useMinMax = true;
-            }
-            if ($useMinMax) {
-                return $this;
-            }
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-        }
-
-        return $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId, $comparison);
     }
 
     /**
@@ -338,6 +295,49 @@ abstract class PlayerResourceQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $resourceTypeId, $comparison);
+    }
+
+    /**
+     * Filter the query on the player_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByPlayerId(1234); // WHERE player_id = 1234
+     * $query->filterByPlayerId(array(12, 34)); // WHERE player_id IN (12, 34)
+     * $query->filterByPlayerId(array('min' => 12)); // WHERE player_id > 12
+     * </code>
+     *
+     * @see       filterByPlayer()
+     *
+     * @param     mixed $playerId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildPlayerResourceQuery The current query, for fluid interface
+     */
+    public function filterByPlayerId($playerId = null, $comparison = null)
+    {
+        if (is_array($playerId)) {
+            $useMinMax = false;
+            if (isset($playerId['min'])) {
+                $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($playerId['max'])) {
+                $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(PlayerResourceTableMap::COL_PLAYER_ID, $playerId, $comparison);
     }
 
     /**
@@ -545,8 +545,8 @@ abstract class PlayerResourceQuery extends ModelCriteria
     public function prune($playerResource = null)
     {
         if ($playerResource) {
-            $this->addCond('pruneCond0', $this->getAliasedColName(PlayerResourceTableMap::COL_PLAYER_ID), $playerResource->getPlayerId(), Criteria::NOT_EQUAL);
-            $this->addCond('pruneCond1', $this->getAliasedColName(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID), $playerResource->getResourceTypeId(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond0', $this->getAliasedColName(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID), $playerResource->getResourceTypeId(), Criteria::NOT_EQUAL);
+            $this->addCond('pruneCond1', $this->getAliasedColName(PlayerResourceTableMap::COL_PLAYER_ID), $playerResource->getPlayerId(), Criteria::NOT_EQUAL);
             $this->combine(array('pruneCond0', 'pruneCond1'), Criteria::LOGICAL_OR);
         }
 

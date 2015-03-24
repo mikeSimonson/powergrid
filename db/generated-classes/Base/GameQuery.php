@@ -23,6 +23,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGameQuery orderById($order = Criteria::ASC) Order by the id column
  * @method     ChildGameQuery orderByTurnNumber($order = Criteria::ASC) Order by the turn_number column
  * @method     ChildGameQuery orderByStepNumber($order = Criteria::ASC) Order by the step_number column
+ * @method     ChildGameQuery orderByNextPlayerId($order = Criteria::ASC) Order by the next_player_id column
  * @method     ChildGameQuery orderByOwnerId($order = Criteria::ASC) Order by the owner_id column
  * @method     ChildGameQuery orderByBankId($order = Criteria::ASC) Order by the bank_id column
  * @method     ChildGameQuery orderByMapId($order = Criteria::ASC) Order by the map_id column
@@ -30,6 +31,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGameQuery groupById() Group by the id column
  * @method     ChildGameQuery groupByTurnNumber() Group by the turn_number column
  * @method     ChildGameQuery groupByStepNumber() Group by the step_number column
+ * @method     ChildGameQuery groupByNextPlayerId() Group by the next_player_id column
  * @method     ChildGameQuery groupByOwnerId() Group by the owner_id column
  * @method     ChildGameQuery groupByBankId() Group by the bank_id column
  * @method     ChildGameQuery groupByMapId() Group by the map_id column
@@ -37,6 +39,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGameQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildGameQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildGameQuery innerJoin($relation) Adds a INNER JOIN clause to the query
+ *
+ * @method     ChildGameQuery leftJoinPlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the Player relation
+ * @method     ChildGameQuery rightJoinPlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Player relation
+ * @method     ChildGameQuery innerJoinPlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the Player relation
  *
  * @method     ChildGameQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
  * @method     ChildGameQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
@@ -70,7 +76,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGameQuery rightJoinGameCity($relationAlias = null) Adds a RIGHT JOIN clause to the query using the GameCity relation
  * @method     ChildGameQuery innerJoinGameCity($relationAlias = null) Adds a INNER JOIN clause to the query using the GameCity relation
  *
- * @method     \UserQuery|\BankQuery|\MapQuery|\PlayerQuery|\ResourceStoreQuery|\TurnOrderQuery|\GameCardQuery|\GameCityQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \PlayerQuery|\UserQuery|\BankQuery|\MapQuery|\ResourceStoreQuery|\TurnOrderQuery|\GameCardQuery|\GameCityQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildGame findOne(ConnectionInterface $con = null) Return the first ChildGame matching the query
  * @method     ChildGame findOneOrCreate(ConnectionInterface $con = null) Return the first ChildGame matching the query, or a new ChildGame object populated from the query conditions when no match is found
@@ -78,6 +84,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGame findOneById(int $id) Return the first ChildGame filtered by the id column
  * @method     ChildGame findOneByTurnNumber(int $turn_number) Return the first ChildGame filtered by the turn_number column
  * @method     ChildGame findOneByStepNumber(int $step_number) Return the first ChildGame filtered by the step_number column
+ * @method     ChildGame findOneByNextPlayerId(int $next_player_id) Return the first ChildGame filtered by the next_player_id column
  * @method     ChildGame findOneByOwnerId(int $owner_id) Return the first ChildGame filtered by the owner_id column
  * @method     ChildGame findOneByBankId(int $bank_id) Return the first ChildGame filtered by the bank_id column
  * @method     ChildGame findOneByMapId(int $map_id) Return the first ChildGame filtered by the map_id column *
@@ -88,6 +95,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGame requireOneById(int $id) Return the first ChildGame filtered by the id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGame requireOneByTurnNumber(int $turn_number) Return the first ChildGame filtered by the turn_number column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGame requireOneByStepNumber(int $step_number) Return the first ChildGame filtered by the step_number column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildGame requireOneByNextPlayerId(int $next_player_id) Return the first ChildGame filtered by the next_player_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGame requireOneByOwnerId(int $owner_id) Return the first ChildGame filtered by the owner_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGame requireOneByBankId(int $bank_id) Return the first ChildGame filtered by the bank_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildGame requireOneByMapId(int $map_id) Return the first ChildGame filtered by the map_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -96,6 +104,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGame[]|ObjectCollection findById(int $id) Return ChildGame objects filtered by the id column
  * @method     ChildGame[]|ObjectCollection findByTurnNumber(int $turn_number) Return ChildGame objects filtered by the turn_number column
  * @method     ChildGame[]|ObjectCollection findByStepNumber(int $step_number) Return ChildGame objects filtered by the step_number column
+ * @method     ChildGame[]|ObjectCollection findByNextPlayerId(int $next_player_id) Return ChildGame objects filtered by the next_player_id column
  * @method     ChildGame[]|ObjectCollection findByOwnerId(int $owner_id) Return ChildGame objects filtered by the owner_id column
  * @method     ChildGame[]|ObjectCollection findByBankId(int $bank_id) Return ChildGame objects filtered by the bank_id column
  * @method     ChildGame[]|ObjectCollection findByMapId(int $map_id) Return ChildGame objects filtered by the map_id column
@@ -191,7 +200,7 @@ abstract class GameQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id, turn_number, step_number, owner_id, bank_id, map_id FROM game WHERE id = :p0';
+        $sql = 'SELECT id, turn_number, step_number, next_player_id, owner_id, bank_id, map_id FROM game WHERE id = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -405,6 +414,49 @@ abstract class GameQuery extends ModelCriteria
     }
 
     /**
+     * Filter the query on the next_player_id column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByNextPlayerId(1234); // WHERE next_player_id = 1234
+     * $query->filterByNextPlayerId(array(12, 34)); // WHERE next_player_id IN (12, 34)
+     * $query->filterByNextPlayerId(array('min' => 12)); // WHERE next_player_id > 12
+     * </code>
+     *
+     * @see       filterByPlayer()
+     *
+     * @param     mixed $nextPlayerId The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildGameQuery The current query, for fluid interface
+     */
+    public function filterByNextPlayerId($nextPlayerId = null, $comparison = null)
+    {
+        if (is_array($nextPlayerId)) {
+            $useMinMax = false;
+            if (isset($nextPlayerId['min'])) {
+                $this->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $nextPlayerId['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($nextPlayerId['max'])) {
+                $this->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $nextPlayerId['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $nextPlayerId, $comparison);
+    }
+
+    /**
      * Filter the query on the owner_id column
      *
      * Example usage:
@@ -531,6 +583,83 @@ abstract class GameQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(GameTableMap::COL_MAP_ID, $mapId, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Player object
+     *
+     * @param \Player|ObjectCollection $player The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildGameQuery The current query, for fluid interface
+     */
+    public function filterByPlayer($player, $comparison = null)
+    {
+        if ($player instanceof \Player) {
+            return $this
+                ->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $player->getId(), $comparison);
+        } elseif ($player instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $player->toKeyValue('PrimaryKey', 'Id'), $comparison);
+        } else {
+            throw new PropelException('filterByPlayer() only accepts arguments of type \Player or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Player relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildGameQuery The current query, for fluid interface
+     */
+    public function joinPlayer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Player');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Player');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Player relation Player object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \PlayerQuery A secondary query class using the current class as primary query
+     */
+    public function usePlayerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinPlayer($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Player', '\PlayerQuery');
     }
 
     /**

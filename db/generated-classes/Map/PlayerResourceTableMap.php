@@ -72,14 +72,14 @@ class PlayerResourceTableMap extends TableMap
     const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the player_id field
-     */
-    const COL_PLAYER_ID = 'player_resource.player_id';
-
-    /**
      * the column name for the resource_type_id field
      */
     const COL_RESOURCE_TYPE_ID = 'player_resource.resource_type_id';
+
+    /**
+     * the column name for the player_id field
+     */
+    const COL_PLAYER_ID = 'player_resource.player_id';
 
     /**
      * the column name for the quantity field
@@ -98,10 +98,10 @@ class PlayerResourceTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('PlayerId', 'ResourceTypeId', 'Quantity', ),
-        self::TYPE_CAMELNAME     => array('playerId', 'resourceTypeId', 'quantity', ),
-        self::TYPE_COLNAME       => array(PlayerResourceTableMap::COL_PLAYER_ID, PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, PlayerResourceTableMap::COL_QUANTITY, ),
-        self::TYPE_FIELDNAME     => array('player_id', 'resource_type_id', 'quantity', ),
+        self::TYPE_PHPNAME       => array('ResourceTypeId', 'PlayerId', 'Quantity', ),
+        self::TYPE_CAMELNAME     => array('resourceTypeId', 'playerId', 'quantity', ),
+        self::TYPE_COLNAME       => array(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, PlayerResourceTableMap::COL_PLAYER_ID, PlayerResourceTableMap::COL_QUANTITY, ),
+        self::TYPE_FIELDNAME     => array('resource_type_id', 'player_id', 'quantity', ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -112,10 +112,10 @@ class PlayerResourceTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('PlayerId' => 0, 'ResourceTypeId' => 1, 'Quantity' => 2, ),
-        self::TYPE_CAMELNAME     => array('playerId' => 0, 'resourceTypeId' => 1, 'quantity' => 2, ),
-        self::TYPE_COLNAME       => array(PlayerResourceTableMap::COL_PLAYER_ID => 0, PlayerResourceTableMap::COL_RESOURCE_TYPE_ID => 1, PlayerResourceTableMap::COL_QUANTITY => 2, ),
-        self::TYPE_FIELDNAME     => array('player_id' => 0, 'resource_type_id' => 1, 'quantity' => 2, ),
+        self::TYPE_PHPNAME       => array('ResourceTypeId' => 0, 'PlayerId' => 1, 'Quantity' => 2, ),
+        self::TYPE_CAMELNAME     => array('resourceTypeId' => 0, 'playerId' => 1, 'quantity' => 2, ),
+        self::TYPE_COLNAME       => array(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID => 0, PlayerResourceTableMap::COL_PLAYER_ID => 1, PlayerResourceTableMap::COL_QUANTITY => 2, ),
+        self::TYPE_FIELDNAME     => array('resource_type_id' => 0, 'player_id' => 1, 'quantity' => 2, ),
         self::TYPE_NUM           => array(0, 1, 2, )
     );
 
@@ -136,8 +136,8 @@ class PlayerResourceTableMap extends TableMap
         $this->setPackage('');
         $this->setUseIdGenerator(false);
         // columns
-        $this->addForeignPrimaryKey('player_id', 'PlayerId', 'INTEGER' , 'player', 'id', true, null, null);
         $this->addForeignPrimaryKey('resource_type_id', 'ResourceTypeId', 'INTEGER' , 'resource_type', 'id', true, null, null);
+        $this->addForeignPrimaryKey('player_id', 'PlayerId', 'INTEGER' , 'player', 'id', true, null, null);
         $this->addColumn('quantity', 'Quantity', 'INTEGER', true, null, null);
     } // initialize()
 
@@ -177,7 +177,7 @@ class PlayerResourceTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize(array((string) $obj->getPlayerId(), (string) $obj->getResourceTypeId()));
+                $key = serialize(array((string) $obj->getResourceTypeId(), (string) $obj->getPlayerId()));
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -197,7 +197,7 @@ class PlayerResourceTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
             if (is_object($value) && $value instanceof \PlayerResource) {
-                $key = serialize(array((string) $value->getPlayerId(), (string) $value->getResourceTypeId()));
+                $key = serialize(array((string) $value->getResourceTypeId(), (string) $value->getPlayerId()));
 
             } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
@@ -231,11 +231,11 @@ class PlayerResourceTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -257,12 +257,12 @@ class PlayerResourceTableMap extends TableMap
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)
         ];
         $pks[] = (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 1 + $offset
-                : self::translateFieldName('ResourceTypeId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('PlayerId', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
         return $pks;
@@ -365,12 +365,12 @@ class PlayerResourceTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(PlayerResourceTableMap::COL_PLAYER_ID);
             $criteria->addSelectColumn(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID);
+            $criteria->addSelectColumn(PlayerResourceTableMap::COL_PLAYER_ID);
             $criteria->addSelectColumn(PlayerResourceTableMap::COL_QUANTITY);
         } else {
-            $criteria->addSelectColumn($alias . '.player_id');
             $criteria->addSelectColumn($alias . '.resource_type_id');
+            $criteria->addSelectColumn($alias . '.player_id');
             $criteria->addSelectColumn($alias . '.quantity');
         }
     }
@@ -430,8 +430,8 @@ class PlayerResourceTableMap extends TableMap
                 $values = array($values);
             }
             foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(PlayerResourceTableMap::COL_PLAYER_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $value[1]));
+                $criterion = $criteria->getNewCriterion(PlayerResourceTableMap::COL_RESOURCE_TYPE_ID, $value[0]);
+                $criterion->addAnd($criteria->getNewCriterion(PlayerResourceTableMap::COL_PLAYER_ID, $value[1]));
                 $criteria->addOr($criterion);
             }
         }

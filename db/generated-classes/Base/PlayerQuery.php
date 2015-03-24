@@ -56,6 +56,10 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildPlayerQuery rightJoinTurnOrder($relationAlias = null) Adds a RIGHT JOIN clause to the query using the TurnOrder relation
  * @method     ChildPlayerQuery innerJoinTurnOrder($relationAlias = null) Adds a INNER JOIN clause to the query using the TurnOrder relation
  *
+ * @method     ChildPlayerQuery leftJoinTurnOrder($relationAlias = null) Adds a LEFT JOIN clause to the query using the TurnOrder relation
+ * @method     ChildPlayerQuery rightJoinTurnOrder($relationAlias = null) Adds a RIGHT JOIN clause to the query using the TurnOrder relation
+ * @method     ChildPlayerQuery innerJoinTurnOrder($relationAlias = null) Adds a INNER JOIN clause to the query using the TurnOrder relation
+ *
  * @method     ChildPlayerQuery leftJoinPlayerResource($relationAlias = null) Adds a LEFT JOIN clause to the query using the PlayerResource relation
  * @method     ChildPlayerQuery rightJoinPlayerResource($relationAlias = null) Adds a RIGHT JOIN clause to the query using the PlayerResource relation
  * @method     ChildPlayerQuery innerJoinPlayerResource($relationAlias = null) Adds a INNER JOIN clause to the query using the PlayerResource relation
@@ -804,6 +808,79 @@ abstract class PlayerQuery extends ModelCriteria
         return $this
             ->joinWallet($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Wallet', '\WalletQuery');
+    }
+
+    /**
+     * Filter the query by a related \Game object
+     *
+     * @param \Game|ObjectCollection $game the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildPlayerQuery The current query, for fluid interface
+     */
+    public function filterByTurnOrder($game, $comparison = null)
+    {
+        if ($game instanceof \Game) {
+            return $this
+                ->addUsingAlias(PlayerTableMap::COL_ID, $game->getNextPlayerId(), $comparison);
+        } elseif ($game instanceof ObjectCollection) {
+            return $this
+                ->useTurnOrderQuery()
+                ->filterByPrimaryKeys($game->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByTurnOrder() only accepts arguments of type \Game or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the TurnOrder relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildPlayerQuery The current query, for fluid interface
+     */
+    public function joinTurnOrder($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('TurnOrder');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'TurnOrder');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the TurnOrder relation Game object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \GameQuery A secondary query class using the current class as primary query
+     */
+    public function useTurnOrderQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinTurnOrder($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'TurnOrder', '\GameQuery');
     }
 
     /**

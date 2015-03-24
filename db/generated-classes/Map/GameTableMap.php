@@ -59,7 +59,7 @@ class GameTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class GameTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the id field
@@ -85,6 +85,11 @@ class GameTableMap extends TableMap
      * the column name for the step_number field
      */
     const COL_STEP_NUMBER = 'game.step_number';
+
+    /**
+     * the column name for the next_player_id field
+     */
+    const COL_NEXT_PLAYER_ID = 'game.next_player_id';
 
     /**
      * the column name for the owner_id field
@@ -113,11 +118,11 @@ class GameTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'TurnNumber', 'StepNumber', 'OwnerId', 'BankId', 'MapId', ),
-        self::TYPE_CAMELNAME     => array('id', 'turnNumber', 'stepNumber', 'ownerId', 'bankId', 'mapId', ),
-        self::TYPE_COLNAME       => array(GameTableMap::COL_ID, GameTableMap::COL_TURN_NUMBER, GameTableMap::COL_STEP_NUMBER, GameTableMap::COL_OWNER_ID, GameTableMap::COL_BANK_ID, GameTableMap::COL_MAP_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'turn_number', 'step_number', 'owner_id', 'bank_id', 'map_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'TurnNumber', 'StepNumber', 'NextPlayerId', 'OwnerId', 'BankId', 'MapId', ),
+        self::TYPE_CAMELNAME     => array('id', 'turnNumber', 'stepNumber', 'nextPlayerId', 'ownerId', 'bankId', 'mapId', ),
+        self::TYPE_COLNAME       => array(GameTableMap::COL_ID, GameTableMap::COL_TURN_NUMBER, GameTableMap::COL_STEP_NUMBER, GameTableMap::COL_NEXT_PLAYER_ID, GameTableMap::COL_OWNER_ID, GameTableMap::COL_BANK_ID, GameTableMap::COL_MAP_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'turn_number', 'step_number', 'next_player_id', 'owner_id', 'bank_id', 'map_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -127,11 +132,11 @@ class GameTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'TurnNumber' => 1, 'StepNumber' => 2, 'OwnerId' => 3, 'BankId' => 4, 'MapId' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'turnNumber' => 1, 'stepNumber' => 2, 'ownerId' => 3, 'bankId' => 4, 'mapId' => 5, ),
-        self::TYPE_COLNAME       => array(GameTableMap::COL_ID => 0, GameTableMap::COL_TURN_NUMBER => 1, GameTableMap::COL_STEP_NUMBER => 2, GameTableMap::COL_OWNER_ID => 3, GameTableMap::COL_BANK_ID => 4, GameTableMap::COL_MAP_ID => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'turn_number' => 1, 'step_number' => 2, 'owner_id' => 3, 'bank_id' => 4, 'map_id' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'TurnNumber' => 1, 'StepNumber' => 2, 'NextPlayerId' => 3, 'OwnerId' => 4, 'BankId' => 5, 'MapId' => 6, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'turnNumber' => 1, 'stepNumber' => 2, 'nextPlayerId' => 3, 'ownerId' => 4, 'bankId' => 5, 'mapId' => 6, ),
+        self::TYPE_COLNAME       => array(GameTableMap::COL_ID => 0, GameTableMap::COL_TURN_NUMBER => 1, GameTableMap::COL_STEP_NUMBER => 2, GameTableMap::COL_NEXT_PLAYER_ID => 3, GameTableMap::COL_OWNER_ID => 4, GameTableMap::COL_BANK_ID => 5, GameTableMap::COL_MAP_ID => 6, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'turn_number' => 1, 'step_number' => 2, 'next_player_id' => 3, 'owner_id' => 4, 'bank_id' => 5, 'map_id' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -154,6 +159,7 @@ class GameTableMap extends TableMap
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('turn_number', 'TurnNumber', 'INTEGER', true, null, null);
         $this->addColumn('step_number', 'StepNumber', 'INTEGER', true, null, null);
+        $this->addForeignKey('next_player_id', 'NextPlayerId', 'INTEGER', 'player', 'id', true, null, null);
         $this->addForeignKey('owner_id', 'OwnerId', 'INTEGER', 'user', 'id', true, null, null);
         $this->addForeignKey('bank_id', 'BankId', 'INTEGER', 'bank', 'id', true, null, null);
         $this->addForeignKey('map_id', 'MapId', 'INTEGER', 'map', 'id', true, null, null);
@@ -164,6 +170,13 @@ class GameTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Player', '\\Player', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':next_player_id',
+    1 => ':id',
+  ),
+), null, null, null, false);
         $this->addRelation('User', '\\User', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
@@ -366,6 +379,7 @@ class GameTableMap extends TableMap
             $criteria->addSelectColumn(GameTableMap::COL_ID);
             $criteria->addSelectColumn(GameTableMap::COL_TURN_NUMBER);
             $criteria->addSelectColumn(GameTableMap::COL_STEP_NUMBER);
+            $criteria->addSelectColumn(GameTableMap::COL_NEXT_PLAYER_ID);
             $criteria->addSelectColumn(GameTableMap::COL_OWNER_ID);
             $criteria->addSelectColumn(GameTableMap::COL_BANK_ID);
             $criteria->addSelectColumn(GameTableMap::COL_MAP_ID);
@@ -373,6 +387,7 @@ class GameTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.turn_number');
             $criteria->addSelectColumn($alias . '.step_number');
+            $criteria->addSelectColumn($alias . '.next_player_id');
             $criteria->addSelectColumn($alias . '.owner_id');
             $criteria->addSelectColumn($alias . '.bank_id');
             $criteria->addSelectColumn($alias . '.map_id');

@@ -191,6 +191,13 @@ class PlayerTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
+        $this->addRelation('TurnOrder', '\\Game', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':next_player_id',
+    1 => ':id',
+  ),
+), null, null, 'TurnOrders', false);
         $this->addRelation('TurnOrder', '\\TurnOrder', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
