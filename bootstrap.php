@@ -19,6 +19,14 @@ function loadApiLib($className) {
   }
 }
 
+function loadPowerGridLib($classname) {
+  $parts = explode('\\', $className);
+
+  if (array_shift($parts) === 'PowerGrid') {
+    require('src/PowerGrid/' . implode('/', $parts) . '.php');
+  }
+}
+
 spl_autoload_register('loadApiLib');
 
 ?>
