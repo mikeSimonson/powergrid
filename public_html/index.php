@@ -5,7 +5,7 @@ require_once('../bootstrap.php');
 $app = new \Slim\Slim();
 
 $app->post('/register', function() {
-  $json_result = new \Api\JSONResult();
+  $json_result = new \HTTPApi\JSONResult();
 
   $username = $_POST['username'];
   $password = $_POST['password'];
