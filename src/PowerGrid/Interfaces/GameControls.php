@@ -17,13 +17,13 @@ interface GameControls {
   /**
    * @param   int
    */
-  public function startBid($powerPlantId);
+  public function startBid($playerId, $powerPlantId);
 
   /**
    * @param   int
    * @param   int
    */ 
-  public function placeBid($powerPlantId, $bidAmount);
+  public function placeBid($playerId, $powerPlantId, $bidAmount);
 
   /**
    * @param array   $resource_name => $resource_quantity

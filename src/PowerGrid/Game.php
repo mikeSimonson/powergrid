@@ -39,14 +39,26 @@ class Game implements \PowerGrid\Interfaces\GameControls {
   /**
    * @param   int
    */
-  public function startBid($powerPlantId) {
+  public function startBid($playerId, $powerPlantId) {
+    $stepId = $this->gameData->getCurrentStepId();
+
+    $startBidRules = $this->makeStepRules($stepId);
+
+    $turnData = new \Ruler\Context(array(
+      'playerId' => $playerId,
+      'powerPlantId' => $powerPlantId
+    ));
+
+    $bidRules->execute($this->gameData, $turnData);
+
+    $this->gameData->save();
   }
 
   /**
    * @param   int
    * @param   int
    */ 
-  public function placeBid($powerPlantId, $bidAmount) {
+  public function placeBid($playerId, $powerPlantId, $bidAmount) {
     $stepId = $this->gameData->getCurrentStepId();
 
     $bidRules = $this->makeStepRules($stepId);
