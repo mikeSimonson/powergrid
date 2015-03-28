@@ -14,7 +14,7 @@ class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   obj     A proxy for the game data. 
    * @param   array   An assoc array with 
    */
-  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Abstract\RuleFactory $ruleFactory) {
+  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\RuleFactory $ruleFactory) {
     $this->gameData = $dataSource;
     $this->ruleFactory = $ruleFactory;
 
@@ -98,7 +98,7 @@ class Game implements \PowerGrid\Interfaces\GameControls {
   protected function makeStepRules($stepId) {
     $phaseId = $this->gameData->getCurrentPhaseId();
 
-    $stepRules = $this->ruleFactory->getRules($stepId, $phaseId);
+    $stepRules = $this->ruleFactory->makeRules($stepId, $phaseId);
 
     return $stepRules;
   }
