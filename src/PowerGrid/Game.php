@@ -4,7 +4,7 @@ namespace \PowerGrid;
 
 class Game implements \PowerGrid\Interfaces\GameControls {
 
-  const NEW_TURN_ORDER_PHASE = 'new_turn_order'
+  const NEW_TURN_ORDER_PHASE = 'new_turn_order';
   const PLACE_BID_PHASE = 'place_bid';
   const BUY_RESOURCES_PHASE = 'buy_resources';
   const BUILD_CITIES_PHASE = 'build_cities';
@@ -17,6 +17,8 @@ class Game implements \PowerGrid\Interfaces\GameControls {
   public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Abstract\RuleFactory $ruleFactory) {
     $this->gameData = $dataSource;
     $this->ruleFactory = $ruleFactory;
+
+    // Shuffle and create card stack
   }
 
   /**
@@ -31,16 +33,23 @@ class Game implements \PowerGrid\Interfaces\GameControls {
 
   }
 
+  public function determineTurnOrder() {
+  }
+
+  /**
+   * @param   int
+   */
+  public function startBid($powerPlantId) {
+  }
+
   /**
    * @param   int
    * @param   int
    */ 
   public function placeBid($powerPlantId, $bidAmount) {
+    $stepId = $this->gameData->getCurrentStepId();
 
-    $step_id = $this->gameData->getCurrentStepId();
-    $phase_id = $this->gameData->getCurrentPhaseId();
-
-    $bidRules = $this->ruleFactory->getRules($step_id, $phase_id);
+    $bidRules = $this->makeStepRules($stepId);
 
     $turnData = new \Ruler\Context(array(
       'powerPlantId' => $powerPlantId,
@@ -48,7 +57,7 @@ class Game implements \PowerGrid\Interfaces\GameControls {
       'playerId' => $playerId
     ));
 
-    $bidRules->execute($turnData);
+    $bidRules->execute($this->gameData, $turnData);
   }
 
   /**
@@ -72,5 +81,13 @@ class Game implements \PowerGrid\Interfaces\GameControls {
    */
   public function powerCities($quantity, $resourcePayment) {
 
+  }
+
+  protected function makeStepRules($stepId) {
+    $phaseId = $this->gameData->getCurrentPhaseId();
+
+    $stepRules = $this->ruleFactory->getRules($stepId, $phaseId);
+
+    return $stepRules;
   }
 }

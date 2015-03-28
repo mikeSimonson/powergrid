@@ -16,6 +16,11 @@ interface GameControls {
 
   /**
    * @param   int
+   */
+  public function startBid($powerPlantId);
+
+  /**
+   * @param   int
    * @param   int
    */ 
   public function placeBid($powerPlantId, $bidAmount);
