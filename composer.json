@@ -2,7 +2,8 @@
     "require": {
         "slim/slim": "~2.6",
         "propel/propel": "~2.0@dev",
-        "monolog/monolog": "~1.13"
+        "monolog/monolog": "~1.13",
+        "ruler/ruler": "0.3.*"
     },
     "autoload": {
         "classmap": ["db/generated-classes/"]
