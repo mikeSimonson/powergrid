@@ -4,11 +4,12 @@ namespace \PowerGrid;
 
 class Game implements \PowerGrid\Interfaces\GameControls {
 
-  const NEW_TURN_ORDER_PHASE = 'new_turn_order';
-  const PLACE_BID_PHASE = 'place_bid';
-  const BUY_RESOURCES_PHASE = 'buy_resources';
-  const BUILD_CITIES_PHASE = 'build_cities';
-  const POWER_CITIES_PHASE = 'power_cities';
+  const NEW_TURN_ORDER_ACTION = 'new_turn_order';
+  const START_BID_ACTION = 'start_bid';
+  const PLACE_BID_ACTION = 'place_bid';
+  const BUY_RESOURCES_ACTION = 'buy_resources';
+  const BUILD_CITIES_ACTION = 'build_cities';
+  const POWER_CITIES_ACTION = 'power_cities';
 
   /**
    * @param   obj     A proxy for the game data. 
@@ -41,8 +42,7 @@ class Game implements \PowerGrid\Interfaces\GameControls {
    */
   public function startBid($playerId, $powerPlantId) {
     $stepId = $this->gameData->getCurrentStepId();
-
-    $startBidRules = $this->makeStepRules($stepId);
+    $bidRules = $this->ruleFactory->makeRules($stepId, static::START_BID_ACTION);
 
     $turnData = new \Ruler\Context(array(
       'playerId' => $playerId,
@@ -59,9 +59,8 @@ class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   int
    */ 
   public function placeBid($playerId, $powerPlantId, $bidAmount) {
-    $stepId = $this->gameData->getCurrentStepId();
 
-    $bidRules = $this->makeStepRules($stepId);
+    $bidRules = $this->makeRules($stepId);
 
     $turnData = new \Ruler\Context(array(
       'powerPlantId' => $powerPlantId,
@@ -95,11 +94,4 @@ class Game implements \PowerGrid\Interfaces\GameControls {
 
   }
 
-  protected function makeStepRules($stepId) {
-    $phaseId = $this->gameData->getCurrentPhaseId();
-
-    $stepRules = $this->ruleFactory->makeRules($stepId, $phaseId);
-
-    return $stepRules;
-  }
 }
