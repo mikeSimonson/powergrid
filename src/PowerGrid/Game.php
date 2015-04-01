@@ -31,7 +31,6 @@ class Game implements \PowerGrid\Interfaces\GameControls {
    * @return  array
    */
   public function getInfo() {
-
   }
 
   public function determineTurnOrder() {
