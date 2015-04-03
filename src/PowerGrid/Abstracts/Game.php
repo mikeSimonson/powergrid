@@ -115,8 +115,9 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   }
 
   protected function notifyNextPlayer($action) {
-    // We need to figure out how to determine what the next player's action
-    // will be.
+    if ($this->gameData->phaseComplete()) {
+      $this->notifyNextPlayer($this->gameData->getNextPhase());
+    }
   }
 
   /**
