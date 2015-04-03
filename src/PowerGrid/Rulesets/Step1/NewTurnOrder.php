@@ -2,14 +2,15 @@
 
 namespace \PowerGrid\Rulesets\Step1;
 
-class NewTurnOrder implements \PowerGrid\Interfaces\ActionRuleset {
+class NewTurnOrder extends \PowerGrid\Abstracts\ActionRuleset {
 
-  public function __construct() {
+  /**
+   * Adds all rules to the ruleSet
+   *
+   * @param   void
+   * @return  void
+   */
+  protected function compileRules() {
 
   }
-
-  public function execute(\PowerGrid\Interfaces\GameData $gameData, \Ruler\Context $turnData) {
-  
-  }
-
 }

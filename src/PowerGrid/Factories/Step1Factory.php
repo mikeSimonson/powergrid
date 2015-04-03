@@ -8,23 +8,23 @@ class Step1Factory {
     $actionRuleset;
 
     switch ($action) {
-    case (Game::NEW_TURN_ORDER_ACTION):
+    case (\PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\NewTurnOrder();
       break;
-    case (Game::START_BID_ACTION):
+    case (\PowerGrid\Interfaces\GameData::START_BID_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\StartBidAction();
       break;
       break;
-    case (Game::PLACE_BID_ACTION):
+    case (\PowerGrid\Interfaces\GameData::PLACE_BID_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\PlaceBidAction();
       break;
-    case (Game::BUY_RESOURCES_ACTION):
+    case (\PowerGrid\Interfaces\GameData::BUY_RESOURCES_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\BuyResourcesAction();
       break;
-    case (Game::BUILD_CITIES_ACTION):
+    case (\PowerGrid\Interfaces\GameData::BUILD_CITIES_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\BuildCitiesAction();
       break;
-    case (Game::POWER_CITIES_ACTION):
+    case (\PowerGrid\Interfaces\GameData::POWER_CITIES_ACTION):
       $actionRuleset = new \PowerGrid\Rulesets\Step1\PowerCitiesAction();
       break;
     default:
