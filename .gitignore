@@ -4,3 +4,4 @@ vendor
 .phpcomplete_extended/
 id_rsa*
 root_id_rsa*
+composer.phar
