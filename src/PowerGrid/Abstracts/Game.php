@@ -8,7 +8,8 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
   /**
    * @param   obj     A proxy for the game data. 
-   * @param   array   An assoc array with 
+   * @param   obj     A rule factory.
+   * @param   obj     An assoc array of \PowerGrid\Abstract\Player objs.
    */
   public function __construct(\PowerGrid\Abstracts\GameData $dataSource, \PowerGrid\RuleFactory $ruleFactory, $players) {
     if (is_array($players)) {
@@ -128,6 +129,8 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   protected function getRules($action) {
     $stepId = $this->gameData->getCurrentStep();
     $rules = $this->ruleFactory->makeRules($stepId, $action);
+
+    return $rules;
   }
 
   protected function notifyNextPlayer($action) {
