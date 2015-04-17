@@ -44,7 +44,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     $action = \PowerGrid\Abstracts\GameData::NEW_TURN_ORDER_ACTION;
     $context = array();
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   /**
@@ -57,7 +57,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'powerPlantId' => $powerPlantId
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   /**
@@ -72,7 +72,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'bidAmount' => $bidAmount
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   /**
@@ -85,7 +85,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'resourceOrder' => $resourceOrder
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   /**
@@ -98,7 +98,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'cityNames' => $cityNames
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   /**
@@ -113,7 +113,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'resourcePayment' => $resourcePayment
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer($action);
+    $this->notifyNextPlayer();
   }
 
   protected function performAction($action, $contextMap) {
@@ -133,10 +133,11 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     return $rules;
   }
 
-  protected function notifyNextPlayer($action) {
+  protected function notifyNextPlayer() {
     $nextPlayerId = $this->gameData->getNextPlayerId();
+    $nextAction = $this->gameData->getNextPhaseId();
 
-    $this->players[$nextPlayerId]->notify($action);
+    $this->players[$nextPlayerId]->notify($nextAction);
   }
 
   /**

@@ -612,9 +612,10 @@ abstract class Map implements ActiveRecordInterface
 
             if ($this->gamesScheduledForDeletion !== null) {
                 if (!$this->gamesScheduledForDeletion->isEmpty()) {
-                    \GameQuery::create()
-                        ->filterByPrimaryKeys($this->gamesScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete($con);
+                    foreach ($this->gamesScheduledForDeletion as $game) {
+                        // need to save related object because we set the relation to null
+                        $game->save($con);
+                    }
                     $this->gamesScheduledForDeletion = null;
                 }
             }
@@ -1314,7 +1315,7 @@ abstract class Map implements ActiveRecordInterface
                 $this->gamesScheduledForDeletion = clone $this->collGames;
                 $this->gamesScheduledForDeletion->clear();
             }
-            $this->gamesScheduledForDeletion[]= clone $game;
+            $this->gamesScheduledForDeletion[]= $game;
             $game->setMap(null);
         }
 
@@ -1338,10 +1339,10 @@ abstract class Map implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildGame[] List of ChildGame objects
      */
-    public function getGamesJoinPlayer(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getGamesJoinNextPlayer(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildGameQuery::create(null, $criteria);
-        $query->joinWith('Player', $joinBehavior);
+        $query->joinWith('NextPlayer', $joinBehavior);
 
         return $this->getGames($query, $con);
     }

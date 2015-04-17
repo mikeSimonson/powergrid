@@ -25,13 +25,13 @@
   </table>
   <table name="game" phpName="Game">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="turn_number" type="integer" required="true"/>
-    <column name="step_number" type="integer" required="true"/>
-    <column name="next_player_id" type="integer" required="true"/>
-    <column name="owner_id" type="integer" required="true"/>
-    <column name="bank_id" type="integer" required="true"/>
-    <column name="map_id" type="integer" required="true"/>
-    <foreign-key foreignTable="player" phpName="Player" refPhpName="TurnOrder">
+    <column name="turn_number" type="integer" required="false"/>
+    <column name="step_number" type="integer" required="false"/>
+    <column name="next_player_id" type="integer" required="false"/>
+    <column name="owner_id" type="integer" required="false"/>
+    <column name="bank_id" type="integer" required="false"/>
+    <column name="map_id" type="integer" required="false"/>
+    <foreign-key foreignTable="player" phpName="NextPlayer" refPhpName="Game">
       <reference local="next_player_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="user" phpName="User" refPhpName="Game">

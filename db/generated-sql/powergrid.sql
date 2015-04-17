@@ -57,12 +57,12 @@ DROP TABLE IF EXISTS `game`;
 CREATE TABLE `game`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `turn_number` INTEGER NOT NULL,
-    `step_number` INTEGER NOT NULL,
-    `next_player_id` INTEGER NOT NULL,
-    `owner_id` INTEGER NOT NULL,
-    `bank_id` INTEGER NOT NULL,
-    `map_id` INTEGER NOT NULL,
+    `turn_number` INTEGER,
+    `step_number` INTEGER,
+    `next_player_id` INTEGER,
+    `owner_id` INTEGER,
+    `bank_id` INTEGER,
+    `map_id` INTEGER,
     PRIMARY KEY (`id`),
     INDEX `game_fi_33ffcb` (`next_player_id`),
     INDEX `game_fi_ac5b84` (`owner_id`),

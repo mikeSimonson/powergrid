@@ -40,9 +40,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildGameQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ChildGameQuery innerJoin($relation) Adds a INNER JOIN clause to the query
  *
- * @method     ChildGameQuery leftJoinPlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the Player relation
- * @method     ChildGameQuery rightJoinPlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Player relation
- * @method     ChildGameQuery innerJoinPlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the Player relation
+ * @method     ChildGameQuery leftJoinNextPlayer($relationAlias = null) Adds a LEFT JOIN clause to the query using the NextPlayer relation
+ * @method     ChildGameQuery rightJoinNextPlayer($relationAlias = null) Adds a RIGHT JOIN clause to the query using the NextPlayer relation
+ * @method     ChildGameQuery innerJoinNextPlayer($relationAlias = null) Adds a INNER JOIN clause to the query using the NextPlayer relation
  *
  * @method     ChildGameQuery leftJoinUser($relationAlias = null) Adds a LEFT JOIN clause to the query using the User relation
  * @method     ChildGameQuery rightJoinUser($relationAlias = null) Adds a RIGHT JOIN clause to the query using the User relation
@@ -423,7 +423,7 @@ abstract class GameQuery extends ModelCriteria
      * $query->filterByNextPlayerId(array('min' => 12)); // WHERE next_player_id > 12
      * </code>
      *
-     * @see       filterByPlayer()
+     * @see       filterByNextPlayer()
      *
      * @param     mixed $nextPlayerId The value to use as filter.
      *              Use scalar values for equality.
@@ -595,7 +595,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return ChildGameQuery The current query, for fluid interface
      */
-    public function filterByPlayer($player, $comparison = null)
+    public function filterByNextPlayer($player, $comparison = null)
     {
         if ($player instanceof \Player) {
             return $this
@@ -608,22 +608,22 @@ abstract class GameQuery extends ModelCriteria
             return $this
                 ->addUsingAlias(GameTableMap::COL_NEXT_PLAYER_ID, $player->toKeyValue('PrimaryKey', 'Id'), $comparison);
         } else {
-            throw new PropelException('filterByPlayer() only accepts arguments of type \Player or Collection');
+            throw new PropelException('filterByNextPlayer() only accepts arguments of type \Player or Collection');
         }
     }
 
     /**
-     * Adds a JOIN clause to the query using the Player relation
+     * Adds a JOIN clause to the query using the NextPlayer relation
      *
      * @param     string $relationAlias optional alias for the relation
      * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return $this|ChildGameQuery The current query, for fluid interface
      */
-    public function joinPlayer($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinNextPlayer($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Player');
+        $relationMap = $tableMap->getRelation('NextPlayer');
 
         // create a ModelJoin object for this join
         $join = new ModelJoin();
@@ -638,14 +638,14 @@ abstract class GameQuery extends ModelCriteria
             $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
             $this->addJoinObject($join, $relationAlias);
         } else {
-            $this->addJoinObject($join, 'Player');
+            $this->addJoinObject($join, 'NextPlayer');
         }
 
         return $this;
     }
 
     /**
-     * Use the Player relation Player object
+     * Use the NextPlayer relation Player object
      *
      * @see useQuery()
      *
@@ -655,11 +655,11 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return \PlayerQuery A secondary query class using the current class as primary query
      */
-    public function usePlayerQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useNextPlayerQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
-            ->joinPlayer($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Player', '\PlayerQuery');
+            ->joinNextPlayer($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'NextPlayer', '\PlayerQuery');
     }
 
     /**
@@ -697,7 +697,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return $this|ChildGameQuery The current query, for fluid interface
      */
-    public function joinUser($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinUser($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('User');
@@ -732,7 +732,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return \UserQuery A secondary query class using the current class as primary query
      */
-    public function useUserQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useUserQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinUser($relationAlias, $joinType)
@@ -774,7 +774,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return $this|ChildGameQuery The current query, for fluid interface
      */
-    public function joinBank($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinBank($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Bank');
@@ -809,7 +809,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return \BankQuery A secondary query class using the current class as primary query
      */
-    public function useBankQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useBankQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinBank($relationAlias, $joinType)
@@ -851,7 +851,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return $this|ChildGameQuery The current query, for fluid interface
      */
-    public function joinMap($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinMap($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Map');
@@ -886,7 +886,7 @@ abstract class GameQuery extends ModelCriteria
      *
      * @return \MapQuery A secondary query class using the current class as primary query
      */
-    public function useMapQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useMapQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinMap($relationAlias, $joinType)

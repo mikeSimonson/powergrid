@@ -122,7 +122,7 @@ abstract class Game implements ActiveRecordInterface
     /**
      * @var        ChildPlayer
      */
-    protected $aPlayer;
+    protected $aNextPlayer;
 
     /**
      * @var        ChildUser
@@ -571,8 +571,8 @@ abstract class Game implements ActiveRecordInterface
             $this->modifiedColumns[GameTableMap::COL_NEXT_PLAYER_ID] = true;
         }
 
-        if ($this->aPlayer !== null && $this->aPlayer->getId() !== $v) {
-            $this->aPlayer = null;
+        if ($this->aNextPlayer !== null && $this->aNextPlayer->getId() !== $v) {
+            $this->aNextPlayer = null;
         }
 
         return $this;
@@ -736,8 +736,8 @@ abstract class Game implements ActiveRecordInterface
      */
     public function ensureConsistency()
     {
-        if ($this->aPlayer !== null && $this->next_player_id !== $this->aPlayer->getId()) {
-            $this->aPlayer = null;
+        if ($this->aNextPlayer !== null && $this->next_player_id !== $this->aNextPlayer->getId()) {
+            $this->aNextPlayer = null;
         }
         if ($this->aUser !== null && $this->owner_id !== $this->aUser->getId()) {
             $this->aUser = null;
@@ -787,7 +787,7 @@ abstract class Game implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aPlayer = null;
+            $this->aNextPlayer = null;
             $this->aUser = null;
             $this->aBank = null;
             $this->aMap = null;
@@ -905,11 +905,11 @@ abstract class Game implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aPlayer !== null) {
-                if ($this->aPlayer->isModified() || $this->aPlayer->isNew()) {
-                    $affectedRows += $this->aPlayer->save($con);
+            if ($this->aNextPlayer !== null) {
+                if ($this->aNextPlayer->isModified() || $this->aNextPlayer->isNew()) {
+                    $affectedRows += $this->aNextPlayer->save($con);
                 }
-                $this->setPlayer($this->aPlayer);
+                $this->setNextPlayer($this->aNextPlayer);
             }
 
             if ($this->aUser !== null) {
@@ -1235,7 +1235,7 @@ abstract class Game implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aPlayer) {
+            if (null !== $this->aNextPlayer) {
 
                 switch ($keyType) {
                     case TableMap::TYPE_CAMELNAME:
@@ -1248,7 +1248,7 @@ abstract class Game implements ActiveRecordInterface
                         $key = 'Player';
                 }
 
-                $result[$key] = $this->aPlayer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+                $result[$key] = $this->aNextPlayer->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aUser) {
 
@@ -1699,7 +1699,7 @@ abstract class Game implements ActiveRecordInterface
      * @return $this|\Game The current object (for fluent API support)
      * @throws PropelException
      */
-    public function setPlayer(ChildPlayer $v = null)
+    public function setNextPlayer(ChildPlayer $v = null)
     {
         if ($v === null) {
             $this->setNextPlayerId(NULL);
@@ -1707,12 +1707,12 @@ abstract class Game implements ActiveRecordInterface
             $this->setNextPlayerId($v->getId());
         }
 
-        $this->aPlayer = $v;
+        $this->aNextPlayer = $v;
 
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the ChildPlayer object, it will not be re-added.
         if ($v !== null) {
-            $v->addTurnOrder($this);
+            $v->addGame($this);
         }
 
 
@@ -1727,20 +1727,20 @@ abstract class Game implements ActiveRecordInterface
      * @return ChildPlayer The associated ChildPlayer object.
      * @throws PropelException
      */
-    public function getPlayer(ConnectionInterface $con = null)
+    public function getNextPlayer(ConnectionInterface $con = null)
     {
-        if ($this->aPlayer === null && ($this->next_player_id !== null)) {
-            $this->aPlayer = ChildPlayerQuery::create()->findPk($this->next_player_id, $con);
+        if ($this->aNextPlayer === null && ($this->next_player_id !== null)) {
+            $this->aNextPlayer = ChildPlayerQuery::create()->findPk($this->next_player_id, $con);
             /* The following can be used additionally to
                 guarantee the related object contains a reference
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                $this->aPlayer->addTurnOrders($this);
+                $this->aNextPlayer->addGames($this);
              */
         }
 
-        return $this->aPlayer;
+        return $this->aNextPlayer;
     }
 
     /**
@@ -3202,8 +3202,8 @@ abstract class Game implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aPlayer) {
-            $this->aPlayer->removeTurnOrder($this);
+        if (null !== $this->aNextPlayer) {
+            $this->aNextPlayer->removeGame($this);
         }
         if (null !== $this->aUser) {
             $this->aUser->removeGame($this);
@@ -3271,7 +3271,7 @@ abstract class Game implements ActiveRecordInterface
         $this->collTurnOrders = null;
         $this->collGameCards = null;
         $this->collGameCities = null;
-        $this->aPlayer = null;
+        $this->aNextPlayer = null;
         $this->aUser = null;
         $this->aBank = null;
         $this->aMap = null;

@@ -1,6 +1,8 @@
 <?php
 
-abstract class GameData {
+namespace PowerGrid\Abstracts;
+
+interface GameData {
   const NEW_TURN_ORDER_ACTION = 'new_turn_order';
   const START_BID_ACTION = 'start_bid';
   const PLACE_BID_ACTION = 'place_bid';
@@ -10,15 +12,15 @@ abstract class GameData {
 
   /* GETTERS */
 
-  abstract public function getCurrentPhaseId();
+  public function getCurrentPhaseId();
 
-  abstract public function getCurrentStepId();
+  public function getCurrentStepId();
 
-  abstract public function getNextPhaseId();
+  public function getNextPhaseId();
 
-  abstract public function getNextPlayerId();
+  public function getNextPlayerId();
 
   /* SETTERS */
 
-  abstract public function setPlayerIds($playerIds);
+  public function setPlayerIds($playerIds);
 }

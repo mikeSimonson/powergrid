@@ -19,7 +19,7 @@ function loadApiLib($className) {
   }
 }
 
-function loadPowerGridLib($classname) {
+function loadPowerGridLib($className) {
   $parts = explode('\\', $className);
 
   if (array_shift($parts) === 'PowerGrid') {
@@ -27,6 +27,16 @@ function loadPowerGridLib($classname) {
   }
 }
 
+function loadHTTPPowerGridLib($className) {
+  $parts = explode('\\', $className);
+
+  if (array_shift($parts) === 'HTTPPowerGrid') {
+    require('src/HTTPPowerGrid/' . implode('/', $parts) . '.php');
+  }
+}
+
 spl_autoload_register('loadApiLib');
+spl_autoload_register('loadPowerGridLib');
+spl_autoload_register('loadHTTPPowerGridLib');
 
 ?>

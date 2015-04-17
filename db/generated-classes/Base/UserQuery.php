@@ -479,7 +479,7 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return $this|ChildUserQuery The current query, for fluid interface
      */
-    public function joinGame($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function joinGame($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         $tableMap = $this->getTableMap();
         $relationMap = $tableMap->getRelation('Game');
@@ -514,7 +514,7 @@ abstract class UserQuery extends ModelCriteria
      *
      * @return \GameQuery A secondary query class using the current class as primary query
      */
-    public function useGameQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    public function useGameQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
     {
         return $this
             ->joinGame($relationAlias, $joinType)

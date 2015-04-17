@@ -157,12 +157,12 @@ class GameTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('turn_number', 'TurnNumber', 'INTEGER', true, null, null);
-        $this->addColumn('step_number', 'StepNumber', 'INTEGER', true, null, null);
-        $this->addForeignKey('next_player_id', 'NextPlayerId', 'INTEGER', 'player', 'id', true, null, null);
-        $this->addForeignKey('owner_id', 'OwnerId', 'INTEGER', 'user', 'id', true, null, null);
-        $this->addForeignKey('bank_id', 'BankId', 'INTEGER', 'bank', 'id', true, null, null);
-        $this->addForeignKey('map_id', 'MapId', 'INTEGER', 'map', 'id', true, null, null);
+        $this->addColumn('turn_number', 'TurnNumber', 'INTEGER', false, null, null);
+        $this->addColumn('step_number', 'StepNumber', 'INTEGER', false, null, null);
+        $this->addForeignKey('next_player_id', 'NextPlayerId', 'INTEGER', 'player', 'id', false, null, null);
+        $this->addForeignKey('owner_id', 'OwnerId', 'INTEGER', 'user', 'id', false, null, null);
+        $this->addForeignKey('bank_id', 'BankId', 'INTEGER', 'bank', 'id', false, null, null);
+        $this->addForeignKey('map_id', 'MapId', 'INTEGER', 'map', 'id', false, null, null);
     } // initialize()
 
     /**
@@ -170,7 +170,7 @@ class GameTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Player', '\\Player', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('NextPlayer', '\\Player', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':next_player_id',
