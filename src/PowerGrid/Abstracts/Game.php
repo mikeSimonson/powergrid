@@ -4,15 +4,28 @@ namespace \PowerGrid\Abstracts;
 
 abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
+  protected $players = array();
+
   /**
    * @param   obj     A proxy for the game data. 
    * @param   array   An assoc array with 
    */
-  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\RuleFactory $ruleFactory) {
+  public function __construct(\PowerGrid\Abstracts\GameData $dataSource, \PowerGrid\RuleFactory $ruleFactory, $players) {
+    if (is_array($players)) {
+      foreach ($players as $player) {
+        if (!($player instanceof \PowerGrid\Abstracts\Player)) {
+          throw new Exception('Player objects passed to a Game obj must extend the \PowerGrid\Abstracts\Player class.');
+        }
+
+        $this->players[$player->getId()] = $player;
+      }
+    }
+    else {
+      throw new Exception('Pass at least two players when making a Game obj.');
+    }
+
     $this->gameData = $dataSource;
     $this->ruleFactory = $ruleFactory;
-
-    // Shuffle and create card stack
   }
 
   /**
@@ -27,23 +40,23 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   }
 
   public function determineTurnOrder() {
-    $action = \PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION;
+    $action = \PowerGrid\Abstracts\GameData::NEW_TURN_ORDER_ACTION;
     $context = array();
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   /**
    * @param   int
    */
   public function startBid($playerId, $powerPlantId) {
-    $action = \PowerGrid\Interfaces\GameData::START_BID_ACTION;
+    $action = \PowerGrid\Abstracts\GameData::START_BID_ACTION;
     $context = array(
       'playerId' => $playerId,
       'powerPlantId' => $powerPlantId
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   /**
@@ -51,52 +64,55 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   int
    */ 
   public function placeBid($playerId, $powerPlantId, $bidAmount) {
-    $action = \PowerGrid\Interfaces\GameData::PLACE_BID_ACTION;
+    $action = \PowerGrid\Abstracts\GameData::PLACE_BID_ACTION;
     $context = array(
       'playerId' => $playerId,
       'powerPlantId' => $powerPlantId,
       'bidAmount' => $bidAmount
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   /**
    * @param array   $resource_name => $resource_quantity
    */
-  public function buyResources($resourceOrder) {
-    $action = \PowerGrid\Interfaces\GameData::BUY_RESOURCES_ACTION;
+  public function buyResources($playerId, $resourceOrder) {
+    $action = \PowerGrid\Abstracts\GameData::BUY_RESOURCES_ACTION;
     $context = array(
+      'playerId' => $playerId,
       'resourceOrder' => $resourceOrder
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   /**
    * @param array
    */
-  public function buildCities($cityNames) {
-    $action = \PowerGrid\Interfaces\GameData::BUILD_CITIES_ACTION;
+  public function buildCities($playerId, $cityNames) {
+    $action = \PowerGrid\Abstracts\GameData::BUILD_CITIES_ACTION;
     $context = array(
+      'playerId' => $playerId,
       'cityNames' => $cityNames
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   /**
    * @param   int
    * @param   array   $resource_name => $resource_quantity
    */
-  public function powerCities($quantity, $resourcePayment) {
-    $action = \PowerGrid\Interfaces\GameData::POWER_CITIES_ACTION;
+  public function powerCities($playerId, $quantity, $resourcePayment) {
+    $action = \PowerGrid\Abstracts\GameData::POWER_CITIES_ACTION;
     $context = array(
+      'playerId' => $playerId,
       'quantity' => $quantity,
       'resourcePayment' => $resourcePayment
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+    $this->notifyNextPlayer($action);
   }
 
   protected function performAction($action, $contextMap) {
@@ -104,9 +120,9 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
     $rules = $this->getRules($action);
     $turnData = new \Ruler\Context($contextMap);
-    $rulesResult = $rules->execute($this->gameData, $turnData);
+    $rules->execute($this->gameData, $turnData);
 
-    $this->finishAction($rulesResult);
+    $this->finishAction();
   }
 
   protected function getRules($action) {
@@ -115,9 +131,9 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   }
 
   protected function notifyNextPlayer($action) {
-    if ($this->gameData->phaseComplete()) {
-      $this->notifyNextPlayer($this->gameData->getNextPhase());
-    }
+    $nextPlayerId = $this->gameData->getNextPlayerId();
+
+    $this->players[$nextPlayerId]->notify($action);
   }
 
   /**
@@ -132,8 +148,6 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
    * Run at the end of any action, but before the next player is notified
    * of his/her next action (since notifying a player is not part of an
    * action).
-   *
-   * @param   bool  Whether the rules were passed and actions taken.
    */
-  abstract protected function finishAction($rulesRunResult);
+  abstract protected function finishAction();
 }

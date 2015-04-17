@@ -8,9 +8,7 @@ class Game extends \PowerGrid\Abstracts\Game {
   
   }
 
-  protected function finishAction($rulesRunResult) {
-    if ($rulesRunResult === TRUE) {
-      $this->gameData->save();
-    }
+  protected function finishAction() {
+    $this->gameData->save();
   }
 }
