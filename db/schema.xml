@@ -1,18 +1,21 @@
 <database name="powergrid" defaultIdMethod="native">
   <table name="user" phpName="User">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="32" required="true"/>
     <column name="email" type="varchar" size="254" required="true"/>
     <column name="username" type="varchar" size="64" require="true"/>
     <column name="password" type="varchar" size="64" required="true"/>
   </table>
   <table name="player" phpName="Player">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="32"/>
     <column name="card_limit" type="integer" required="false"/>
     <column name="user_id" type="integer" required="false"/>
     <column name="game_id" type="integer" required="false"/>
     <column name="wallet_id" type="integer" required="false"/>
-    <foreign-key foreignTable="user" phpName="User" refPhpName="Player">
+    <foreign-key foreignTable="user" phpName="PlayerUser" refPhpName="Player">
       <reference local="user_id" foreign="id"/>
+      <reference local="name" foreign="name"/>
     </foreign-key>
     <foreign-key foreignTable="game" phpName="CurrentGame" refPhpName="Player">
       <reference local="game_id" foreign="id"/>

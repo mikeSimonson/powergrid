@@ -12,17 +12,15 @@ interface GameData {
 
   /* GETTERS */
 
-  public function getCurrentPhaseId();
+  public function getPhaseNumber();
 
-  public function getCurrentStepId();
-
-  public function getNextPhaseId();
+  public function getStepNumber();
 
   public function getNextPlayer();
 
   public function getPlayers();
 
-  /* SETTERS */
+  /* MUTATORS */
 
-  public function setPlayerIds($playerIds);
+  public function addPlayer($player);
 }
