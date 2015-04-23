@@ -7,16 +7,14 @@
   </table>
   <table name="player" phpName="Player">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="turn_number" type="integer" required="true"/>
-    <column name="step_number" type="integer" required="true"/>
-    <column name="card_limit" type="integer" required="true"/>
-    <column name="user_id" type="integer" required="true"/>
-    <column name="game_id" type="integer" required="true"/>
-    <column name="wallet_id" type="integer" required="true"/>
+    <column name="card_limit" type="integer" required="false"/>
+    <column name="user_id" type="integer" required="false"/>
+    <column name="game_id" type="integer" required="false"/>
+    <column name="wallet_id" type="integer" required="false"/>
     <foreign-key foreignTable="user" phpName="User" refPhpName="Player">
       <reference local="user_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="game" phpName="Game" refPhpName="Player">
+    <foreign-key foreignTable="game" phpName="CurrentGame" refPhpName="Player">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="wallet" phpName="Wallet" refPhpName="Player">
@@ -27,6 +25,7 @@
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="turn_number" type="integer" required="false"/>
     <column name="step_number" type="integer" required="false"/>
+    <column name="has_started" type="boolean" required="true" defaultValue="false"/>
     <column name="next_player_id" type="integer" required="false"/>
     <column name="owner_id" type="integer" required="false"/>
     <column name="bank_id" type="integer" required="false"/>
