@@ -18,7 +18,9 @@ interface GameData {
 
   public function getNextPhaseId();
 
-  public function getNextPlayerId();
+  public function getNextPlayer();
+
+  public function getPlayers();
 
   /* SETTERS */
 

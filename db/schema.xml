@@ -23,9 +23,11 @@
   </table>
   <table name="game" phpName="Game">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="turn_number" type="integer" required="false"/>
-    <column name="step_number" type="integer" required="false"/>
     <column name="has_started" type="boolean" required="true" defaultValue="false"/>
+    <column name="player_turn_order" type="array" required="false"/>
+    <column name="phase_number" type="integer" required="false" defaultValue="0"/>
+    <column name="turn_number" type="integer" required="false" defaultValue="0"/>
+    <column name="step_number" type="integer" required="false" defaultValue="0"/>
     <column name="next_player_id" type="integer" required="false"/>
     <column name="owner_id" type="integer" required="false"/>
     <column name="bank_id" type="integer" required="false"/>
@@ -33,13 +35,13 @@
     <foreign-key foreignTable="player" phpName="NextPlayer" refPhpName="Game">
       <reference local="next_player_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="user" phpName="User" refPhpName="Game">
+    <foreign-key foreignTable="user" phpName="OwnerUser" refPhpName="Game">
       <reference local="owner_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="bank" phpName="Bank" refPhpName="Game">
+    <foreign-key foreignTable="bank" phpName="GameBank" refPhpName="Game">
       <reference local="bank_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="map" phpName="Map" refPhpName="Game">
+    <foreign-key foreignTable="map" phpName="GameMap" refPhpName="Game">
       <reference local="map_id" foreign="id"/>
     </foreign-key>
   </table>
