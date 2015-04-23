@@ -5,3 +5,5 @@ vendor
 id_rsa*
 root_id_rsa*
 composer.phar
+db/generated-classes/
+db/generated-sql/
