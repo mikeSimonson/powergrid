@@ -2,7 +2,7 @@
 
 namespace HTTPPowerGrid;
 
-class GameData extends \Game implements \PowerGrid\Abstracts\GameData {
+class GameData extends \Game implements \PowerGrid\Interfaces\GameData {
 
   public function __construct() {
     parent::__construct();
