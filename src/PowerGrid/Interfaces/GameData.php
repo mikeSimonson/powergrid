@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerGrid\Abstracts;
+namespace PowerGrid\Interfaces;
 
 interface GameData {
   const NEW_TURN_ORDER_ACTION = 'new_turn_order';
