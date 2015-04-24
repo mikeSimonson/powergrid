@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Rulesets\Step1;
+namespace PowerGrid\Rulesets\Step1;
 
 class NewTurnOrder extends \PowerGrid\Abstracts\ActionRuleset {
 

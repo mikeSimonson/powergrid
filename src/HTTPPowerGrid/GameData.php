@@ -6,9 +6,6 @@ class GameData extends \Game implements \PowerGrid\Interfaces\GameData {
 
   public function __construct() {
     parent::__construct();
-
-    $this->setTurnNumber(0);
-    $this->setStepNumber(0);
   }
 
   /* GETTERS */

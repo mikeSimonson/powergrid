@@ -1,6 +1,6 @@
 <?php
 
-namespace \HTTPPowerGrid;
+namespace HTTPPowerGrid;
 
 class Game extends \PowerGrid\Abstracts\Game {
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Interfaces;
+namespace PowerGrid\Interfaces;
 
 interface GameControls {
 
@@ -28,18 +28,17 @@ interface GameControls {
   /**
    * @param array   $resource_name => $resource_quantity
    */
-  public function buyResources($resourceOrder);
+  public function buyResources($playerId, $resourceOrder);
 
   /**
    * @param array
    */
-  public function buildCities($cityNames);
+  public function buildCities($playerId, $cityNames);
 
 
   /**
    * @param   int
    * @param   array   $resource_name => $resource_quantity
    */
-  public function powerCities($quantity, $resourcePayment);
-  
+  public function powerCities($playerId, $quantity, $resourcePayment);
 }

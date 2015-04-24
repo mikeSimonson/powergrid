@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Factories;
+namespace PowerGrid\Factories;
 
 class Step1Factory {
 
@@ -28,7 +28,7 @@ class Step1Factory {
       $actionRuleset = new \PowerGrid\Rulesets\Step1\PowerCitiesAction();
       break;
     default:
-      throw new Exception("No rulset for action $action in Step 1");
+      throw new \Exception("No rulset for action $action in Step 1");
       break;
     }
   }

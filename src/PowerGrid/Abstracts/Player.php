@@ -1,14 +1,17 @@
 <?php
 
-namespace \PowerGrid\Abstracts;
+namespace PowerGrid\Abstracts;
 
 abstract class Player {
   protected $playerId;
   protected $game;
 
-  public function __construct($playerId, $game) {
+  public function __construct($playerId) {
     $this->playerId = $playerId;
-    $this->game = $game;
+  }
+
+  public function getId() {
+    return $this->playerId;
   }
 
   public function notify($action) {
@@ -29,7 +32,7 @@ abstract class Player {
       $this->powerCities();
       break;
     default:
-      throw new Exception("Player has no action for the notification $action");
+      throw new \Exception("Player has no action for the notification $action");
     }
   }
 

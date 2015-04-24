@@ -26,7 +26,7 @@ class JSONResult {
 
   public function addError($errorMsg) {
     if (!is_string($errorMsg)) {
-      throw new Exception("JSON result messages must be strings.");
+      throw new \Exception("JSON result messages must be strings.");
     }
 
     $this->status = static::RESULT_ERROR;
@@ -36,11 +36,11 @@ class JSONResult {
 
   public function setSuccess($successMsg) {
     if (!$this->noErrors()) {
-      throw new Exception("Trying to set success on a JSON result when there are errors.");
+      throw new \Exception("Trying to set success on a JSON result when there are errors.");
     }
 
     if (!is_string($successMsg)) {
-      throw new Exception("JSON result messages must be strings.");
+      throw new \Exception("JSON result messages must be strings.");
     }
 
     $this->status = static::RESULT_SUCCESS;
@@ -70,7 +70,7 @@ class JSONResult {
 
   public function addData($key, $value) {
     if (in_array($key, $this->reservedDataKeys)) {
-      throw new Exception('The following keys are reserved and may not be used in JSON result data: ' . implode(' ', $this->reserved_data_keys));
+      throw new \Exception('The following keys are reserved and may not be used in JSON result data: ' . implode(' ', $this->reserved_data_keys));
     }
 
     $this->data[$key] = $value;
@@ -80,7 +80,7 @@ class JSONResult {
     $json = json_encode($thing);
 
     if ($json === false) {
-      throw new Exception("JSON result only accepts jsonifiable things.");
+      throw new \Exception("JSON result only accepts jsonifiable things.");
     }
 
     return $json;

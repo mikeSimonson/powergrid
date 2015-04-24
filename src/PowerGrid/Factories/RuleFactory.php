@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Factories;
+namespace PowerGrid\Factories;
 
 class RuleFactory {
 
@@ -32,7 +32,7 @@ class RuleFactory {
         $actionFactory = new \PowerGrid\Factories\Step3Factory();
         break;
       default:
-        throw new Exception("No step $stepId action factory available.");
+        throw new \Exception("No step $stepId action factory available.");
         break;
     }
 

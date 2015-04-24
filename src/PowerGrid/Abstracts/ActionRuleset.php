@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Abstracts;
+namespace PowerGrid\Abstracts;
 
 abstract class ActionRuleset {
   protected $ruleSet;
