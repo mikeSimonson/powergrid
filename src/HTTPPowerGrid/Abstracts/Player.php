@@ -1,18 +1,8 @@
 <?php
 
-namespace PowerGrid\Abstracts;
+namespace HTTPPowerGrid\Abstracts;
 
-abstract class Player {
-  protected $playerId;
-  protected $game;
-
-  public function __construct($playerId) {
-    $this->playerId = $playerId;
-  }
-
-  public function getId() {
-    return $this->playerId;
-  }
+abstract class Player extends \Player implements \PowerGrid\Interfaces\Player {
 
   public function notify($action) {
     switch ($action) {

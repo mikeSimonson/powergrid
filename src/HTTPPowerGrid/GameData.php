@@ -16,7 +16,8 @@ class GameData extends \Game implements \PowerGrid\Interfaces\GameData {
     if ($player->getGameId() !== $this->getId() && !is_null($player->getGameId())) {
       throw new \Exception("Player " . $player->getName() . " (" . $player->getId() . ")" . " is already in game " . $player->getGameId());
     }
-    $player->setCurrentGame($this);
+
+    parent::addPlayer($player);
   }
 
   protected function advancePhase() {

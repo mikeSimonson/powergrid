@@ -14,8 +14,8 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Factories\RuleFactory $ruleFactory, $players) {
     if (is_array($players)) {
       foreach ($players as $player) {
-        if (!($player instanceof \PowerGrid\Abstracts\Player)) {
-          throw new \Exception('Player objects passed to a Game obj must extend the \PowerGrid\Abstracts\Player class.');
+        if (!($player instanceof \PowerGrid\Interfaces\Player)) {
+          throw new \Exception('Player objects passed to a Game obj must implement the \PowerGrid\Interfaces\Player interface.');
         }
 
         $this->players[$player->getId()] = $player;
@@ -42,7 +42,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
   public function determineTurnOrder() {
     $action = \PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION;
-    $context = array();
+    $context = array('currentTurnOrder' => $this->gameData->getPlayerTurnOrder());
     $this->performAction($action, $context);
     //$this->notifyNextPlayer();
   }

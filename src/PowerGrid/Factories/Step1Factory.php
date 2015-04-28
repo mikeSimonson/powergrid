@@ -31,5 +31,7 @@ class Step1Factory {
       throw new \Exception("No rulset for action $action in Step 1");
       break;
     }
+
+    return $actionRuleset;
   }
 }

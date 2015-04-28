@@ -9,11 +9,13 @@ abstract class ActionRuleset {
   public function __construct() {
     $this->ruleSet = new \Ruler\RuleSet();
     $this->ruleBuilder = new \Ruler\RuleBuilder();
+    $this->rb = $this->ruleBuilder;
 
     $this->compileRules();
   }
 
   public function execute(\PowerGrid\Interfaces\GameData $gameData, \Ruler\Context $turnData) {
+    var_dump('execute_called');
     $this->gameData = $gameData;
 
     $this->ruleSet->executeRules($turnData);

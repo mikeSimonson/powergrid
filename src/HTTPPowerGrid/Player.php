@@ -2,7 +2,7 @@
 
 namespace HTTPPowerGrid;
 
-class Player extends \PowerGrid\Abstracts\Player {
+class Player extends \HTTPPowerGrid\Abstracts\Player {
   protected function startBid() {
   
   }
