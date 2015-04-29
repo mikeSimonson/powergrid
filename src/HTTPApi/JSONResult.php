@@ -1,5 +1,5 @@
 <?php
-namespace Api;
+namespace HTTPApi;
 
 class JSONResult {
   const RESULT_ERROR = 'ERROR';

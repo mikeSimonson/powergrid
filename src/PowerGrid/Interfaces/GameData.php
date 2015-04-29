@@ -10,6 +10,11 @@ interface GameData {
   const BUILD_CITIES_ACTION = 'build_cities';
   const POWER_CITIES_ACTION = 'power_cities';
 
+  const MIN_PLAYERS = 2;
+  const MAX_PLAYERS = 6;
+
+  const STARTING_PLAYER_WALLET_BALANCE = 50;
+
   /* GETTERS */
 
   public function getPhaseNumber();
@@ -23,4 +28,6 @@ interface GameData {
   /* MUTATORS */
 
   public function addPlayer($player);
+
+  public function setHasStarted($hasStarted);
 }

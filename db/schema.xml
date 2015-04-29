@@ -19,7 +19,7 @@
     <foreign-key foreignTable="game" phpName="CurrentGame" refPhpName="Player">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="wallet" phpName="Wallet" refPhpName="Player">
+    <foreign-key foreignTable="wallet" phpName="PlayerWallet" refPhpName="Player">
       <reference local="wallet_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -53,7 +53,7 @@
   </table>
   <table name="wallet" phpName="Wallet">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="balance" type="integer" required="true"/>
+    <column name="balance" type="integer" required="true" defaultValue="50"/>
   </table>
   <table name="card" phpName="Card">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/> <!-- Id is minimum price for cards -->
