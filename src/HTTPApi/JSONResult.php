@@ -51,7 +51,7 @@ class JSONResult {
     return ($this->status !== static::RESULT_ERROR) && (count($this->errors) == 0);
   }
 
-  public function send() {
+  public function getJSON() {
     $result = new \stdClass();
 
     $result->status = $this->status;
@@ -65,7 +65,7 @@ class JSONResult {
 
     $result->data = $this->data;
 
-    echo $this->JSONify($result);
+    return $this->JSONify($result);
   }
 
   public function addData($key, $value) {
