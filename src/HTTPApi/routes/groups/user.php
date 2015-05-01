@@ -1,5 +1,7 @@
 <?php
 
+require_once('../bootstrap.php');
+
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/user', function () use ($app, $json_result) {
@@ -109,37 +111,33 @@ $app->group('/user', function () use ($app, $json_result) {
     }
 
     // Validate username and password
-    $q = UserQuery::create();
+    $q = \UserQuery::create();
     $user = $q->findOneByUsername($username);
     if (is_null($user) || !password_verify($password, $user->getPassword())) {
-      $app->response->setStatus(HTTPResponse::BAD_REQUEST);
+      $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
       $json_result->addError('Username or password not found/incorrect.');
       $app->response->setBody($json_result->getJSON());
       return;
     }
 
     // Get the existing token or generate a new one based on timestamp.
-    $q = UserTokenQuery::create();
-    $userToken = $q->findOneByUser($user);
+    $q = \UserTokenQuery::create();
+    $userToken = $q->findOneByTokenUser($user);
     if (is_null($userToken)) {
       $userToken = new \UserToken();
-      $userToken->generateNewToken();
+      $userToken->setTokenUser($user);
     }
-    else {
-      if ($userToken->isExpired()) {
-        $userToken->generateNewToken();
-      }
-    }
+    $userToken->generateNewToken();
 
     $userToken->save();
     
-    $returnToken = $userToken->getToken();
-    $expirationDate = $userToken->getExpirationDate();
+    $returnToken = $userToken->getTokenString();
+    $expirationTimestamp = $userToken->getExpirationDate()->getTimestamp();
 
     // All good. Send the token information along.
     $json_result->setSuccess('Valid credentials. Token information in data portion of response.');
     $json_result->addData('token', $returnToken);
-    $json_result->addData('expires', $expirationDate);
+    $json_result->addData('expires', $expirationTimestamp);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
     return;

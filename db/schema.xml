@@ -9,10 +9,13 @@
       <unique-column name="email"/>
     </unique>
   </table>
-  <table name="userToken" phpName="UserToken">
+  <table name="user_token" phpName="UserToken">
     <column name="token_string" type="varchar" size="255" required="true" primaryKey="true"/>
     <column name="user_id" type="integer" required="true"/>
-    <column name="expiration_date" type="datetime" required="true"/>
+    <column name="expiration_date" type="timestamp" required="true"/>
+    <foreign-key foreignTable="user" phpName="TokenUser" refPhpName="UserToken">
+      <reference local="user_id" foreign="id"/>
+    </foreign-key>
   </table>
   <table name="player" phpName="Player">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
