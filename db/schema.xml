@@ -9,6 +9,11 @@
       <unique-column name="email"/>
     </unique>
   </table>
+  <table name="userToken" phpName="UserToken">
+    <column name="token_string" type="varchar" size="255" required="true" primaryKey="true"/>
+    <column name="user_id" type="integer" required="true"/>
+    <column name="expiration_date" type="datetime" required="true"/>
+  </table>
   <table name="player" phpName="Player">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar" size="32"/>
