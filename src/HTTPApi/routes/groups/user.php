@@ -7,8 +7,6 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 $app->group('/user', function () use ($app, $json_result) {
 
   $app->post('/register', function() use ($app, $json_result) {
-    $expected_indices = array('username', 'password', 'email');
-
     $input_map = array(
       'username' => $app->request->post('username'),
       'password' => $app->request->post('password'),
@@ -96,7 +94,6 @@ $app->group('/user', function () use ($app, $json_result) {
     $password = $app->request->post('password');
 
     // Ensure that we got a username and password.
-    $expected_indices = array('username', 'password');
     $input_map = array(
       'username' => $username,
       'password' => $password
