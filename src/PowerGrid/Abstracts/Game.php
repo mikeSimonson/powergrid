@@ -11,19 +11,9 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   obj     A rule factory.
    * @param   obj     An assoc array of \PowerGrid\Abstract\Player objs.
    */
-  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Factories\RuleFactory $ruleFactory, $players) {
-    if (is_array($players)) {
-      foreach ($players as $player) {
-        if (!($player instanceof \PowerGrid\Interfaces\Player)) {
-          throw new \Exception('Player objects passed to a Game obj must implement the \PowerGrid\Interfaces\Player interface.');
-        }
+  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Factories\RuleFactory $ruleFactory) {
 
-        $this->players[$player->getId()] = $player;
-      }
-    }
-    else {
-      throw new \Exception('Pass at least two players when making a Game obj.');
-    }
+    //@TODO: Need some way to get Player objects and validate those players
 
     $this->gameData = $dataSource;
     $this->ruleFactory = $ruleFactory;

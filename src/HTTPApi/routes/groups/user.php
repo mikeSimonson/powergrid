@@ -120,19 +120,20 @@ $app->group('/user', function () use ($app, $json_result) {
     // Get the existing token or generate a new one based on timestamp.
     $q = \UserTokenQuery::create();
     $userToken = $q->findOneByTokenUser($user);
-    if (is_null($userToken)) {
-      $userToken = new \UserToken();
-      $userToken->setTokenUser($user);
+    if ($userToken instanceof \UserToken) {
+      $userToken->delete();
     }
-    $userToken->generateNewToken();
 
+    $userToken = new \UserToken();
+    $userToken->setTokenUser($user);
+    $userToken->generateNewToken();
     $userToken->save();
     
     $returnToken = $userToken->getTokenString();
     $expirationTimestamp = $userToken->getExpirationDate()->getTimestamp();
 
     // All good. Send the token information along.
-    $json_result->setSuccess('Valid credentials. Token information in data portion of response.');
+    $json_result->setSuccess('Valid credentials.');
     $json_result->addData('token', $returnToken);
     $json_result->addData('expires', $expirationTimestamp);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
@@ -142,7 +143,5 @@ $app->group('/user', function () use ($app, $json_result) {
 
   // Used if the user already has an account, and wants to manage it.
   $app->group('/account', function() use ($app, $json_result) {
-
   }); // END /user/account endpoint
-
 });

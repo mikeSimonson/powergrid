@@ -12,7 +12,30 @@ use Base\Game as BaseGame;
  * long as it does not already exist in the output directory.
  *
  */
-class Game extends BaseGame
+class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
 {
 
+  /* GETTERS */
+
+  /* MUTATORS */
+
+  public function addPlayer($player) {
+    if ($player->getGameId() !== $this->getId() && !is_null($player->getGameId())) {
+      throw new \Exception("Player " . $player->getName() . " (" . $player->getId() . ")" . " is already in game " . $player->getGameId());
+    }
+
+    parent::addPlayer($player);
+  }
+
+  protected function advancePhase() {
+    $nextPhaseNumber = $this->getPhaseNumber() + 1;
+
+    $this->setPhaseNumber($nextPhaseNumber);
+  }
+
+  protected function advanceStep() {
+    $nextStepNumber = $this->getStepNumber() + 1;
+
+    $this->setStepNumber($nextStepNumber);
+  }
 }
