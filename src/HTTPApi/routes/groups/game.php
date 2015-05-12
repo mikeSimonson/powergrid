@@ -9,7 +9,7 @@ $app->group('/game', function() use ($app, $json_result) {
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
     $token = $app->request->params('token');
-    $game = new \HTTPPowerGrid\GameData();
+    $game = new \Game();
 
     // Default to the user's name if a game name is not passed along
     if (is_null($name)) {

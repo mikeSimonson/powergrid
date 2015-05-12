@@ -27,7 +27,5 @@ interface GameData {
 
   /* MUTATORS */
 
-  public function addPlayer($player);
-
   public function setHasStarted($hasStarted);
 }
