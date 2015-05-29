@@ -17,9 +17,18 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
 
   /* GETTERS */
 
+  public function isUserGameOwner($userId) {
+    $isOwner = FALSE;
+    if ($userId === $this->getOwnerId()) {
+      $isOwner = TRUE;
+    }
+
+    return $isOwner;
+  }
+
   /* MUTATORS */
 
-  public function addPlayer($player) {
+  public function addPlayer(\Player $player) {
     if ($player->getGameId() !== $this->getId() && !is_null($player->getGameId())) {
       throw new \Exception("Player " . $player->getName() . " (" . $player->getId() . ")" . " is already in game " . $player->getGameId());
     }

@@ -35,7 +35,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $userToken = \UserTokenQuery::create()->findPK($app->request->params('token'));
     $callingUserId = $userToken->getTokenUser()->getId();
 
-    if ($gameOwnerId !== $callingUserId) {
+    if ($gameData->isUserGameOwner($callingUserId) === FALSE) {
       $json_result->addError('Only the game owner can start a game.');
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
       $app->response->setBody($json_result->getJSON());
