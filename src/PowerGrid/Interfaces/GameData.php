@@ -25,7 +25,11 @@ interface GameData {
 
   public function getPlayers();
 
+  public function isNumberOfJoinedPlayersValid();
+
+  public function gameCanBeStartedByUserId($callingUserId);
+
   /* MUTATORS */
 
-  public function setHasStarted($hasStarted);
+  public function startGameForCallingUserId($callingUserId);
 }

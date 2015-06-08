@@ -35,22 +35,19 @@ $app->group('/game', function() use ($app, $json_result) {
     $userToken = \UserTokenQuery::create()->findPK($app->request->params('token'));
     $callingUserId = $userToken->getTokenUser()->getId();
 
-    if ($gameData->isUserGameOwner($callingUserId) === FALSE) {
-      $json_result->addError('Only the game owner can start a game.');
-      $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-      $app->response->setBody($json_result->getJSON());
-      return;
+    try {
+      $gameData->startGameForCallingUserId($callingUserId);
+      $gameData->save();
+      $json_result->setSuccess('Game started');
+      $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
-
-    if ($gameData->getHasStarted() === TRUE) {
-      $json_result->addError('Game has already started.');
+    catch (\PowerGrid\Exceptions\Administrative $e) {
+      $json_result->addError($e->getMessage());
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-      $app->response->setBody($json_result->getJSON());
-      return;
     }
+    
+    $app->response->setBody($json_result->getJSON());
 
-    $gameData->setHasStarted(TRUE);
-    $gameData->save();
   }); // END /game/:gameId/start POST route
 
 }); // END /game group

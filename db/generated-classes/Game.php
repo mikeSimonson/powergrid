@@ -26,6 +26,62 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     return $isOwner;
   }
 
+  public function isNumberOfJoinedPlayersValid() {
+    $result = FALSE;
+    
+    $playerCount = $this->countPlayers();
+    
+    $minPlayers = $this->getMinimiumNumberOfPlayers();
+    $maxPlayers = $this->getMaxmimumNumberOfPlayers();
+
+    if ($playerCount >= $minPlayers && $playerCount <= $maxPlayers) {
+      $result = TRUE;
+    }
+
+    return $result;
+  }
+
+  public function haveMinimumNumberOfPlayersJoined() {
+    $result = FALSE;
+    
+    $playerCount = $this->countPlayers();
+    
+    $minPlayers = $this->getMinimiumNumberOfPlayers();
+
+    if ($playerCount >= $minPlayers) {
+      $result = TRUE;
+    }
+
+    return $result;
+  }
+
+  protected function getMinimumNumberOfPlayers() {
+    return \PowerGrid\Interfaces\GameData::MIN_PLAYERS;
+  }
+
+  protected function getMaximumNumberOfPlayers() {
+    return \PowerGrid\Interfaces\GameData::MAX_PLAYERS;
+  }
+
+  public function raiseAnyGameStartErrors($callingUserId) {
+    if ($this->isUserGameOwner($callingUserId) === FALSE) {
+      throw new \PowerGrid\Exceptions\Administrative\UserIsNotGameOwner();
+    }
+
+    if ($this->getHasStarted() === TRUE) {
+      throw new \PowerGrid\Exceptions\Administrative\GameHasAlreadyStarted();
+    }
+
+    if ($this->isNumberOfJoinedPlayersValid() === FALSE) {
+      throw new \PowerGrid\Exceptions\Administrative\NotEnoughPlayersHaveJoined();
+    }
+  }
+
+  public function startGameForCallingUserId($callingUserId) {
+    $this->raiseAnyGameStartErrors($callingUserId);
+    $this->setHasStarted(TRUE);
+  }
+
   /* MUTATORS */
 
   public function addPlayer(\Player $player) {
