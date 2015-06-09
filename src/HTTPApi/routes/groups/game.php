@@ -11,21 +11,24 @@ $app->group('/game', function() use ($app, $json_result) {
     $token = $app->request->params('token');
     $game = new \Game();
 
-    // Default to the user's name if a game name is not passed along
+    $q = UserTokenQuery::create();
+    $userToken = $q->findOneByTokenString($token);
+    $user = $userToken->getTokenUser();
+
     if (is_null($name)) {
-      $q = UserTokenQuery::create();
-      $userToken = $q->findOneByTokenString($token);
-      $user = $userToken->getTokenUser();
       $name = $user->getName() . "'s Game";
     }
+
     $game->setName($name);
+
+    $game->setOwnerUser($user);
 
     $game->save();
     $json_result->setSuccess('Game created.');
     $json_result->addData('id', $game->getId());
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
-  }); // END /game/ POST route
+  }); // END /game/create POST route
 
   $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
     $q = \GameQuery::create();

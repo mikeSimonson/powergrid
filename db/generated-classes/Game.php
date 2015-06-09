@@ -31,8 +31,8 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     
     $playerCount = $this->countPlayers();
     
-    $minPlayers = $this->getMinimiumNumberOfPlayers();
-    $maxPlayers = $this->getMaxmimumNumberOfPlayers();
+    $minPlayers = $this->getMinimumNumberOfPlayers();
+    $maxPlayers = $this->getMaximumNumberOfPlayers();
 
     if ($playerCount >= $minPlayers && $playerCount <= $maxPlayers) {
       $result = TRUE;
@@ -46,7 +46,7 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     
     $playerCount = $this->countPlayers();
     
-    $minPlayers = $this->getMinimiumNumberOfPlayers();
+    $minPlayers = $this->getMinimumNumberOfPlayers();
 
     if ($playerCount >= $minPlayers) {
       $result = TRUE;
