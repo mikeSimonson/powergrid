@@ -5,7 +5,7 @@ require_once('../bootstrap.php');
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
-  // Create a game
+  
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
     $token = $app->request->params('token');
