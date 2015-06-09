@@ -5,6 +5,22 @@ require_once('../bootstrap.php');
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
+
+  $app->post('/list', function() use ($app, $json_result) {
+    $games = \GameQuery::create()->find();
+    $gamesList = array();
+    foreach ($games AS $game) {
+      $gameInfo = array();
+      $gameInfo['name'] = $game->getName();
+      $gameInfo['hasStarted'] = $game->getHasStarted();
+      $gamesList[$game->getId()] = $gameInfo;
+    }
+
+    $json_result->setSuccess('Games list in data field.');
+    $json_result->addData('gamesList', $gamesList);
+    $app->response->setStatus(HTTPResponse::HTTP_OK);
+    $app->response->setBody($json_result->getJSON());
+  });
   
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
@@ -41,6 +57,21 @@ $app->group('/game', function() use ($app, $json_result) {
     try {
       $gameData->startGameForCallingUserId($callingUserId);
       $gameData->save();
+
+      // @TODO: This is terrible and does not belong here.
+      $players = $gameData->getPlayers();
+      $playerCount = $gameData->countPlayers();
+      foreach ($players as $player) {
+        if ($playerCount == 2) {
+          $player->setCardLimit(4);
+        }
+        else {
+          $player->setCardLimit(3);
+        }
+
+        $player->save();
+      }
+
       $json_result->setSuccess('Game started');
       $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
@@ -54,10 +85,43 @@ $app->group('/game', function() use ($app, $json_result) {
 
   $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
     $token = $app->request->params('token');
-    $user = UserTokenQuery::create()
+    $playerUser = UserTokenQuery::create()
       ->findOneByTokenString($token)
       ->getTokenUser();
 
+    $player = \PlayerQuery::create()
+      ->filterByPlayerUser($playerUser)
+      ->filterByGameId($gameId)
+      ->findOne();
 
-  });
+    if ($player !== NULL) {
+      $json_result->addError('You are already in this game.');
+      $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+      $app->response->setBody($json_result->getJSON());
+      return;
+    }
+
+    $player = new \Player();
+    $playerWallet = new \Wallet();
+    //@TODO: Sensible way to set player wallet starting amount. Don't do it in 
+    //the db.
+
+    $player->setGameId($gameId);
+
+    $passedPlayerName = $app->request->params('name');
+    if (!empty($passedPlayerName)) {
+      $player->setName($passedPlayerName);
+    }
+    else {
+      $player->setName($playerUser->getName());
+    }
+
+    $player->setPlayerUser($playerUser);
+
+    $player->setPlayerWallet($playerWallet);
+    
+    $json_result->setSuccess('Game joined.');
+    $app->response->setStatus(HTTPResponse::HTTP_OK);
+    $app->response->setBody($json_result->getJSON());
+  }); // END /game/:gameId/join POST route
 }); // END /game group

@@ -65,7 +65,7 @@
   </table>
   <table name="wallet" phpName="Wallet">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="balance" type="integer" required="true" defaultValue="50"/>
+    <column name="balance" type="integer" required="false" defaultValue="50"/>
   </table>
   <table name="card" phpName="Card">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/> <!-- Id is minimum price for cards -->
