@@ -7,3 +7,4 @@ root_id_rsa*
 composer.phar
 db/generated-classes/
 db/generated-sql/
+composer
