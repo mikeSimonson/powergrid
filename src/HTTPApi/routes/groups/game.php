@@ -50,7 +50,14 @@ $app->group('/game', function() use ($app, $json_result) {
     }
     
     $app->response->setBody($json_result->getJSON());
-
   }); // END /game/:gameId/start POST route
 
+  $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
+    $token = $app->request->params('token');
+    $user = UserTokenQuery::create()
+      ->findOneByTokenString($token)
+      ->getTokenUser();
+
+
+  });
 }); // END /game group
