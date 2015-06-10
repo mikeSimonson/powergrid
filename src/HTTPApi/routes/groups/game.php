@@ -119,6 +119,8 @@ $app->group('/game', function() use ($app, $json_result) {
     $player->setPlayerUser($playerUser);
 
     $player->setPlayerWallet($playerWallet);
+
+    $player->save();
     
     $json_result->setSuccess('Game joined.');
     $app->response->setStatus(HTTPResponse::HTTP_OK);
