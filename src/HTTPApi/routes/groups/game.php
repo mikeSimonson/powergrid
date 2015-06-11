@@ -56,21 +56,18 @@ $app->group('/game', function() use ($app, $json_result) {
 
     try {
       $gameData->startGameForCallingUserId($callingUserId);
-      $gameData->save();
 
       // @TODO: This is terrible and does not belong here.
       $players = $gameData->getPlayers();
       $playerCount = $gameData->countPlayers();
-      foreach ($players as $player) {
-        if ($playerCount == 2) {
-          $player->setCardLimit(4);
-        }
-        else {
-          $player->setCardLimit(3);
-        }
-
-        $player->save();
+      if ($playerCount == 2) {
+        $gameData->setCardLimit(4);
       }
+      else {
+        $gameData->setCardLimit(3);
+      }
+
+      $gameData->save();
 
       $json_result->setSuccess('Game started');
       $app->response->setStatus(HTTPResponse::HTTP_OK);
