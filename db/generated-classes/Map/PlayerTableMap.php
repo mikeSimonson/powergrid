@@ -59,7 +59,7 @@ class PlayerTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 6;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class PlayerTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 6;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the id field
@@ -80,11 +80,6 @@ class PlayerTableMap extends TableMap
      * the column name for the name field
      */
     const COL_NAME = 'player.name';
-
-    /**
-     * the column name for the card_limit field
-     */
-    const COL_CARD_LIMIT = 'player.card_limit';
 
     /**
      * the column name for the user_id field
@@ -113,11 +108,11 @@ class PlayerTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Name', 'CardLimit', 'UserId', 'GameId', 'WalletId', ),
-        self::TYPE_CAMELNAME     => array('id', 'name', 'cardLimit', 'userId', 'gameId', 'walletId', ),
-        self::TYPE_COLNAME       => array(PlayerTableMap::COL_ID, PlayerTableMap::COL_NAME, PlayerTableMap::COL_CARD_LIMIT, PlayerTableMap::COL_USER_ID, PlayerTableMap::COL_GAME_ID, PlayerTableMap::COL_WALLET_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'name', 'card_limit', 'user_id', 'game_id', 'wallet_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', 'UserId', 'GameId', 'WalletId', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', 'userId', 'gameId', 'walletId', ),
+        self::TYPE_COLNAME       => array(PlayerTableMap::COL_ID, PlayerTableMap::COL_NAME, PlayerTableMap::COL_USER_ID, PlayerTableMap::COL_GAME_ID, PlayerTableMap::COL_WALLET_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', 'user_id', 'game_id', 'wallet_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -127,11 +122,11 @@ class PlayerTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'CardLimit' => 2, 'UserId' => 3, 'GameId' => 4, 'WalletId' => 5, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'cardLimit' => 2, 'userId' => 3, 'gameId' => 4, 'walletId' => 5, ),
-        self::TYPE_COLNAME       => array(PlayerTableMap::COL_ID => 0, PlayerTableMap::COL_NAME => 1, PlayerTableMap::COL_CARD_LIMIT => 2, PlayerTableMap::COL_USER_ID => 3, PlayerTableMap::COL_GAME_ID => 4, PlayerTableMap::COL_WALLET_ID => 5, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'card_limit' => 2, 'user_id' => 3, 'game_id' => 4, 'wallet_id' => 5, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'UserId' => 2, 'GameId' => 3, 'WalletId' => 4, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'userId' => 2, 'gameId' => 3, 'walletId' => 4, ),
+        self::TYPE_COLNAME       => array(PlayerTableMap::COL_ID => 0, PlayerTableMap::COL_NAME => 1, PlayerTableMap::COL_USER_ID => 2, PlayerTableMap::COL_GAME_ID => 3, PlayerTableMap::COL_WALLET_ID => 4, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'user_id' => 2, 'game_id' => 3, 'wallet_id' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -153,7 +148,6 @@ class PlayerTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 32, null);
-        $this->addColumn('card_limit', 'CardLimit', 'INTEGER', false, null, null);
         $this->addForeignKey('user_id', 'UserId', 'INTEGER', 'user', 'id', false, null, null);
         $this->addForeignKey('game_id', 'GameId', 'INTEGER', 'game', 'id', false, null, null);
         $this->addForeignKey('wallet_id', 'WalletId', 'INTEGER', 'wallet', 'id', false, null, null);
@@ -365,14 +359,12 @@ class PlayerTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(PlayerTableMap::COL_ID);
             $criteria->addSelectColumn(PlayerTableMap::COL_NAME);
-            $criteria->addSelectColumn(PlayerTableMap::COL_CARD_LIMIT);
             $criteria->addSelectColumn(PlayerTableMap::COL_USER_ID);
             $criteria->addSelectColumn(PlayerTableMap::COL_GAME_ID);
             $criteria->addSelectColumn(PlayerTableMap::COL_WALLET_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.name');
-            $criteria->addSelectColumn($alias . '.card_limit');
             $criteria->addSelectColumn($alias . '.user_id');
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.wallet_id');

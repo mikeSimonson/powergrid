@@ -132,7 +132,7 @@ class WalletTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('balance', 'Balance', 'INTEGER', true, null, 50);
+        $this->addColumn('balance', 'Balance', 'INTEGER', false, null, 50);
     } // initialize()
 
     /**

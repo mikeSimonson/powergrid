@@ -59,7 +59,7 @@ class GameTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 11;
+    const NUM_COLUMNS = 12;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class GameTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 11;
+    const NUM_HYDRATE_COLUMNS = 12;
 
     /**
      * the column name for the id field
@@ -95,6 +95,11 @@ class GameTableMap extends TableMap
      * the column name for the phase_number field
      */
     const COL_PHASE_NUMBER = 'game.phase_number';
+
+    /**
+     * the column name for the card_limit field
+     */
+    const COL_CARD_LIMIT = 'game.card_limit';
 
     /**
      * the column name for the turn_number field
@@ -138,11 +143,11 @@ class GameTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Name', 'HasStarted', 'PlayerTurnOrder', 'PhaseNumber', 'TurnNumber', 'StepNumber', 'NextPlayerId', 'OwnerId', 'BankId', 'MapId', ),
-        self::TYPE_CAMELNAME     => array('id', 'name', 'hasStarted', 'playerTurnOrder', 'phaseNumber', 'turnNumber', 'stepNumber', 'nextPlayerId', 'ownerId', 'bankId', 'mapId', ),
-        self::TYPE_COLNAME       => array(GameTableMap::COL_ID, GameTableMap::COL_NAME, GameTableMap::COL_HAS_STARTED, GameTableMap::COL_PLAYER_TURN_ORDER, GameTableMap::COL_PHASE_NUMBER, GameTableMap::COL_TURN_NUMBER, GameTableMap::COL_STEP_NUMBER, GameTableMap::COL_NEXT_PLAYER_ID, GameTableMap::COL_OWNER_ID, GameTableMap::COL_BANK_ID, GameTableMap::COL_MAP_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'name', 'has_started', 'player_turn_order', 'phase_number', 'turn_number', 'step_number', 'next_player_id', 'owner_id', 'bank_id', 'map_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', 'HasStarted', 'PlayerTurnOrder', 'PhaseNumber', 'CardLimit', 'TurnNumber', 'StepNumber', 'NextPlayerId', 'OwnerId', 'BankId', 'MapId', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', 'hasStarted', 'playerTurnOrder', 'phaseNumber', 'cardLimit', 'turnNumber', 'stepNumber', 'nextPlayerId', 'ownerId', 'bankId', 'mapId', ),
+        self::TYPE_COLNAME       => array(GameTableMap::COL_ID, GameTableMap::COL_NAME, GameTableMap::COL_HAS_STARTED, GameTableMap::COL_PLAYER_TURN_ORDER, GameTableMap::COL_PHASE_NUMBER, GameTableMap::COL_CARD_LIMIT, GameTableMap::COL_TURN_NUMBER, GameTableMap::COL_STEP_NUMBER, GameTableMap::COL_NEXT_PLAYER_ID, GameTableMap::COL_OWNER_ID, GameTableMap::COL_BANK_ID, GameTableMap::COL_MAP_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', 'has_started', 'player_turn_order', 'phase_number', 'card_limit', 'turn_number', 'step_number', 'next_player_id', 'owner_id', 'bank_id', 'map_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -152,11 +157,11 @@ class GameTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'HasStarted' => 2, 'PlayerTurnOrder' => 3, 'PhaseNumber' => 4, 'TurnNumber' => 5, 'StepNumber' => 6, 'NextPlayerId' => 7, 'OwnerId' => 8, 'BankId' => 9, 'MapId' => 10, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'hasStarted' => 2, 'playerTurnOrder' => 3, 'phaseNumber' => 4, 'turnNumber' => 5, 'stepNumber' => 6, 'nextPlayerId' => 7, 'ownerId' => 8, 'bankId' => 9, 'mapId' => 10, ),
-        self::TYPE_COLNAME       => array(GameTableMap::COL_ID => 0, GameTableMap::COL_NAME => 1, GameTableMap::COL_HAS_STARTED => 2, GameTableMap::COL_PLAYER_TURN_ORDER => 3, GameTableMap::COL_PHASE_NUMBER => 4, GameTableMap::COL_TURN_NUMBER => 5, GameTableMap::COL_STEP_NUMBER => 6, GameTableMap::COL_NEXT_PLAYER_ID => 7, GameTableMap::COL_OWNER_ID => 8, GameTableMap::COL_BANK_ID => 9, GameTableMap::COL_MAP_ID => 10, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'has_started' => 2, 'player_turn_order' => 3, 'phase_number' => 4, 'turn_number' => 5, 'step_number' => 6, 'next_player_id' => 7, 'owner_id' => 8, 'bank_id' => 9, 'map_id' => 10, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, 'HasStarted' => 2, 'PlayerTurnOrder' => 3, 'PhaseNumber' => 4, 'CardLimit' => 5, 'TurnNumber' => 6, 'StepNumber' => 7, 'NextPlayerId' => 8, 'OwnerId' => 9, 'BankId' => 10, 'MapId' => 11, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, 'hasStarted' => 2, 'playerTurnOrder' => 3, 'phaseNumber' => 4, 'cardLimit' => 5, 'turnNumber' => 6, 'stepNumber' => 7, 'nextPlayerId' => 8, 'ownerId' => 9, 'bankId' => 10, 'mapId' => 11, ),
+        self::TYPE_COLNAME       => array(GameTableMap::COL_ID => 0, GameTableMap::COL_NAME => 1, GameTableMap::COL_HAS_STARTED => 2, GameTableMap::COL_PLAYER_TURN_ORDER => 3, GameTableMap::COL_PHASE_NUMBER => 4, GameTableMap::COL_CARD_LIMIT => 5, GameTableMap::COL_TURN_NUMBER => 6, GameTableMap::COL_STEP_NUMBER => 7, GameTableMap::COL_NEXT_PLAYER_ID => 8, GameTableMap::COL_OWNER_ID => 9, GameTableMap::COL_BANK_ID => 10, GameTableMap::COL_MAP_ID => 11, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, 'has_started' => 2, 'player_turn_order' => 3, 'phase_number' => 4, 'card_limit' => 5, 'turn_number' => 6, 'step_number' => 7, 'next_player_id' => 8, 'owner_id' => 9, 'bank_id' => 10, 'map_id' => 11, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
     );
 
     /**
@@ -181,6 +186,7 @@ class GameTableMap extends TableMap
         $this->addColumn('has_started', 'HasStarted', 'BOOLEAN', true, 1, false);
         $this->addColumn('player_turn_order', 'PlayerTurnOrder', 'ARRAY', false, null, null);
         $this->addColumn('phase_number', 'PhaseNumber', 'INTEGER', false, null, 1);
+        $this->addColumn('card_limit', 'CardLimit', 'INTEGER', false, null, null);
         $this->addColumn('turn_number', 'TurnNumber', 'INTEGER', false, null, 1);
         $this->addColumn('step_number', 'StepNumber', 'INTEGER', false, null, 1);
         $this->addForeignKey('next_player_id', 'NextPlayerId', 'INTEGER', 'player', 'id', false, null, null);
@@ -405,6 +411,7 @@ class GameTableMap extends TableMap
             $criteria->addSelectColumn(GameTableMap::COL_HAS_STARTED);
             $criteria->addSelectColumn(GameTableMap::COL_PLAYER_TURN_ORDER);
             $criteria->addSelectColumn(GameTableMap::COL_PHASE_NUMBER);
+            $criteria->addSelectColumn(GameTableMap::COL_CARD_LIMIT);
             $criteria->addSelectColumn(GameTableMap::COL_TURN_NUMBER);
             $criteria->addSelectColumn(GameTableMap::COL_STEP_NUMBER);
             $criteria->addSelectColumn(GameTableMap::COL_NEXT_PLAYER_ID);
@@ -417,6 +424,7 @@ class GameTableMap extends TableMap
             $criteria->addSelectColumn($alias . '.has_started');
             $criteria->addSelectColumn($alias . '.player_turn_order');
             $criteria->addSelectColumn($alias . '.phase_number');
+            $criteria->addSelectColumn($alias . '.card_limit');
             $criteria->addSelectColumn($alias . '.turn_number');
             $criteria->addSelectColumn($alias . '.step_number');
             $criteria->addSelectColumn($alias . '.next_player_id');
