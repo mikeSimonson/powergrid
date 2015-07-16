@@ -17,6 +17,10 @@ interface GameData {
 
   /* GETTERS */
 
+  public function getId();
+
+  public function getName();
+
   public function getPhaseNumber();
 
   public function getStepNumber();
@@ -24,6 +28,8 @@ interface GameData {
   public function getNextPlayer();
 
   public function getPlayers();
+
+  public function getHasStarted();
 
   /* MUTATORS */
 

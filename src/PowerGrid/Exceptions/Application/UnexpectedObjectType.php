@@ -1,0 +1,15 @@
+<?php
+
+namespace PowerGrid\Exceptions\Application;
+
+class UnexpectedObjectType extends \PowerGrid\Exceptions\Exception {
+  protected $defaultMessage = 'Unexpected object type.';
+
+  public function __construct($expectedType, $receivedObject) {
+    var_dump($receivedObject);
+    $receivedClass = get_class($receivedObject);
+    $receivedInterfaces = implode(', ', class_implements($receivedClass));
+    $message = "Expected type $expectedType, received $receivedClass, which implements $receivedInterfaces.";
+    parent::construct($message);
+  }
+}

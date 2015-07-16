@@ -6,18 +6,12 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
-  $app->post('/list', function() use ($app, $json_result) {
+  $app->get('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
-    $gamesList = array();
-    foreach ($games AS $game) {
-      $gameInfo = array();
-      $gameInfo['name'] = $game->getName();
-      $gameInfo['hasStarted'] = $game->getHasStarted();
-      $gamesList[$game->getId()] = $gameInfo;
-    }
-
+    $gameLister = new \PowerGrid\Services\GameLister($games);
+    $gameList = $gameLister->createList();
     $json_result->setSuccess('Games list in data field.');
-    $json_result->addData('gamesList', $gamesList);
+    $json_result->addData('gamesList', $gameList);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
   });
@@ -25,21 +19,11 @@ $app->group('/game', function() use ($app, $json_result) {
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
     $token = $app->request->params('token');
-    $game = new \Game();
 
     $q = UserTokenQuery::create();
     $userToken = $q->findOneByTokenString($token);
     $user = $userToken->getTokenUser();
 
-    if (is_null($name)) {
-      $name = $user->getName() . "'s Game";
-    }
-
-    $game->setName($name);
-
-    $game->setOwnerUser($user);
-
-    $game->save();
     $json_result->setSuccess('Game created.');
     $json_result->addData('id', $game->getId());
     $app->response->setStatus(HTTPResponse::HTTP_OK);
