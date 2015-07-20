@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTPPowerGrid\Services;
+namespace PowerGrid\Services;
 
 class UserGameCreator {
 
@@ -39,7 +39,9 @@ class UserGameCreator {
     if (is_null($this->gameName)) {
       $this->gameName = $this->user->getName() . "'s Game";
     }
+
     $this->game->setName($this->gameName);
+
     $this->game->setOwnerUser($this->user);
   }
 }

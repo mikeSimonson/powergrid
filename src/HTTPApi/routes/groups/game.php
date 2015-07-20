@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
-  $app->get('/list', function() use ($app, $json_result) {
+  $app->post('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
     $gameLister = new \PowerGrid\Services\GameLister($games);
     $gameList = $gameLister->createList();
@@ -20,12 +20,14 @@ $app->group('/game', function() use ($app, $json_result) {
     $name = $app->request->params('name');
     $token = $app->request->params('token');
 
-    $q = UserTokenQuery::create();
-    $userToken = $q->findOneByTokenString($token);
-    $user = $userToken->getTokenUser();
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
+    $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
+    $newGame = $userGameCreator->createGame();
+    $newGameId = $userGameCreator->getLastCreatedGameId();
 
     $json_result->setSuccess('Game created.');
-    $json_result->addData('id', $game->getId());
+    $json_result->addData('id', $newGameId);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
   }); // END /game/create POST route
@@ -66,16 +68,16 @@ $app->group('/game', function() use ($app, $json_result) {
 
   $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
     $token = $app->request->params('token');
-    $playerUser = UserTokenQuery::create()
-      ->findOneByTokenString($token)
-      ->getTokenUser();
 
-    $player = \PlayerQuery::create()
-      ->filterByPlayerUser($playerUser)
-      ->filterByGameId($gameId)
-      ->findOne();
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+    $userServices = new \HTTPPowerGrid\Services\UserServices($user);
 
-    if ($player !== NULL) {
+    $game = \GameQuery::create()->findPK($gameId);
+    $gamePlayerManager = new \PowerGrid\Services\GamePlayerManager($game);
+
+    $userInGame = $userServices->isUserInGame($gamePlayerManager);
+    
+    if ($userInGame) {
       $json_result->addError('You are already in this game.');
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
       $app->response->setBody($json_result->getJSON());
@@ -94,10 +96,10 @@ $app->group('/game', function() use ($app, $json_result) {
       $player->setName($passedPlayerName);
     }
     else {
-      $player->setName($playerUser->getName());
+      //$player->setName($playerUser->getName());
     }
 
-    $player->setPlayerUser($playerUser);
+    //$player->setPlayerUser($playerUser);
 
     $player->setPlayerWallet($playerWallet);
 
