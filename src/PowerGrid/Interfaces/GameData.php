@@ -15,8 +15,6 @@ interface GameData {
 
   const STARTING_PLAYER_WALLET_BALANCE = 50;
 
-  /* GETTERS */
-
   public function getId();
 
   public function getName();
@@ -30,8 +28,6 @@ interface GameData {
   public function getPlayers();
 
   public function getHasStarted();
-
-  /* MUTATORS */
 
   public function startGameForCallingUserId($callingUserId);
 }
