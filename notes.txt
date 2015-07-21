@@ -1,0 +1,3 @@
+user only objects, not ids, in the controllers and inside classes
+convert all object-creation methods to be static, and have them return objects, not ids
+what am I using to create objects? factory? di?

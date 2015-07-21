@@ -5,12 +5,16 @@ namespace PowerGrid\Services;
 class PlayerServices {
   protected $player;
 
-  public __construct(\Player $player) {
+  public function __construct(\Player $player) {
     $this->player = $player;
   }
 
-  public setPlayerName($name) {
+  public function setPlayerName($name) {
 
+  }
+
+  static public function createPlayer($name = NULL) {
+    return new Player();
   }
 
 }

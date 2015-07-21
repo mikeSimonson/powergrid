@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
-  $app->post('/list', function() use ($app, $json_result) {
+  $app->get('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
     $gameLister = new \PowerGrid\Services\GameLister($games);
     $gameList = $gameLister->createList();
@@ -14,7 +14,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $json_result->addData('gamesList', $gameList);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
-  });
+  }); // END /game/list GET route
   
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
@@ -37,8 +37,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $gameData = $q->findPK($gameId);
     $gameOwnerId = $gameData->getOwnerUser()->getId();
 
-    $userToken = \UserTokenQuery::create()->findPK($app->request->params('token'));
-    $callingUserId = $userToken->getTokenUser()->getId();
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($app->request->params('token'));
 
     try {
       $gameData->startGameForCallingUserId($callingUserId);
