@@ -63,19 +63,6 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     return \PowerGrid\Interfaces\GameData::MAX_PLAYERS;
   }
 
-  public function raiseAnyGameStartErrors($callingUserId) {
-    if ($this->isUserGameOwner($callingUserId) === FALSE) {
-      throw new \PowerGrid\Exceptions\Administrative\UserIsNotGameOwner();
-    }
-
-    if ($this->getHasStarted() === TRUE) {
-      throw new \PowerGrid\Exceptions\Administrative\GameHasAlreadyStarted();
-    }
-
-    if ($this->isNumberOfJoinedPlayersValid() === FALSE) {
-      throw new \PowerGrid\Exceptions\Administrative\NotEnoughPlayersHaveJoined();
-    }
-  }
 
   public function startGameForCallingUserId($callingUserId) {
     $this->raiseAnyGameStartErrors($callingUserId);

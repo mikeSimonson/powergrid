@@ -29,5 +29,7 @@ interface GameData {
 
   public function getHasStarted();
 
-  public function startGameForCallingUserId($callingUserId);
+  public function countPlayers();
+
+  public function setHasStarted($hasStarted);
 }

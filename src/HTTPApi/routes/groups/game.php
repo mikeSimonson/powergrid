@@ -24,7 +24,8 @@ $app->group('/game', function() use ($app, $json_result) {
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
     $newGame = $userGameCreator->createGame();
-    $newGameId = $userGameCreator->getLastCreatedGameId();
+    $newGame->save();
+    $newGameId = $newGame->getId();
 
     $json_result->setSuccess('Game created.');
     $json_result->addData('id', $newGameId);
@@ -34,27 +35,14 @@ $app->group('/game', function() use ($app, $json_result) {
 
   $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
     $q = \GameQuery::create();
-    $gameData = $q->findPK($gameId);
-    $gameOwnerId = $gameData->getOwnerUser()->getId();
+    $game = $q->findPK($gameId);
+    
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
 
-    $userToken = \UserTokenQuery::create()->findPK($app->request->params('token'));
-    $callingUserId = $userToken->getTokenUser()->getId();
+    $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game);
 
     try {
-      $gameData->startGameForCallingUserId($callingUserId);
-
-      // @TODO: This is terrible and does not belong here.
-      $players = $gameData->getPlayers();
-      $playerCount = $gameData->countPlayers();
-      if ($playerCount == 2) {
-        $gameData->setCardLimit(4);
-      }
-      else {
-        $gameData->setCardLimit(3);
-      }
-
-      $gameData->save();
-
+      $gameStarter->startGame();
       $json_result->setSuccess('Game started');
       $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
