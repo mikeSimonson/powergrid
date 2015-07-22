@@ -3,14 +3,34 @@
 namespace PowerGrid\Services;
 
 class PlayerServices {
-  protected $player;
 
-  public __construct(\Player $player) {
+  const DEFAULT_PLAYER_NAME_PREFIX = 'Player ';
+
+  protected $player;
+  protected $playerName;
+
+  public function __construct(\PowerGrid\Interfaces\PlayerData $player) {
     $this->player = $player;
   }
 
-  public setPlayerName($name) {
-
+  static public function createPlayer() {
+    $newPlayer = new \Player();
+    return $newPlayer;
   }
 
+  public function setPlayerName($name) {
+    $this->playerName = $name;
+    $this->player->setName($name);
+  }
+
+  public function setPlayerDefaults(\PowerGrid\Interfaces\WalletData $wallet) {
+    $this->player->setPlayerWallet($wallet);
+    if (empty($this->playerName)) {
+      $this->player->setPlayerName(static::DEFAULT_PLAYER_NAME_PREFIX . $this->player->getId());
+    }
+  }
+
+  public function savePlayer() {
+    $this->player->save();
+  }
 }

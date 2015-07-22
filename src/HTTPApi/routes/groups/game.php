@@ -60,41 +60,26 @@ $app->group('/game', function() use ($app, $json_result) {
     $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
     $userServices = new \HTTPPowerGrid\Services\UserServices($user);
 
-    $game = \GameQuery::create()->findPK($gameId);
-    $gamePlayerManager = new \PowerGrid\Services\GamePlayerManager($game);
+    $player = \HTTPPowerGrid\Services\PlayerServices::createPlayer();
+    $playerServices = new \HTTPPowerGrid\Services\PlayerServices();
+    $wallet = \PowerGrid\Services\WalletServices::createWallet();
+    $playerServices->setPlayerDefaults($wallet);
 
-    $userInGame = $userServices->isUserInGame($gamePlayerManager);
-    
-    if ($userInGame) {
-      $json_result->addError('You are already in this game.');
+    $game = \HTTPPowerGrid\Services\GameServices::findGameById($gameId);
+    $gamePlayerManager = new \HTTPPowerGrid\Services\GamePlayerManager($game, $player);
+
+    try {
+      $gamePlayerManager->joinPlayerToGame();
+      $gamePlayerManager->saveObjects();
+
+      $json_result->setSuccess('Game joined.');
+      $app->response->setStatus(HTTPResponse::HTTP_OK);
+    }
+    catch (\PowerGrid\Exceptions\Administrative $e) {
+      $json_result->addError($e->getMessage());
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-      $app->response->setBody($json_result->getJSON());
-      return;
     }
-
-    $player = new \Player();
-    $playerWallet = new \Wallet();
-    //@TODO: Sensible way to set player wallet starting amount. Don't do it in 
-    //the db.
-
-    $player->setGameId($gameId);
-
-    $passedPlayerName = $app->request->params('name');
-    if (!empty($passedPlayerName)) {
-      $player->setName($passedPlayerName);
-    }
-    else {
-      //$player->setName($playerUser->getName());
-    }
-
-    //$player->setPlayerUser($playerUser);
-
-    $player->setPlayerWallet($playerWallet);
-
-    $player->save();
     
-    $json_result->setSuccess('Game joined.');
-    $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
   }); // END /game/:gameId/join POST route
 }); // END /game group
