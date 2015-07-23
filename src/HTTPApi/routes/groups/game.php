@@ -34,6 +34,8 @@ $app->group('/game', function() use ($app, $json_result) {
   }); // END /game/create POST route
 
   $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
+    $token = $app->request->params('token');
+
     $q = \GameQuery::create();
     $game = $q->findPK($gameId);
     
@@ -42,6 +44,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game);
 
     try {
+      $gameStarter->setStartingUser($user);
       $gameStarter->startGame();
       $json_result->setSuccess('Game started');
       $app->response->setStatus(HTTPResponse::HTTP_OK);

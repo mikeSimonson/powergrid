@@ -1,6 +1,6 @@
 <?php
 
-namespace \PowerGrid\Services;
+namespace PowerGrid\Services;
 
 class GameStarter {
 
