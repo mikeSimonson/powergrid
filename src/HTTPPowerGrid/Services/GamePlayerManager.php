@@ -1,35 +1,31 @@
 <?php
 
-namespace PowerGrid\Services;
+namespace HTTPPowerGrid\Services;
 
 class GamePlayerManager extends \PowerGrid\Services\GamePlayerManager implements \HTTPPowerGrid\Interfaces\Service {
 
-  protected function isPlayerInGame(\PowerGrid\Interfaces\PlayerData $player) {
-    $playerInGame = FALSE;
-    if ($this->gameData->getId() === $player->getGameId()) {
-      $playerInGame = TRUE;
-    }
-    return $playerInGame;
-  }
-
   protected function isUserInGameByPlayer() {
-    $userInGame = array_reduce($this->gameData->getPlayers(), function ($previous, $gamePlayer) {
-      $gamePlayerId = $gamePlayer->getId();
-      return ($previous || ($gamePlayerId === $this->player->getId()));
-    }, FALSE);
-
+    $userInGame = FALSE;
+    $playerUserId = $this->player->getUserId();
+    foreach ($this->gameData->getPlayers() as $gamePlayer) {
+      $gamePlayerUserId = $gamePlayer->getUserId();
+      if ($gamePlayerUserId === $playerUserId) {
+        $userInGame = TRUE;
+        break;
+      }
+    }
     return $userInGame;
   }
 
   public function joinPlayerToGame() {
     if ($this->isUserInGameByPlayer()) {
-      throw new \HTTPPowerGrid\Exceptions\UserAlreadyInGame();
+      throw new \HTTPPowerGrid\Exceptions\Administrative\UserAlreadyInGame();
     }
     parent::joinPlayerToGame();
   }
 
   public function saveObjects() {
     $this->player->save();
-    $this->game->save();
+    $this->gameData->save();
   }
 }

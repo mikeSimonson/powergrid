@@ -56,13 +56,18 @@ $app->group('/game', function() use ($app, $json_result) {
 
   $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
     $token = $app->request->params('token');
+    $playerName = $app->request->params('name');
 
     $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
     $userServices = new \HTTPPowerGrid\Services\UserServices($user);
 
     $player = \HTTPPowerGrid\Services\PlayerServices::createPlayer();
-    $playerServices = new \HTTPPowerGrid\Services\PlayerServices();
+    $playerServices = new \HTTPPowerGrid\Services\PlayerServices($player);
     $wallet = \PowerGrid\Services\WalletServices::createWallet();
+    $playerServices->setPlayerUser($user);
+    if (!empty($playerName)) {
+      $playerServices->setPlayerName($playerName);
+    }
     $playerServices->setPlayerDefaults($wallet);
 
     $game = \HTTPPowerGrid\Services\GameServices::findGameById($gameId);
@@ -71,6 +76,7 @@ $app->group('/game', function() use ($app, $json_result) {
     try {
       $gamePlayerManager->joinPlayerToGame();
       $gamePlayerManager->saveObjects();
+      $playerServices->saveObjects();
 
       $json_result->setSuccess('Game joined.');
       $app->response->setStatus(HTTPResponse::HTTP_OK);

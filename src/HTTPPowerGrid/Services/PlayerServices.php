@@ -2,26 +2,24 @@
 
 namespace HTTPPowerGrid\Services;
 
-class PlayerServices extends \PowerGrid\Services\PlayerServices {
+class PlayerServices extends \PowerGrid\Services\PlayerServices implements \HTTPPowerGrid\Interfaces\Service {
 
   protected $user;
 
-  static public function createPlayer(\User $user) {
+  public function setPlayerUser(\User $user) {
     $this->user = $user;
-    $newPlayer = parent::createPlayer();
-    $newPlayer->setPlayerUser($user);
-    return $newPlayer;
-  }
-
-  public function setPlayerName($name) {
-    $this->playerName = $name;
-    $this->player->setName($name);
+    $this->player->setPlayerUser($user);
   }
 
   public function setPlayerDefaults(\PowerGrid\Interfaces\WalletData $wallet) {
     if (empty($this->playerName)) {
-      $this->player->setName($this->user->getName());
+      $this->playerName = $this->user->getName();
+      $this->player->setName($this->playerName);
     }
     parent::setPlayerDefaults($wallet);
+  }
+
+  public function saveObjects() {
+    $this->player->save();
   }
 }

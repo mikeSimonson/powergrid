@@ -3,7 +3,7 @@
 namespace PowerGrid\Services;
 
 class GamePlayerManager {
-  protected $game;
+  protected $gameData;
   protected $player;
 
   public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Interfaces\PlayerData $player) {
@@ -11,7 +11,7 @@ class GamePlayerManager {
     $this->player = $player;
   }
 
-  public function isPlayerInGame() {
+  protected function isPlayerInGame() {
     $playerInGame = FALSE;
     if ($this->gameData->getId() === $this->player->getGameId()) {
       $playerInGame = TRUE;

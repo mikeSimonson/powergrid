@@ -26,11 +26,7 @@ class PlayerServices {
   public function setPlayerDefaults(\PowerGrid\Interfaces\WalletData $wallet) {
     $this->player->setPlayerWallet($wallet);
     if (empty($this->playerName)) {
-      $this->player->setPlayerName(static::DEFAULT_PLAYER_NAME_PREFIX . $this->player->getId());
+      $this->player->setName(static::DEFAULT_PLAYER_NAME_PREFIX . $this->player->getId());
     }
-  }
-
-  public function savePlayer() {
-    $this->player->save();
   }
 }
