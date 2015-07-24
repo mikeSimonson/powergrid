@@ -1,0 +1,10 @@
+[
+  {
+    "setName": "Originals",
+    "filename": "original_cards.json"
+  },
+  {
+    "setName": "New Power Plant Cards",
+    "filename": "new_power_plant_cards.json"
+  }
+]

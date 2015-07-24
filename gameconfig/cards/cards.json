@@ -1,0 +1,44 @@
+[
+  {
+    "cost": 3,
+    "resourceTypes": ["oil"],
+    "resourceCost": 2,
+    "housesPowered": 1
+  },
+  {
+    "cost": 4,
+    "resourceTypes": ["coal"],
+    "resourceCost": 2,
+    "housesPowered": 1
+  },
+  {
+    "cost": 5,
+    "resourceTypes": ["coal", "oil"],
+    "resourceCost": 2,
+    "housesPowered": 1
+  },
+  {
+    "cost": 6,
+    "resourceTypes": ["trash"],
+    "resourceCost": 1,
+    "housesPowered": 1
+  },
+  {
+    "cost": 7,
+    "resourceTypes": ["oil"],
+    "resourceCost": 3,
+    "housesPowered": 2
+  },
+  {
+    "cost": 8,
+    "resourceTypes": ["coal"],
+    "resourceCost": 3,
+    "housesPowered": 2
+  },
+  {
+    "cost": 9,
+    "resourceTypes": ["oil"],
+    "resourceCost": 1,
+    "housesPowered": 1
+  }
+]
