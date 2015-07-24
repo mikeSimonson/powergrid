@@ -69,8 +69,8 @@
   </table>
   <table name="card" phpName="Card">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/> <!-- Id is minimum price for cards -->
-    <column name="resource_cost" type="integer" required="true"/>
-    <column name="resource_type_id" type="integer" required="true"/>
+    <column name="resource_cost" type="integer" required="false"/>
+    <column name="resource_type_id" type="integer" required="false"/>
     <foreign-key foreignTable="resource_type" phpName="ResourceType" refPhpName="Card">
       <reference local="resource_type_id" foreign="id"/>
     </foreign-key>
