@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
-  $app->post('/list', function() use ($app, $json_result) {
+  $app->get('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
     $gameLister = new \PowerGrid\Services\GameLister($games);
     $gameList = $gameLister->createList();
@@ -14,7 +14,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $json_result->addData('gamesList', $gameList);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
-  });
+  }); //END /game/list GET route
   
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
@@ -82,6 +82,7 @@ $app->group('/game', function() use ($app, $json_result) {
       $playerServices->saveObjects();
 
       $json_result->setSuccess('Game joined.');
+      $json_result->addData('playerId', $player->getId());
       $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
     catch (\PowerGrid\Exceptions\Administrative $e) {
@@ -91,4 +92,5 @@ $app->group('/game', function() use ($app, $json_result) {
     
     $app->response->setBody($json_result->getJSON());
   }); // END /game/:gameId/join POST route
+
 }); // END /game group
