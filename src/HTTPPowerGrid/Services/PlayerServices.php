@@ -19,6 +19,14 @@ class PlayerServices extends \PowerGrid\Services\PlayerServices implements \HTTP
     parent::setPlayerDefaults($wallet);
   }
 
+  static public function findPlayerById($playerId) {
+    $player = \PlayerQuery::create()->findPK($playerId);
+    if (is_null($player)) {
+      throw new \HTTPPowerGrid\Exceptions\Administrative\PlayerDoesNotExist();
+    }
+    return $player;
+  }
+
   public function saveObjects() {
     $this->player->save();
   }
