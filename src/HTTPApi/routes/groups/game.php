@@ -14,7 +14,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $json_result->addData('gamesList', $gameList);
     $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
-  }); // END /game/list GET route
+  }); //END /game/list GET route
   
   $app->post('/create', function() use ($app, $json_result) {
     $name = $app->request->params('name');
@@ -24,7 +24,8 @@ $app->group('/game', function() use ($app, $json_result) {
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
     $newGame = $userGameCreator->createGame();
-    $newGameId = $userGameCreator->getLastCreatedGameId();
+    $newGame->save();
+    $newGameId = $newGame->getId();
 
     $json_result->setSuccess('Game created.');
     $json_result->addData('id', $newGameId);
@@ -33,27 +34,18 @@ $app->group('/game', function() use ($app, $json_result) {
   }); // END /game/create POST route
 
   $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
-    $q = \GameQuery::create();
-    $gameData = $q->findPK($gameId);
-    $gameOwnerId = $gameData->getOwnerUser()->getId();
+    $token = $app->request->params('token');
 
-    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($app->request->params('token'));
+    $q = \GameQuery::create();
+    $game = $q->findPK($gameId);
+    
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
+    $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game);
 
     try {
-      $gameData->startGameForCallingUserId($callingUserId);
-
-      // @TODO: This is terrible and does not belong here.
-      $players = $gameData->getPlayers();
-      $playerCount = $gameData->countPlayers();
-      if ($playerCount == 2) {
-        $gameData->setCardLimit(4);
-      }
-      else {
-        $gameData->setCardLimit(3);
-      }
-
-      $gameData->save();
-
+      $gameStarter->setStartingUser($user);
+      $gameStarter->startGame();
       $json_result->setSuccess('Game started');
       $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
@@ -67,45 +59,38 @@ $app->group('/game', function() use ($app, $json_result) {
 
   $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
     $token = $app->request->params('token');
+    $playerName = $app->request->params('name');
 
     $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
     $userServices = new \HTTPPowerGrid\Services\UserServices($user);
 
-    $game = \GameQuery::create()->findPK($gameId);
-    $gamePlayerManager = new \PowerGrid\Services\GamePlayerManager($game);
+    $player = \HTTPPowerGrid\Services\PlayerServices::createPlayer();
+    $playerServices = new \HTTPPowerGrid\Services\PlayerServices($player);
+    $wallet = \PowerGrid\Services\WalletServices::createWallet();
+    $playerServices->setPlayerUser($user);
+    if (!empty($playerName)) {
+      $playerServices->setPlayerName($playerName);
+    }
+    $playerServices->setPlayerDefaults($wallet);
 
-    $userInGame = $userServices->isUserInGame($gamePlayerManager);
-    
-    if ($userInGame) {
-      $json_result->addError('You are already in this game.');
+    $game = \HTTPPowerGrid\Services\GameServices::findGameById($gameId);
+    $gamePlayerManager = new \HTTPPowerGrid\Services\GamePlayerManager($game, $player);
+
+    try {
+      $gamePlayerManager->joinPlayerToGame();
+      $gamePlayerManager->saveObjects();
+      $playerServices->saveObjects();
+
+      $json_result->setSuccess('Game joined.');
+      $json_result->addData('playerId', $player->getId());
+      $app->response->setStatus(HTTPResponse::HTTP_OK);
+    }
+    catch (\PowerGrid\Exceptions\Administrative $e) {
+      $json_result->addError($e->getMessage());
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-      $app->response->setBody($json_result->getJSON());
-      return;
     }
-
-    $player = new \Player();
-    $playerWallet = new \Wallet();
-    //@TODO: Sensible way to set player wallet starting amount. Don't do it in 
-    //the db.
-
-    $player->setGameId($gameId);
-
-    $passedPlayerName = $app->request->params('name');
-    if (!empty($passedPlayerName)) {
-      $player->setName($passedPlayerName);
-    }
-    else {
-      //$player->setName($playerUser->getName());
-    }
-
-    //$player->setPlayerUser($playerUser);
-
-    $player->setPlayerWallet($playerWallet);
-
-    $player->save();
     
-    $json_result->setSuccess('Game joined.');
-    $app->response->setStatus(HTTPResponse::HTTP_OK);
     $app->response->setBody($json_result->getJSON());
   }); // END /game/:gameId/join POST route
+
 }); // END /game group

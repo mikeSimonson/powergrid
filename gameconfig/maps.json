@@ -1,0 +1,9 @@
+[
+  {
+    "name": "USA",
+    "filenames": {
+      "cities": "cities/usa.json",
+      "connections": "connections/usa.json"
+    }
+  }
+]

@@ -12,7 +12,7 @@ use Base\Wallet as BaseWallet;
  * long as it does not already exist in the output directory.
  *
  */
-class Wallet extends BaseWallet
+class Wallet extends BaseWallet implements \PowerGrid\Interfaces\WalletData
 {
 
 }

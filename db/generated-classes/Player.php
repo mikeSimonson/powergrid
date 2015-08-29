@@ -12,7 +12,7 @@ use Base\Player as BasePlayer;
  * long as it does not already exist in the output directory.
  *
  */
-class Player extends BasePlayer
+class Player extends BasePlayer implements \PowerGrid\Interfaces\PlayerData
 {
 
 }

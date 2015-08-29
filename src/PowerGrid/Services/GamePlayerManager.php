@@ -3,21 +3,26 @@
 namespace PowerGrid\Services;
 
 class GamePlayerManager {
-  protected $game;
+  protected $gameData;
+  protected $player;
 
-  public function __construct(\Game $game) {
+  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Interfaces\PlayerData $player) {
     $this->gameData = $game;
+    $this->player = $player;
   }
 
-  public function isPlayerInGame(\Player $player) {
+  protected function isPlayerInGame() {
     $playerInGame = FALSE;
-    if ($this->gameData->getId() === $player->getGameId()) {
+    if ($this->gameData->getId() === $this->player->getGameId()) {
       $playerInGame = TRUE;
     }
     return $playerInGame;
   }
 
-  public function joinPlayerToGame(\Player $game) {
-    $this->addPlayerToGame($player);
+  public function joinPlayerToGame() {
+    if ($this->isPlayerInGame()) {
+      throw new \PowerGrid\Exceptions\PlayerAlreadyInGame();
+    }
+    $this->gameData->addPlayer($this->player);
   }
 }

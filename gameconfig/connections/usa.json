@@ -1,0 +1,55 @@
+[
+  {
+    "cities": [39, 1], // seattle to billing
+    "price": 9
+  },
+  {
+    "cities": [39, 3], // seattle to boise
+    "price": 12
+  },
+  {
+    "cities": [39, 32], // seattle to portland
+    "price": 3
+  },
+  {
+    "cities": [32, 3], // Portland to boise
+    "price": 13 
+  },
+  {
+    "cities": [32, 36], // portland to san francisco
+    "price": 24
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+
+]

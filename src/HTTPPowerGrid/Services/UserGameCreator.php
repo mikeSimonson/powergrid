@@ -14,27 +14,10 @@ class UserGameCreator {
     $this->user = $user;
   }
 
-  protected function instantiateGame() {
-    $game = new \Game();
-    return $game;
-  }
-
-  /**
-   * @return int game id
-   */
-  public function createGame($gameName = NULL) {
-    $this->gameName = $gameName;
-    $this->game = $this->instantiateGame();
+  public function createGame() {
+    $this->game = new \Game();
     $this->setGameMetaInfo();
-    $this->saveGame();
-  }
-
-  public function getLastCreatedGameId() {
-    return $this->game->getId();
-  }
-
-  protected function saveGame() {
-    $this->game->save();
+    return $this->game;
   }
 
   protected function setGameMetaInfo() {

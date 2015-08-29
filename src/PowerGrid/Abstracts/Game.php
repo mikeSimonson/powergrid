@@ -5,6 +5,7 @@ namespace PowerGrid\Abstracts;
 abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
   protected $players = array();
+  protected $ruleFactory = NULL;
 
   /**
    * @param   obj     A proxy for the game data. 
@@ -40,11 +41,11 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   /**
    * @param   int
    */
-  public function startBid($playerId, $powerPlantId) {
+  public function startBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant) {
     $action = \PowerGrid\Interfaces\GameData::START_BID_ACTION;
     $context = array(
-      'playerId' => $playerId,
-      'powerPlantId' => $powerPlantId
+      'player' => $player,
+      'powerPlant' => $powerPlant
     );
     $this->performAction($action, $context);
     $this->notifyNextPlayer();
