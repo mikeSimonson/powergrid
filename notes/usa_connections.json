@@ -1,0 +1,350 @@
+[
+  {
+    "cities": [39, 1],
+    "price": 9
+  },
+  {
+    "cities": [39, 3],
+    "price": 12
+  },
+  {
+    "cities": [39, 32],
+    "price": 3
+  },
+  {
+    "cities": [32, 3],
+    "price": 13 
+  },
+  {
+    "cities": [32, 36],
+    "price": 24
+  },
+  {
+    "cities": [36, 3],
+    "price": 23
+  },
+  {
+    "cities": [36, 34],
+    "price": 27
+  },
+  {
+    "cities": [36, 20],
+    "price": 9
+  },
+  {
+    "cities": [36, 19],
+    "price": 14
+  },
+  {
+    "cities": [20, 19],
+    "price": 9
+  },
+  {
+    "cities": [20, 35],
+    "price": 3
+  },
+  {
+    "cities": [35, 30],
+    "price": 14
+  },
+  {
+    "cities": [35, 19],
+    "price": 9
+  },
+  {
+    "cities": [30, 19],
+    "price": 15
+  },
+  {
+    "cities": [30, 37],
+    "price": 18
+  },
+  {
+    "cities": [37, 19],
+    "price": 27
+  },
+  {
+    "cities": [37, 34],
+    "price": 28
+  },
+  {
+    "cities": [37, 10],
+    "price": 13
+  },
+  {
+    "cities": [37, 17],
+    "price": 16
+  },
+  {
+    "cities": [37, 27],
+    "price": 15
+  },
+  {
+    "cities": [37, 9],
+    "price": 16
+  },
+  {
+    "cities": [37, 15],
+    "price": 21
+  },
+  {
+    "cities": [34, 19],
+    "price": 18 
+  },
+  {
+    "cities": [34, 10],
+    "price": 21
+  },
+  {
+    "cities": [34, 3],
+    "price": 8
+  },
+  {
+    "cities": [3, 1],
+    "price": 12
+  },
+  {
+    "cities": [3, 6],
+    "price": 24
+  },
+  {
+    "cities": [6, 1],
+    "price": 9
+  },
+  {
+    "cities": [6, 10],
+    "price": 0
+  },
+  {
+    "cities": [6, 28],
+    "price": 14 
+  },
+  {
+    "cities": [6, 23],
+    "price": 18
+  },
+  {
+    "cities": [23, 1],
+    "price": 18
+  },
+  {
+    "cities": [23, 14],
+    "price": 6
+  },
+  {
+    "cities": [23, 28],
+    "price": 8
+  },
+  {
+    "cities": [23, 7],
+    "price": 8
+  },
+  {
+    "cities": [23, 13],
+    "price": 5
+  },
+  {
+    "cities": [13, 14],
+    "price": 6
+  },
+  {
+    "cities": [13, 7],
+    "price": 12
+  },
+  {
+    "cities": [13, 11],
+    "price": 15
+  },
+  {
+    "cities": [11, 5],
+    "price": 7
+  },
+  {
+    "cities": [11, 31],
+    "price": 6 
+  },
+  {
+    "cities": [11, 8],
+    "price": 4
+  },
+  {
+    "cities": [11, 7],
+    "price": 4
+  },
+  {
+    "cities": [7, 8],
+    "price": 7
+  },
+  {
+    "cities": [7, 40],
+    "price": 10
+  },
+  {
+    "cities": [7, 17],
+    "price": 8
+  },
+  {
+    "cities": [7, 28],
+    "price": 13
+  },
+  {
+    "cities": [17, 27],
+    "price": 8
+  },
+  {
+    "cities": [17, 10],
+    "price": 16
+  },
+  {
+    "cities": [17, 28],
+    "price": 5
+  },
+  {
+    "cities": [17, 40],
+    "price": 6
+  },
+  {
+    "cities": [17, 21],
+    "price": 12
+  },
+  {
+    "cities": [27, 21],
+    "price": 14
+  },
+  {
+    "cities": [27, 9],
+    "price": 3
+  },
+  {
+    "cities": [9, 15],
+    "price": 4
+  },
+  {
+    "cities": [9, 21],
+    "price": 12
+  },
+  {
+    "cities": [9, 24],
+    "price": 12
+  },
+  {
+    "cities": [15, 24],
+    "price": 8
+  },
+  {
+    "cities": [1, 14],
+    "price": 17
+  },
+  {
+    "cities": [40, 8],
+    "price": 12
+  },
+  {
+    "cities": [40, 21],
+    "price": 7
+  },
+  {
+    "cities": [40, 0],
+    "price": 12
+  },
+  {
+    "cities": [21, 2],
+    "price": 6
+  },
+  {
+    "cities": [21, 24],
+    "price": 7
+  },
+  {
+    "cities": [2, 24],
+    "price": 11
+  },
+  {
+    "cities": [2, 16],
+    "price": 9
+  },
+  {
+    "cities": [2, 1],
+    "price": 3
+  },
+  {
+    "cities": [24, 16],
+    "price": 16
+  },
+  {
+    "cities": [16, 41],
+    "price": 4
+  },
+  {
+    "cities": [41, 22],
+    "price": 4
+  },
+  {
+    "cities": [16, 38],
+    "price": 0
+  },
+  {
+    "cities": [38, 1],
+    "price": 7
+  },
+  {
+    "cities": [38, 33],
+    "price": 7 
+  },
+  {
+    "cities": [1, 33],
+    "price": 7
+  },
+  {
+    "cities": [1, 18],
+    "price": 5
+  },
+  {
+    "cities": [18, 8],
+    "price": 4
+  },
+  {
+    "cities": [8, 33],
+    "price": 15
+  },
+  {
+    "cities": [8, 31],
+    "price": 4
+  },
+  {
+    "cities": [33, 26],
+    "price": 3
+  },
+  {
+    "cities": [33, 31],
+    "price": 7
+  },
+  {
+    "cities": [26, 42],
+    "price": 5
+  },
+  {
+    "cities": [42, 29],
+    "price": 3
+  },
+  {
+    "cities": [42, 31],
+    "price": 6
+  },
+  {
+    "cities": [31, 5],
+    "price": 7
+  },
+  {
+    "cities": [5, 25],
+    "price": 8
+  },
+  {
+    "cities": [29, 25],
+    "price": 0
+  },
+  {
+    "cities": [25, 4],
+    "price": 3
+  }
+]

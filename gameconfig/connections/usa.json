@@ -1,6 +1,6 @@
 [
   {
-    "cities": [39, 1], // seattle to billing
+    "cities": [39, 1], // seattle to billings
     "price": 9
   },
   {
@@ -20,36 +20,331 @@
     "price": 24
   },
   {
-    "cities": [39, 1],
+    "cities": [36, 3], // san fran to boise
+    "price": 23
+  },
+  {
+    "cities": [36, 34], // san fran to salt lake
+    "price": 27
+  },
+  {
+    "cities": [36, 20], // san fran to la
     "price": 9
   },
   {
-    "cities": [39, 1],
+    "cities": [36, 19], // san fran to las vegas
+    "price": 14
+  },
+  {
+    "cities": [20, 19], // la to las vegas
     "price": 9
   },
   {
-    "cities": [39, 1],
+    "cities": [20, 35], // la to san diego
+    "price": 3
+  },
+  {
+    "cities": [35, 30], // san diego to phoenix
+    "price": 14
+  },
+  {
+    "cities": [35, 19], // san diego to las vegas
     "price": 9
   },
   {
-    "cities": [39, 1],
+    "cities": [30, 19], // phoenix to las vegas
+    "price": 15
+  },
+  {
+    "cities": [30, 37], // phoenix to santa fe
+    "price": 18
+  },
+  {
+    "cities": [37, 19], // santa fe to las vegas
+    "price": 27
+  },
+  {
+    "cities": [37, 34], // santa fe to salt lake city
+    "price": 28
+  },
+  {
+    "cities": [37, 10], // santa fe to denver
+    "price": 13
+  },
+  {
+    "cities": [37, 17], // santa fe to kansas city
+    "price": 16
+  },
+  {
+    "cities": [37, 27], // santa fe to oklahoma city
+    "price": 15
+  },
+  {
+    "cities": [37, 9], // santa fe to dallas
+    "price": 16
+  },
+  {
+    "cities": [37, 15], // santa fe to houston
+    "price": 21
+  },
+  {
+    "cities": [34, 19], // salt lake to las vegas
+    "price": 18 
+  },
+  {
+    "cities": [34, 10], // salt lake to denver
+    "price": 21
+  },
+  {
+    "cities": [34, 3], // salt lake to boise
+    "price": 8
+  },
+  {
+    "cities": [3, 1], // boise to billings
+    "price": 12
+  },
+  {
+    "cities": [3, 6], // boise to cheyenne
+    "price": 24
+  },
+  {
+    "cities": [6, 1], // cheyenne to billings
     "price": 9
   },
   {
-    "cities": [39, 1],
+    "cities": [6, 10], // cheyenne to denver
+    "price": 0
+  },
+  {
+    "cities": [6, 28], // cheyenne to omaha
+    "price": 14 
+  },
+  {
+    "cities": [6, 23], // cheyenne to minneapolis
+    "price": 18
+  },
+  {
+    "cities": [23, 1],  // minneapolis to billings
+    "price": 18
+  },
+  {
+    "cities": [23, 14], // minneapolis to fargo
+    "price": 6
+  },
+  {
+    "cities": [23, 28], // minneapolis to omaha
+    "price": 8
+  },
+  {
+    "cities": [23, 7], // minneapolis to chicago
+    "price": 8
+  },
+  {
+    "cities": [23, 13], // minneapolis to duluth
+    "price": 5
+  },
+  {
+    "cities": [13, 14], // duluth to fargo
+    "price": 6
+  },
+  {
+    "cities": [13, 7], // duluth to chicago
+    "price": 12
+  },
+  {
+    "cities": [13, 11], // duluth to detroit
+    "price": 15
+  },
+  {
+    "cities": [11, 5], // detroit to buffalo
+    "price": 7
+  },
+  {
+    "cities": [11, 31], // detroit to pittsburgh
+    "price": 6 
+  },
+  {
+    "cities": [11, 8], // detroit to cincinnatti
+    "price": 4
+  },
+  {
+    "cities": [11, 7], // detroit to chicago
+    "price": 4
+  },
+  {
+    "cities": [7, 8], // chicago to cincinnatti
+    "price": 7
+  },
+  {
+    "cities": [7, 40], // chicago to st louis
+    "price": 10
+  },
+  {
+    "cities": [7, 17], // chicago to kansas city
+    "price": 8
+  },
+  {
+    "cities": [7, 28], // chicago to omaha
+    "price": 13
+  },
+  {
+    "cities": [17, 27], // kansas city to oklahoma city
+    "price": 8
+  },
+  {
+    "cities": [17, 10], // kansas city to denver
+    "price": 16
+  },
+  {
+    "cities": [17, 28], // kansas city to omaha
+    "price": 5
+  },
+  {
+    "cities": [17, 40], // kansas city to st louis
+    "price": 6
+  },
+  {
+    "cities": [17, 21], // kansas city to memphis
+    "price": 12
+  },
+  {
+    "cities": [27, 21], // oklahoma city to memphis
+    "price": 14
+  },
+  {
+    "cities": [27, 9], // oklahoma city to dallas
+    "price": 3
+  },
+  {
+    "cities": [9, 15], // dallas to houston
+    "price": 4
+  },
+  {
+    "cities": [9, 21], // dallas to memphis
+    "price": 12
+  },
+  {
+    "cities": [9, 24], // dallas to new orleans
+    "price": 12
+  },
+  {
+    "cities": [15, 24], // houston to new orleans
+    "price": 8
+  },
+  {
+    "cities": [1, 14], // billings to fargo
+    "price": 17
+  },
+  {
+    "cities": [40, 8], // st louis to cincinnatti
+    "price": 12
+  },
+  {
+    "cities": [40, 21], // st louis to memphis
+    "price": 7
+  },
+  {
+    "cities": [40, 0], // st louis to atlanta
+    "price": 12
+  },
+  {
+    "cities": [21, 2], // memphis to birmingham
+    "price": 6
+  },
+  {
+    "cities": [21, 24], // memphis to new orleans
+    "price": 7
+  },
+  {
+    "cities": [2, 24], // birmingham to new orleans
+    "price": 11
+  },
+  {
+    "cities": [2, 16], // birmingham to jacksonville
     "price": 9
   },
   {
-    "cities": [39, 1],
-    "price": 9
+    "cities": [2, 1], // birmingham to atlanta
+    "price": 3
   },
   {
-    "cities": [39, 1],
-    "price": 9
+    "cities": [24, 16], // new orleans to jacksonville
+    "price": 16
   },
   {
-    "cities": [39, 1],
-    "price": 9
+    "cities": [16, 41], // jacksonville to tampa
+    "price": 4
   },
-
+  {
+    "cities": [41, 22], // tampa to miami
+    "price": 4
+  },
+  {
+    "cities": [16, 38], // jacksonville to savannah
+    "price": 0
+  },
+  {
+    "cities": [38, 1], // savannah to atlanta
+    "price": 7
+  },
+  {
+    "cities": [38, 33], // savannah to raleigh
+    "price": 7 
+  },
+  {
+    "cities": [1, 33], // atlanta to raleigh
+    "price": 7
+  },
+  {
+    "cities": [1, 18], // atlanta to knoxville
+    "price": 5
+  },
+  {
+    "cities": [18, 8], // knoxville to cincinnatti
+    "price": 4
+  },
+  {
+    "cities": [8, 33], // cincinnatti to raleigh
+    "price": 15
+  },
+  {
+    "cities": [8, 31], // cincinnatti to pittsburgh
+    "price": 4
+  },
+  {
+    "cities": [33, 26], // raleigh to norfolk
+    "price": 3
+  },
+  {
+    "cities": [33, 31], // raleigh to pittsburgh
+    "price": 7
+  },
+  {
+    "cities": [26, 42], // norfolk to washington dc
+    "price": 5
+  },
+  {
+    "cities": [42, 29], // washington dc to philadelphia
+    "price": 3
+  },
+  {
+    "cities": [42, 31], // washington dc to pittsburgh
+    "price": 6
+  },
+  {
+    "cities": [31, 5], // pittsburgh to buffalo
+    "price": 7
+  },
+  {
+    "cities": [5, 25], // buffalo to new york
+    "price": 8
+  },
+  {
+    "cities": [29, 25], // philadelphia to new york
+    "price": 0
+  },
+  {
+    "cities": [25, 4], // new york to boston
+    "price": 3
+  }
 ]
