@@ -179,4 +179,19 @@
       <reference local="city_id" foreign="id"/>
     </foreign-key>
   </table>
+  <table name="city_connection">
+    <column name="city_from" type="integer" required="false" primaryKey="true"/>
+    <column name="city_to" type="integer" required="false" primaryKey="true"/>
+    <column name="map" type="integer" required="false" primaryKey="false"/>
+    <column name="cost" type="integer" required="false" primaryKey="false"/>
+    <foreign-key foreignTable="city" phpName="CityFrom" refPhpName="City">
+      <reference local="city_from" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="city" phpName="CityTo" refPhpName="City">
+      <reference local="city_to" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="map" phpName="CityConnectionMap" refPhpName="Map">
+      <reference local="map" foreign="id"/>
+    </foreign-key>
+  </table>
 </database>
