@@ -12,6 +12,7 @@ class CityConnectionsConfigParser extends \PowerGrid\Abstracts\ConfigParser {
 
     $currentIndex = 0;
     while ($parseError == FALSE && $currentIndex < count($this->current)) {
+      $connectionObj = $this->preMangle[$currentIndex];
       // Make sure both cities and price attributes exist
       if (!isset($connectionObj['cities'], $connectionObj['price']) {
         $parseError = TRUE;
