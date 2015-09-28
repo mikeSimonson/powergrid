@@ -1,5 +1,7 @@
 <?php
 
+//@TODO: This class is stupid. Why does it need all this state?
+
 namespace HTTPPowerGrid\Services;
 
 class UserGameCreator {
