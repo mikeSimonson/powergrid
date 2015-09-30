@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Exceptions\Application;
 
-class CityNodeNeighborWeightNotFound extends \PowerGrid\Exceptions\Application {
+class GraphNodeNeighborWeightNotFound extends \PowerGrid\Exceptions\Application {
   const MESSAGE_PREFIX = 'No corresponding connection weight found in target node with id ';
   const MESSAGE_POSTFIX = ' for requested neighbor node ';
 

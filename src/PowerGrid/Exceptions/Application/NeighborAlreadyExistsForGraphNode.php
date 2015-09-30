@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Exceptions;
 
-class NeighborAlreadyExistsForCityNode extends \PowerGrid\Exceptions\Application {
+class NeighborAlreadyExistsForGraphNode extends \PowerGrid\Exceptions\Application {
 
   const MESSAGE_PREFIX = 'Neighbor with id ';
   const MESSAGE_POSTFIX = ' for node with id ';

@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Structures;
 
-class CityNode {
+class GraphNode {
   protected $neighbors;
   protected $neighborConnectionWeights;
   protected $id;
@@ -15,26 +15,26 @@ class CityNode {
     return $this->id;
   }
 
-  public function addNeighbor(\PowerGrid\Structures\CityNode &$newNeighbor, $weight) {
+  public function addNeighbor(\PowerGrid\Structures\GraphNode &$newNeighbor, $weight) {
     if (isset($this->neighbors[$newNeighbor->getId()])) {
-      throw new \PowerGrid\Exceptions\Application\NeighborAlreadyExistsForCityNode($this->getId(), $newNeighbor->getId());
+      throw new \PowerGrid\Exceptions\Application\NeighborAlreadyExistsForGraphNode($this->getId(), $newNeighbor->getId());
     }
-    $this->neighbors[$newNeighbor->getId()] &= $newNeighbor;
+    $this->neighbors[$newNeighbor->getId()] = $newNeighbor;
     $this->neighborConnectionWeights[$newNeighbor->getId()] = $weight;
   }
 
   public function getConnectionWeightForNeighbor($neighbor) {
     if (!isset($this->neighborConnectionWeights[$neighbor->getId()])) {
-      throw new \PowerGrid\Exceptions\Application\CityNodeNeighborWeightNotFound($this->getId(), $neighbor->getId());
+      throw new \PowerGrid\Exceptions\Application\GraphNodeNeighborWeightNotFound($this->getId(), $neighbor->getId());
     }
 
     return $this->neighborConnectionWeights[$neighbor->getId()];
   }
 
-  public function isNeighbor(\PowerGrid\Structures\CityNode $node) {
+  public function isNeighbor(\PowerGrid\Structures\GraphNode $node) {
     $isNeighbor = FALSE;
 
-    if ($this->neighbors[$node->getId()] instanceof \PowerGrid\Structures\CityNode) {
+    if (isset($this->neighbors[$node->getId()])) {
       $isNeighbor = TRUE;
     }
 
