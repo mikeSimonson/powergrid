@@ -22,17 +22,17 @@ class CityConnectionsGraph {
     return $this->shortestPathFinder->getShortestPath();
   }
 
-  public function getStartNode($requestedNode) {
+  public function getStartNode($requestedNode = NULL) {
     $startNode = NULL;
 
-    if ($requestedNode instanceof \PowerGrid\Structures\CityNode && isset($this->cityNodeRefHash[$requestedNode->getId()])) {
+    if ($requestedNode instanceof \PowerGrid\Structures\GraphNode && isset($this->cityNodeRefHash[$requestedNode->getId()])) {
       $startNode = $this->cityNodeRefHash[$requestedNode->getId()];
     }
     else if (is_numeric($requestedNode)) {
       $startNode = $this->cityNodeRefHash[$requestedNode];
     }
     else if ($requestedNode === NULL) {
-      return array_rand($this->cityNodeRefHash);
+      $startNode = array_rand($this->cityNodeRefHash);
     }
     else {
       throw new \PowerGrid\Exceptions\Application\RequestedStartNodeNotInGraph();
@@ -41,10 +41,10 @@ class CityConnectionsGraph {
     return $startNode;
   }
 
-  protected function saveNodeRefs(Array $nodes) {
+  protected function saveNodeRefs(Array &$nodes) {
     foreach ($nodes AS $node) {
       if (isset($this->cityNodeRefHash[$node->getId()])) {
-        $this->cityNodeRefHash[$node->getId()] &= $node;
+        $this->cityNodeRefHash[$node->getId()] = $node;
       }
     }
   }
