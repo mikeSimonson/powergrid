@@ -17,12 +17,12 @@ class CityConnectionsGraph {
   }
 
   public function findShortestPathBetweenCities($fromCity, $toCity) {
-    $this->shortestPathFinder->setStartNode($this->getStartNode($fromCity));
-    $this->shortestPathFinder->setEndNode($toCity);
+    $this->shortestPathFinder->setStartNode($this->getMatchingNode($fromCity));
+    $this->shortestPathFinder->setEndNode($this->getMatchingNode($toCity));
     return $this->shortestPathFinder->getShortestPath();
   }
 
-  public function getStartNode($requestedNode = NULL) {
+  public function getMatchingNode($requestedNode = NULL) {
     $startNode = NULL;
 
     if ($requestedNode instanceof \PowerGrid\Structures\GraphNode && isset($this->cityNodeRefHash[$requestedNode->getId()])) {
