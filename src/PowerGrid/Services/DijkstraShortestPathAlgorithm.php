@@ -12,14 +12,45 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
   protected $visitedSet;
   protected $unvisitedSet;
 
-  protected $startDistanceMap;
-
   protected $nodeTenativeDistanceMap;
-  protected $overallTentativeDistance;
+
+  public function setNodes(Array $nodes) {
+    foreach ($nodes AS $node) {
+      if (is_numeric($node)) {
+        $nodeId = $node;
+      }
+      else if ($node instanceof \PowerGrid\Services\GraphNode) {
+        $nodeId = $node->getId();
+      }
+      else {
+        throw new \PowerGrid\Exceptions\Application\UnexpectedParameterType('Expected array where each item is a numerical id or \PowerGrid\Services\GraphNode object in ' . __METHOD__);
+      }
+
+      $this->addNode($nodeId);
+
+    }
+  }
+
+  public function reset() {
+    $this->currentNode = NULL;
+    $this->startNode = NULL;
+    $this->endNode = NULL;
+
+    $this->visitedSet = array();
+    $this->unvisitedSet = array();
+
+    $this->nodeTenativeDistanceMap = array();
+  }
+
+  private function addNode($nodeId) {
+    $this->unvisitedSet[$nodeId] = TRUE;
+    $this->visitedSet[$nodeId] = FALSE;
+    $this->nodeTenativeDistanceMap[$nodeId] = NULL;
+  }
 
   public function setStartNode(\PowerGrid\Services\GraphNode $startNode) {
     $this->startNode = $startNode;
-    $this->startDistanceMap[$startNode->getId()] = 0;
+    $this->nodeTenativeDistanceMap[$startNode->getId()] = 0;
     $this->markVisited($startNode);
     $this->currentNode = $this->startNode;
   }
@@ -36,7 +67,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
         }
       }
 
-      $this->markCurrentNodeAsVisited();
+      $this->markVisited($this->currentNode);
       $this->setNextCurrentNode();
     }
     
@@ -45,34 +76,39 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
   private function markVisited($node) {
     $this->visitedSet[$node->getId()] = TRUE;
+    $this->unvisitedSet[$node->getId()] = FALSE;
   }
 
-  private function markCurrentNodeAsVisited() {
-    if (!in_array($this->currentNode->getId(), $this->visitedSet)) {
-      $this->visitedSet[] = $this->currentNode->getId();
-    }
-  }
-
-  private function checkForNewTenativeDistance($neighbor) {
+  private function checkForNewTenativeDistance($node) {
     $distanceToCurrentFromStart = $this->getDistanceToStartNode($this->currentNode);
-    $distanceFromCurrentToNeighbor = $this->currentNode->getConnectionWeightForNeighbor($neighbor);
+    $distanceFromCurrentToNeighbor = $this->currentNode->getConnectionWeightForNeighbor($node);
 
     $totalDistanceFromStartToNeighbor = $distanceToCurrentFromStart + $distanceFromCurrentToNeighbor;
 
-    $this->nodeTenativeDistanceMap[$neighbor->getId()] = $totalDistanceFromStartToNeighbor;
+    $this->nodeTenativeDistanceMap[$node->getId()] = $totalDistanceFromStartToNeighbor;
 
-    if ($totalDistanceFromStartToNeighbor < $this->overallTentativeDistance) {
-      $this->overallTentativeDistance = $totalDistanceFromStartToNeighbor;
+    if ($this->distanceIsLessThanTentativeForNode($totalDistanceFromStartToNeighbor, $node)) {
+      $this->setTentativeDistanceForNode($totalDistanceFromStartToNeighbor, $node);
     }
   }
 
+  private function distanceIsLessThanTentativeForNode($distance, $node) {
+    $result = FALSE;
+
+    $currentTentativeDistance = $this->nodeTenativeDistanceMap[$node->getId()];
+    if ($currentTentativeDistance === NULL || $distance < $currentTentativeDistance) {
+      $result = TRUE;
+    }
+
+    return $result;
+  }
+
+  private function setTentativeDistanceForNode($distance, $node) {
+    $this->nodeTenativeDistanceMap[$node->getId()] = $distance;
+  }
+
   private function isUnvisited($neighbor) {
-    if (!in_array($neighbor->getId(), $this->unvisitedSet)) {
-      return TRUE;
-    }
-    else {
-      return FALSE;
-    }
+    return $this->unvisitedSet[$neighbor->getId()];
   }
 
   private function getDistanceToStartNode($node) {

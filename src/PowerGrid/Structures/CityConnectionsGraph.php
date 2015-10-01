@@ -17,6 +17,8 @@ class CityConnectionsGraph {
   }
 
   public function findShortestPathBetweenCities($fromCity, $toCity) {
+    $this->shortestPathFinder->reset();
+    $this->shortestPathFinder->setNodes($this->cityNodeRefHash);
     $this->shortestPathFinder->setStartNode($this->getMatchingNode($fromCity));
     $this->shortestPathFinder->setEndNode($this->getMatchingNode($toCity));
     return $this->shortestPathFinder->getShortestPath();
