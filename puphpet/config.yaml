@@ -176,6 +176,7 @@ php:
         pear: {  }
         pecl:
             - pecl_http
+            - operator
     ini:
         display_errors: On
         error_reporting: '-1'

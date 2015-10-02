@@ -16,11 +16,19 @@ class GraphNode {
   }
 
   public function addNeighbor(\PowerGrid\Structures\GraphNode &$newNeighbor, $weight) {
-    if (isset($this->neighbors[$newNeighbor->getId()])) {
-      throw new \PowerGrid\Exceptions\Application\NeighborAlreadyExistsForGraphNode($this->getId(), $newNeighbor->getId());
+    if (!isset($this->neighbors[$newNeighbor->getId()])) {
+      $this->neighbors[$newNeighbor->getId()] = $newNeighbor;
+      $this->neighborConnectionWeights[$newNeighbor->getId()] = $weight;
     }
-    $this->neighbors[$newNeighbor->getId()] = $newNeighbor;
-    $this->neighborConnectionWeights[$newNeighbor->getId()] = $weight;
+  }
+
+  public function addNeighbors(Array &$neighborsAndWeights) {
+    foreach ($neighborsAndWeights AS $neighborAndWeight) {
+      $neighbor = $neighborAndWeight[0];
+      $weight = $neighborAndWeight[1];
+
+      $this->addNeighbor($neighbor, $weight);
+    }
   }
 
   public function getConnectionWeightForNeighbor($neighbor) {

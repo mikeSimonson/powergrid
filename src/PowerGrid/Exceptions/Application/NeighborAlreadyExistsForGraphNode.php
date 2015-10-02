@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerGrid\Exceptions;
+namespace PowerGrid\Exceptions\Application;
 
 class NeighborAlreadyExistsForGraphNode extends \PowerGrid\Exceptions\Application {
 

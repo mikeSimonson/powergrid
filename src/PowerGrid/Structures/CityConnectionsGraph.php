@@ -2,26 +2,13 @@
 
 namespace PowerGrid\Structures;
 
-class CityConnectionsGraph {
+class CityConnectionsGraph implements \PowerGrid\Interfaces\WeightedUndirectedGraph {
 
   protected $cityNodeRefHash;
-  protected $shortestPathFinder;
-
-  public function __construct(\PowerGrid\Services\ShortestPathFinder $shortestPathFinder) {
-    $this->shortestPathFinder = $shortestPathFinder;
-  }
 
   public function populateFromIncompleteGraphNodes(Array $incompleteGraph) {
     $this->saveNodeRefs($incompleteGraph);
     $this->buildFullGraph();
-  }
-
-  public function findShortestPathBetweenCities($fromCity, $toCity) {
-    $this->shortestPathFinder->reset();
-    $this->shortestPathFinder->setNodes($this->cityNodeRefHash);
-    $this->shortestPathFinder->setStartNode($this->getMatchingNode($fromCity));
-    $this->shortestPathFinder->setEndNode($this->getMatchingNode($toCity));
-    return $this->shortestPathFinder->getShortestPath();
   }
 
   public function getMatchingNode($requestedNode = NULL) {
@@ -45,7 +32,7 @@ class CityConnectionsGraph {
 
   protected function saveNodeRefs(Array &$nodes) {
     foreach ($nodes AS $node) {
-      if (isset($this->cityNodeRefHash[$node->getId()])) {
+      if (!isset($this->cityNodeRefHash[$node->getId()])) {
         $this->cityNodeRefHash[$node->getId()] = $node;
       }
     }
