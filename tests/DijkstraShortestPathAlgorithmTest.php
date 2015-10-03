@@ -3,10 +3,12 @@
 class DijkstraShortestPathAlgorithmTest extends PHPUnit_Framework_TestCase {
 
   /**
-   * @dataProvider testGraphProvider
+   * @dataProvider graphProvider 
    */
   public function testShortestPathCalculatedProperly($graph, $startNodeId, $endNodeId, $correctDistance) {
     $algorithm = new \PowerGrid\Services\DijkstraShortestPathAlgorithm($graph);
+
+    $algorithm->setNodes($graph->getNodes());
 
     $algorithm->setStartNode($graph->getMatchingNode($startNodeId));
     $algorithm->setEndNode($graph->getMatchingNode($endNodeId));
@@ -16,7 +18,13 @@ class DijkstraShortestPathAlgorithmTest extends PHPUnit_Framework_TestCase {
     $this->assertEquals($calculatedDistance, $correctDistance);
   }
 
-  public function testGraphProvider() {
+  public function graphProvider() {
+    return array(
+      $this->graphProviderCase1()
+    );
+  }
+
+  private function graphProviderCase1() {
     $graph = new \PowerGrid\Structures\CityConnectionsGraph();
 
     $nodes = array();
@@ -83,9 +91,30 @@ class DijkstraShortestPathAlgorithmTest extends PHPUnit_Framework_TestCase {
     $goalNodeId = 5;
     $correctDistance = 11;
 
-    return array(
-      array($graph, $startingNodeId, $goalNodeId, $correctDistance)
+    return array($graph, $startingNodeId, $goalNodeId, $correctDistance);
+  }
+
+  private function graphProviderCase2() {
+    $graph = new \PowerGrid\Structures\CityConnectionsGraph();
+
+    $nodes = array();
+
+    for ($i = 0; $i < 2; ++$i) {
+      $nodes[] = new \PowerGrid\Structures\GraphNode($i);
+    }
+
+    $node0Neighbors = array(
+      array($nodes[1], 1)
     );
+    $nodes[0]->addNeighbors($node0Neighbors);
+
+    $startingNodeId = 0;
+    $goalNodeId = 1;
+    $correctDistance = 1;
+
+    $graph->populateFromIncompleteGraphNodes($nodes);
+
+    return array($graph, $startingNodeId, $goalNodeId, $correctDistance);
   }
 
 }
