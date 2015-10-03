@@ -11,6 +11,10 @@ class CityConnectionsGraph implements \PowerGrid\Interfaces\WeightedUndirectedGr
     $this->buildFullGraph();
   }
 
+  public function getNodes() {
+    return $this->cityNodeRefHash;
+  }
+
   public function getMatchingNode($requestedNode = NULL) {
     $startNode = NULL;
 
@@ -48,8 +52,9 @@ class CityConnectionsGraph implements \PowerGrid\Interfaces\WeightedUndirectedGr
    * Make the connections between a node and its neighbors undirected (bidirectional).
    */
   private function connectNeighborsBackToTarget($target) {
-    $this->saveNodeRefs($target->getNeighbors());
-    foreach ($target->getNeighbors() AS $neighbor) {
+    $neighbors = $target->getNeighbors();
+    $this->saveNodeRefs($neighbors);
+    foreach ($neighbors AS $neighbor) {
       $neighbor->addNeighbor($target, $target->getConnectionWeightForNeighbor($neighbor));
     }
   }

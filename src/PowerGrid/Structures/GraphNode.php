@@ -49,7 +49,7 @@ class GraphNode {
     return $isNeighbor;
   }
 
-  public function getNeighbors() {
+  public function &getNeighbors() {
     return $this->neighbors;
   }
 }
