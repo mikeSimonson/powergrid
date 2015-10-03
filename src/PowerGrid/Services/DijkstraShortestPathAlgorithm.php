@@ -11,6 +11,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
   protected $unvisitedSet;
 
   protected $nodeTenativeDistances;
+  protected $startDistanceMap;
 
   protected $nodeGraph;
 
@@ -19,16 +20,13 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
     $this->nodeTentativeDistances = new \SplPriorityQueue();
   }
 
-  public function setNodes(Array &$nodes) {
+  public function setNodes(Array $nodes) {
     foreach ($nodes AS $node) {
-      if ($node instanceof \PowerGrid\Structures\GraphNode) {
-        $newNode = $node->getId();
-      }
-      else {
+      if (!($node instanceof \PowerGrid\Structures\GraphNode)) {
         throw new \PowerGrid\Exceptions\Application\UnexpectedParameterType('Expected array where each item is a \PowerGrid\Structures\GraphNode object in ' . __METHOD__);
       }
 
-      $this->addNode($newNode);
+      $this->addNode($node);
     }
   }
 
@@ -60,7 +58,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
       $this->setNextCurrentNode();
     }
     
-    return $this->overallTentativeDistance;
+    return $this->getDistanceToStartNode($this->endNode);
   }
 
   private function setNextCurrentNode() {
@@ -91,8 +89,6 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
     $totalDistanceFromStartToNeighbor = $distanceToCurrentFromStart + $distanceFromCurrentToNeighbor;
 
-    $this->nodeTentativeDistances[$node->getId()] = $totalDistanceFromStartToNeighbor;
-
     if ($this->distanceIsLessThanTentativeForNode($totalDistanceFromStartToNeighbor, $node)) {
       $this->setTentativeDistanceForNode($totalDistanceFromStartToNeighbor, $node);
     }
@@ -101,7 +97,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
   private function distanceIsLessThanTentativeForNode($distance, \PowerGrid\Structures\GraphNode $node) {
     $result = FALSE;
 
-    $currentTentativeDistance = $this->nodeTentativeDistances[$node->getId()];
+    $currentTentativeDistance = $this->startDistanceMap[$node->getId()];
     if ($currentTentativeDistance === NULL || $distance < $currentTentativeDistance) {
       $result = TRUE;
     }
@@ -111,6 +107,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
   private function setTentativeDistanceForNode($distance, \PowerGrid\Structures\GraphNode $node) {
     $this->nodeTentativeDistances->insert($node->getId(), $distance);
+    $this->startDistanceMap[$node->getId()] = $distance;
   }
 
   private function getDistanceToStartNode(\PowerGrid\Structures\GraphNode $node) {
