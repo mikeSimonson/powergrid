@@ -98,9 +98,9 @@
   </table>
   <table name="city" phpName="City">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="name" type="varchar" size="128"/>
-    <column name="map_id" type="integer" required="true"/>
-    <foreign-key foreignTable="map" phpName="Map" refPhpName="City">
+    <column name="name" type="varchar" size="128" required="false"/>
+    <column name="map_id" type="integer" required="false"/>
+    <foreign-key foreignTable="map">
       <reference local="map_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -182,16 +182,16 @@
   <table name="city_connection">
     <column name="city_from" type="integer" required="false" primaryKey="true"/>
     <column name="city_to" type="integer" required="false" primaryKey="true"/>
-    <column name="map" type="integer" required="false" primaryKey="false"/>
+    <column name="map_id" type="integer" required="false" primaryKey="false"/>
     <column name="cost" type="integer" required="false" primaryKey="false"/>
-    <foreign-key foreignTable="city" phpName="CityFrom" refPhpName="City">
+    <foreign-key foreignTable="city" phpName="cityFrom">
       <reference local="city_from" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="city" phpName="CityTo" refPhpName="City">
+    <foreign-key foreignTable="city" phpName="cityTo">
       <reference local="city_to" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="map" phpName="CityConnectionMap" refPhpName="Map">
-      <reference local="map" foreign="id"/>
+    <foreign-key foreignTable="map">
+      <reference local="map_id" foreign="id"/>
     </foreign-key>
   </table>
 </database>

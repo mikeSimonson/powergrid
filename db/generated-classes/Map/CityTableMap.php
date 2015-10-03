@@ -138,7 +138,7 @@ class CityTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 128, null);
-        $this->addForeignKey('map_id', 'MapId', 'INTEGER', 'map', 'id', true, null, null);
+        $this->addForeignKey('map_id', 'MapId', 'INTEGER', 'map', 'id', false, null, null);
     } // initialize()
 
     /**
@@ -167,6 +167,20 @@ class CityTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'GameCities', false);
+        $this->addRelation('CityConnectionRelatedByCityFrom', '\\CityConnection', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':city_from',
+    1 => ':id',
+  ),
+), null, null, 'CityConnectionsRelatedByCityFrom', false);
+        $this->addRelation('CityConnectionRelatedByCityTo', '\\CityConnection', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':city_to',
+    1 => ':id',
+  ),
+), null, null, 'CityConnectionsRelatedByCityTo', false);
     } // buildRelations()
 
     /**

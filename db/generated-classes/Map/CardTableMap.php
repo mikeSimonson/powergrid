@@ -137,8 +137,8 @@ class CardTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('resource_cost', 'ResourceCost', 'INTEGER', true, null, null);
-        $this->addForeignKey('resource_type_id', 'ResourceTypeId', 'INTEGER', 'resource_type', 'id', true, null, null);
+        $this->addColumn('resource_cost', 'ResourceCost', 'INTEGER', false, null, null);
+        $this->addForeignKey('resource_type_id', 'ResourceTypeId', 'INTEGER', 'resource_type', 'id', false, null, null);
     } // initialize()
 
     /**

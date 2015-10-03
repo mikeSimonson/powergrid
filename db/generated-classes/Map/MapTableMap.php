@@ -154,6 +154,13 @@ class MapTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'Cities', false);
+        $this->addRelation('CityConnection', '\\CityConnection', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':map_id',
+    1 => ':id',
+  ),
+), null, null, 'CityConnections', false);
     } // buildRelations()
 
     /**
