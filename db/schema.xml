@@ -184,10 +184,10 @@
     <column name="city_to" type="integer" required="false" primaryKey="true"/>
     <column name="map_id" type="integer" required="false" primaryKey="false"/>
     <column name="cost" type="integer" required="false" primaryKey="false"/>
-    <foreign-key foreignTable="city" phpName="cityFrom">
+    <foreign-key foreignTable="city" phpName="CityFrom">
       <reference local="city_from" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="city" phpName="cityTo">
+    <foreign-key foreignTable="city" phpName="CityTo">
       <reference local="city_to" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="map">

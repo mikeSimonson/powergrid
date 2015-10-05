@@ -17,7 +17,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
   public function __construct(\PowerGrid\Interfaces\WeightedUndirectedGraph $nodeGraph) {
     $this->nodeGraph = $nodeGraph;
-    $this->nodeTentativeDistances = new \SplPriorityQueue();
+    $this->initialize();
   }
 
   public function setNodes(Array $nodes) {
@@ -30,12 +30,23 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
     }
   }
 
+  public function initialize() {
+    $this->nodeTentativeDistances = new \SplPriorityQueue();
+    $this->currentNode = NULL;
+
+    $this->unvisitedSet = array();
+
+    $this->nodeTenativeDistances = array();
+    $this->startDistanceMap = array();
+  }
+
   private function addNode(\PowerGrid\Structures\GraphNode $node) {
     $this->markUnvisited($node);
     $this->setTentativeDistanceForNode(INF, $node);
   }
 
   public function setStartNode(\PowerGrid\Structures\GraphNode $startNode) {
+    $this->initialize();
     $this->startNode = $startNode;
     $this->setTentativeDistanceForNode(0, $this->startNode);
     $this->markVisited($startNode);
