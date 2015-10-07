@@ -9,3 +9,4 @@ db/generated-classes/
 db/generated-sql/
 composer
 *.swp
+*.swo
