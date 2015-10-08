@@ -179,15 +179,15 @@
       <reference local="city_id" foreign="id"/>
     </foreign-key>
   </table>
-  <table name="city_connection">
+  <table name="city_connection" phpName="CityConnection">
     <column name="city_from" type="integer" required="false" primaryKey="true"/>
     <column name="city_to" type="integer" required="false" primaryKey="true"/>
     <column name="map_id" type="integer" required="false" primaryKey="false"/>
     <column name="cost" type="integer" required="false" primaryKey="false"/>
-    <foreign-key foreignTable="city" phpName="CityFrom">
+    <foreign-key foreignTable="city" phpName="FromCity">
       <reference local="city_from" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="city" phpName="CityTo">
+    <foreign-key foreignTable="city" phpName="ToCity">
       <reference local="city_to" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="map">

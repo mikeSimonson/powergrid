@@ -8,8 +8,6 @@ class DijkstraShortestPathAlgorithmTest extends PHPUnit_Framework_TestCase {
   public function testShortestPathCalculatedProperly($graph, $startNodeId, $endNodeId, $correctDistance) {
     $algorithm = new \PowerGrid\Services\DijkstraShortestPathAlgorithm($graph);
 
-    $algorithm->setNodes($graph->getNodes());
-
     $algorithm->setStartNode($graph->getMatchingNode($startNodeId));
     $algorithm->setEndNode($graph->getMatchingNode($endNodeId));
 

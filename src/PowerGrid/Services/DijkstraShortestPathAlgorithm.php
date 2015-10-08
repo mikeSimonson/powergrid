@@ -10,7 +10,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
   protected $unvisitedSet;
 
-  protected $nodeTenativeDistances;
+  protected $nodeTentativeDistances;
   protected $startDistanceMap;
 
   protected $nodeGraph;
@@ -20,7 +20,7 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
     $this->initialize();
   }
 
-  public function setNodes(Array $nodes) {
+  private function setNodes(Array $nodes) {
     foreach ($nodes AS $node) {
       if (!($node instanceof \PowerGrid\Structures\GraphNode)) {
         throw new \PowerGrid\Exceptions\Application\UnexpectedParameterType('Expected array where each item is a \PowerGrid\Structures\GraphNode object in ' . __METHOD__);
@@ -32,12 +32,14 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
 
   public function initialize() {
     $this->nodeTentativeDistances = new \SplPriorityQueue();
+    
     $this->currentNode = NULL;
 
     $this->unvisitedSet = array();
 
-    $this->nodeTenativeDistances = array();
     $this->startDistanceMap = array();
+
+    $this->setNodes($this->nodeGraph->getNodes());
   }
 
   private function addNode(\PowerGrid\Structures\GraphNode $node) {
@@ -46,7 +48,6 @@ class DijkstraShortestPathAlgorithm implements \PowerGrid\Interfaces\ShortestPat
   }
 
   public function setStartNode(\PowerGrid\Structures\GraphNode $startNode) {
-    $this->initialize();
     $this->startNode = $startNode;
     $this->setTentativeDistanceForNode(0, $this->startNode);
     $this->markVisited($startNode);

@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTPPowerGrid\Install\MapInstall;
+namespace HTTPPowerGrid\Install;
 
 class MapInstall {
 
@@ -17,12 +17,10 @@ class MapInstall {
 
   protected $shortestPathFinder;
 
-  public function __construct($mapConfig, $cityNames, $connectionsConfig, \PowerGrid\Interfaces\ShortestPathFinder $shortestPathFinder) {
+  public function __construct($mapConfig, $cityNames, $connectionsConfig) {
     $this->mapConfig = $mapConfig;
     $this->cityNames = $cityNames;
     $this->connectionsConfig = $connectionsConfig;
-
-    $this->shortestPathFinder = $shortestPathFinder;
 
     $this->dbMap = new \Map();
     $this->dbCities = array();
@@ -46,6 +44,7 @@ class MapInstall {
     $i = 0;
     foreach ($this->cityNames AS $cityName) {
       $this->installCity($i, $cityName);
+      ++$i;
     }
   }
 
@@ -60,15 +59,13 @@ class MapInstall {
 
   protected function installConnections() {
     $this->buildCityNodes($this->connectionsConfig);
-    $this->cityGraph = new \PowerGrid\Structures\CityConnectionGraph();
-    $graph->populateFromIncompleteGraphNodes($this->cityGraphNodes);
+    $this->cityGraph = new \PowerGrid\Structures\CityConnectionsGraph();
+    $this->cityGraph->populateFromIncompleteGraphNodes($this->cityGraphNodes);
     $this->installAllShortestPaths();
   }
 
-
-
   protected function installAllShortestPaths() {
-    $this->shortestPathFinder->setNodes($this->cityGraph->getNodes());
+    $this->shortestPathFinder = new \PowerGrid\Services\DijkstraShortestPathAlgorithm($this->cityGraph);
     foreach ($this->cityGraph->getNodes() AS $startNode) {
       $this->shortestPathFinder->setStartNode($startNode);
       foreach ($startNode->getNeighbors() AS $endNode) {
@@ -94,15 +91,15 @@ class MapInstall {
 
   protected function buildCityNodes($connectionsConfig) {
     foreach ($connectionsConfig AS $connectionConfig) {
-      $cityFromId = $connectionConfig['cities'][0];
-      $cityToId = $connectionConfig['cities'][1];
+      $cityFromConfigId = $connectionConfig['cities'][0];
+      $cityToConfigId = $connectionConfig['cities'][1];
       $connectionPrice = $connectionConfig['price'];
 
-      $this->installConnection($cityFromConfigId, $cityToId, $connectionPrice);
+      $this->buildConnection($cityFromConfigId, $cityToConfigId, $connectionPrice);
     }
   }
 
-  protected function installConnection($cityFromId, $cityToId, $connectionPrice) {
+  protected function buildConnection($cityFromId, $cityToId, $connectionPrice) {
     if (!isset($this->cityGraphNodes[$cityFromId])) {
       $this->cityGraphNodes[$cityFromId] = new \PowerGrid\Structures\GraphNode($cityFromId);
     }
@@ -111,8 +108,5 @@ class MapInstall {
     }
 
     $this->cityGraphNodes[$cityFromId]->addNeighbor($this->cityGraphNodes[$cityToId], $connectionPrice);
-  }
-
-  protected function shortestPath() {
   }
 }

@@ -4,6 +4,7 @@ namespace PowerGrid\Abstracts;
 
 abstract class ConfigParser {
   protected $contents;
+  protected $preMangle;
 
   public function __construct($currentConfig) {
     $this->preMangle = $currentConfig;
