@@ -6,6 +6,7 @@ class GraphNode {
   protected $neighbors;
   protected $neighborConnectionWeights;
   protected $id;
+  protected $name;
 
   public function __construct($id) {
     $this->id = $id;
@@ -51,5 +52,8 @@ class GraphNode {
 
   public function &getNeighbors() {
     return $this->neighbors;
+  }
+  public function setName($name) {
+    $this->name = $name;
   }
 }

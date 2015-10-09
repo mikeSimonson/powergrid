@@ -58,4 +58,15 @@ class CityConnectionsGraph implements \PowerGrid\Interfaces\WeightedUndirectedGr
       $neighbor->addNeighbor($target, $target->getConnectionWeightForNeighbor($neighbor));
     }
   }
+
+  public function print_representation() {
+    $print_array = array();
+    foreach ($this->cityNodeRefHash AS $cityNode) {
+      $print_array[$cityNode->getName] = array();
+      foreach ($cityNode->getNeighbors() AS $neighbor) {
+        $print_array[$cityNode->getName][$neighbor->getName] = $cityNode->getConnectionWeightForNeighbor($neighbor);
+      }
+    }
+    return $print_array;
+  }
 }

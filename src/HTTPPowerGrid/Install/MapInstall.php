@@ -78,8 +78,8 @@ class MapInstall {
 
   protected function installShortestPath($fromNode, $toNode, $distance) {
     $connection = new \CityConnection();
-    $connection->setCityFrom($this->getDBCity($fromNode));
-    $connection->setCityTo($this->getDBCity($toNode));
+    $connection->setFromCity($this->getDBCity($fromNode));
+    $connection->setToCity($this->getDBCity($toNode));
     $connection->setMap($this->dbMap);
     $connection->setCost($distance);
     $connection->save();
