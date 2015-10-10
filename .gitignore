@@ -10,3 +10,4 @@ db/generated-sql/
 composer
 *.swp
 *.swo
+ctags
