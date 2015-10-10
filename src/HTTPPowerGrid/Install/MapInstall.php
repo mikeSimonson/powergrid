@@ -58,9 +58,11 @@ class MapInstall {
   }
 
   protected function installConnections() {
-    $this->buildCityNodes($this->connectionsConfig);
+    $this->buildCityNodes();
     $this->cityGraph = new \PowerGrid\Structures\CityConnectionsGraph();
     $this->cityGraph->populateFromIncompleteGraphNodes($this->cityGraphNodes);
+    var_dump($this->cityGraph->print_representation());
+    exit();
     $this->installAllShortestPaths();
   }
 
@@ -89,22 +91,25 @@ class MapInstall {
     return $this->dbCities[$cityNode->getId()];
   }
 
-  protected function buildCityNodes($connectionsConfig) {
-    foreach ($connectionsConfig AS $connectionConfig) {
+  protected function buildCityNodes() {
+    foreach ($this->connectionsConfig AS $connectionConfig) {
       $cityFromConfigId = $connectionConfig['cities'][0];
       $cityToConfigId = $connectionConfig['cities'][1];
       $connectionPrice = $connectionConfig['price'];
 
       $this->buildConnection($cityFromConfigId, $cityToConfigId, $connectionPrice);
     }
+
   }
 
   protected function buildConnection($cityFromId, $cityToId, $connectionPrice) {
     if (!isset($this->cityGraphNodes[$cityFromId])) {
       $this->cityGraphNodes[$cityFromId] = new \PowerGrid\Structures\GraphNode($cityFromId);
+      $this->cityGraphNodes[$cityFromId]->setName($this->cityNames[$cityFromId]);
     }
     if (!isset($this->cityGraphNodes[$cityToId])) {
       $this->cityGraphNodes[$cityToId] = new \PowerGrid\Structures\GraphNode($cityToId);
+      $this->cityGraphNodes[$cityToId]->setName($this->cityNames[$cityToId]);
     }
 
     $this->cityGraphNodes[$cityFromId]->addNeighbor($this->cityGraphNodes[$cityToId], $connectionPrice);
