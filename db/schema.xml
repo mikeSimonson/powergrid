@@ -23,6 +23,7 @@
     <column name="user_id" type="integer" required="false"/>
     <column name="game_id" type="integer" required="false"/>
     <column name="wallet_id" type="integer" required="false"/>
+    <column name="color_name" type="varchar" required="false"/>
     <foreign-key foreignTable="user" phpName="PlayerUser" refPhpName="Player">
       <reference local="user_id" foreign="id"/>
     </foreign-key>
@@ -172,6 +173,7 @@
   <table name="game_city" phpName="GameCity">
     <column name="game_id" type="integer" required="true" primaryKey="true"/>
     <column name="city_id" type="integer" required="true" primaryKey="true"/>
+    <column name="build_order" type="enum" valueSet="1,2,3"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCity">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
