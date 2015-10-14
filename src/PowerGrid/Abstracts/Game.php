@@ -20,17 +20,6 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     $this->ruleFactory = $ruleFactory;
   }
 
-  /**
-   * Should give all info a player needs to make a strategic
-   * play decision.
-   * 
-   * @param   void
-   *
-   * @return  array
-   */
-  public function getInfo() {
-  }
-
   public function determineTurnOrder() {
     $action = \PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION;
     $context = array('currentTurnOrder' => $this->gameData->getPlayerTurnOrder());

@@ -5,16 +5,6 @@ namespace PowerGrid\Interfaces;
 interface GameControls {
 
   /**
-   * Should give all info a player needs to make a strategic
-   * play decision.
-   * 
-   * @param   void
-   *
-   * @return  array
-   */
-  public function getInfo();
-
-  /**
    * @param   int
    */
   public function startBid($playerId, $powerPlantId);
