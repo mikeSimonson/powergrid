@@ -59,7 +59,7 @@ class GameCityTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 2;
+    const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class GameCityTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 2;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /**
      * the column name for the game_id field
@@ -82,9 +82,19 @@ class GameCityTableMap extends TableMap
     const COL_CITY_ID = 'game_city.city_id';
 
     /**
+     * the column name for the build_order field
+     */
+    const COL_BUILD_ORDER = 'game_city.build_order';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
+
+    /** The enumerated values for the build_order field */
+    const COL_BUILD_ORDER_1 = '1';
+    const COL_BUILD_ORDER_2 = '2';
+    const COL_BUILD_ORDER_3 = '3';
 
     /**
      * holds an array of fieldnames
@@ -93,11 +103,11 @@ class GameCityTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('GameId', 'CityId', ),
-        self::TYPE_CAMELNAME     => array('gameId', 'cityId', ),
-        self::TYPE_COLNAME       => array(GameCityTableMap::COL_GAME_ID, GameCityTableMap::COL_CITY_ID, ),
-        self::TYPE_FIELDNAME     => array('game_id', 'city_id', ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('GameId', 'CityId', 'BuildOrder', ),
+        self::TYPE_CAMELNAME     => array('gameId', 'cityId', 'buildOrder', ),
+        self::TYPE_COLNAME       => array(GameCityTableMap::COL_GAME_ID, GameCityTableMap::COL_CITY_ID, GameCityTableMap::COL_BUILD_ORDER, ),
+        self::TYPE_FIELDNAME     => array('game_id', 'city_id', 'build_order', ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -107,12 +117,42 @@ class GameCityTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('GameId' => 0, 'CityId' => 1, ),
-        self::TYPE_CAMELNAME     => array('gameId' => 0, 'cityId' => 1, ),
-        self::TYPE_COLNAME       => array(GameCityTableMap::COL_GAME_ID => 0, GameCityTableMap::COL_CITY_ID => 1, ),
-        self::TYPE_FIELDNAME     => array('game_id' => 0, 'city_id' => 1, ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('GameId' => 0, 'CityId' => 1, 'BuildOrder' => 2, ),
+        self::TYPE_CAMELNAME     => array('gameId' => 0, 'cityId' => 1, 'buildOrder' => 2, ),
+        self::TYPE_COLNAME       => array(GameCityTableMap::COL_GAME_ID => 0, GameCityTableMap::COL_CITY_ID => 1, GameCityTableMap::COL_BUILD_ORDER => 2, ),
+        self::TYPE_FIELDNAME     => array('game_id' => 0, 'city_id' => 1, 'build_order' => 2, ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
+
+    /** The enumerated values for this table */
+    protected static $enumValueSets = array(
+                GameCityTableMap::COL_BUILD_ORDER => array(
+                            self::COL_BUILD_ORDER_1,
+            self::COL_BUILD_ORDER_2,
+            self::COL_BUILD_ORDER_3,
+        ),
+    );
+
+    /**
+     * Gets the list of values for all ENUM columns
+     * @return array
+     */
+    public static function getValueSets()
+    {
+      return static::$enumValueSets;
+    }
+
+    /**
+     * Gets the list of values for an ENUM column
+     * @param string $colname
+     * @return array list of possible values for the column
+     */
+    public static function getValueSet($colname)
+    {
+        $valueSets = self::getValueSets();
+
+        return $valueSets[$colname];
+    }
 
     /**
      * Initialize the table attributes and columns
@@ -133,6 +173,12 @@ class GameCityTableMap extends TableMap
         // columns
         $this->addForeignPrimaryKey('game_id', 'GameId', 'INTEGER' , 'game', 'id', true, null, null);
         $this->addForeignPrimaryKey('city_id', 'CityId', 'INTEGER' , 'city', 'id', true, null, null);
+        $this->addColumn('build_order', 'BuildOrder', 'ENUM', false, null, null);
+        $this->getColumn('build_order')->setValueSet(array (
+  0 => '1',
+  1 => '2',
+  2 => '3',
+));
     } // initialize()
 
     /**
@@ -361,9 +407,11 @@ class GameCityTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(GameCityTableMap::COL_GAME_ID);
             $criteria->addSelectColumn(GameCityTableMap::COL_CITY_ID);
+            $criteria->addSelectColumn(GameCityTableMap::COL_BUILD_ORDER);
         } else {
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.city_id');
+            $criteria->addSelectColumn($alias . '.build_order');
         }
     }
 
