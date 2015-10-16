@@ -6,8 +6,6 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
-  $token = $app->request->params('token');
-  $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
 
   $app->get('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
@@ -19,7 +17,10 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); //END /game/list GET route
   
-  $app->post('/create', function() use ($app, $json_result, $user) {
+  $app->post('/create', function() use ($app, $json_result) {
+    $token = $app->request->params('token');
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
     $name = $app->request->params('name');
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
@@ -34,7 +35,10 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); // END /game/create POST route
 
-  $app->post('/:gameId/start', function($gameId) use ($app, $json_result, $user) {
+  $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
+    $token = $app->request->params('token');
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
     $game = \GameQuery::create()->findPK($gameId);
 
     if (is_null($game)) {
@@ -57,7 +61,10 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); // END /game/:gameId/start POST route
 
-  $app->post('/:gameId/join', function($gameId) use ($app, $json_result, $user) {
+  $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
+    $token = $app->request->params('token');
+    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
     $playerName = $app->request->params('name');
 
     $userServices = new \HTTPPowerGrid\Services\UserServices($user);

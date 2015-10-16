@@ -4,22 +4,24 @@ require_once('../bootstrap.php');
 
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
-$app->group('/player/:playerId', function($playerId) use ($app, $json_result) {
+$app->group('/player', function() use ($app, $json_result) {
 
-  try {
-    $powerPlant = \HTTPPowerGrid\Services\CardServices::findCardById($app->request->params('cardId'));
-    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($app->request->params('token'));
-    $player = \HTTPPowerGrid\Services\PlayerServices::findPlayerById($playerId);
-    $userPlayerServices = new \HTTPPowerGrid\Services\UserPlayerServices($user, $player);
-  }
-  catch (\PowerGrid\Exceptions\Administrative $e) {
-    $json_result->addError($e->getMessage());
-    $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-  }
 
-  $gameController = $userPlayerServices->getGameController();
+  $app->post('/startBid', function($playerId) use ($app, $json_result) {
+    try {
+      $powerPlant = \HTTPPowerGrid\Services\CardServices::findCardById($app->request->params('cardId'));
+      $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($app->request->params('token'));
+      $player = \HTTPPowerGrid\Services\PlayerServices::findPlayerById($playerId);
+      $userPlayerServices = new \HTTPPowerGrid\Services\UserPlayerServices($user, $player);
+    }
+    catch (\PowerGrid\Exceptions\Administrative $e) {
+      $json_result->addError($e->getMessage());
+      $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+      $app->response->setBody($json_result->getJSON());
+    }
 
-  $app->post('/startBid', function($playerId) use ($app, $json_result, $gameController) {
+    $gameController = $userPlayerServices->getGameController();
+
     try {
       $gameController->startBid($player, $powerPlant);
       $json_result->setSuccess('Bidding started on plant');
@@ -32,8 +34,9 @@ $app->group('/player/:playerId', function($playerId) use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   });
 
-  $app->post('/placeBid', function ($playerId) use ($app, $json_result, $gameController) {
+  $app->post('/placeBid', function ($playerId) use ($app, $json_result) {
     $bidAmount = $app->request->params('bidAmount');
+
     try {
       $gameController->startBid($player, $powerPlant, $bidAmount);
       $json_result->setSuccess('Bidding started on plant ' . $powerPlant->getId() . ' started at ' . '$' . $bidAmount);
