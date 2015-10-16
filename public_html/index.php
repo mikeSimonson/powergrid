@@ -1,13 +1,18 @@
 <?php
 
-require_once('../bootstrap.php');
+require_once("../bootstrap.php");
 
 $json_result = new \HTTPApi\JSONResult();
 
 $app = new \Slim\Slim();
-$app->add(new \HTTPApi\Middleware\TokenAuthentication(($json_result)));
+$app->add(new \HTTPApi\Middleware\AdminGroupAuthorization($json_result));
+$app->add(new \HTTPApi\Middleware\TokenAuthentication($json_result));
 
-require_once('../src/HTTPApi/routes/groups/user.php');
-require_once('../src/HTTPApi/routes/groups/game.php');
+$apiSrcPath = "../src/HTTPApi/routes/groups";
+
+require_once("{$apiSrcPath}/user.php");
+require_once("{$apiSrcPath}/game.php");
+require_once("{$apiSrcPath}/player.php");
+require_once("{$apiSrcPath}/admin.php");
 
 $app->run();
