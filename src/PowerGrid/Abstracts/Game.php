@@ -12,30 +12,17 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   obj     A rule factory.
    * @param   obj     An assoc array of \PowerGrid\Abstract\Player objs.
    */
-  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Factories\RuleFactory $ruleFactory) {
-
-    //@TODO: Need some way to get Player objects and validate those players
-
+  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Abstracts\GameProgression $gameProgression, \PowerGrid\Factories\RuleFactory $ruleFactory) {
     $this->gameData = $dataSource;
     $this->ruleFactory = $ruleFactory;
-  }
-
-  /**
-   * Should give all info a player needs to make a strategic
-   * play decision.
-   * 
-   * @param   void
-   *
-   * @return  array
-   */
-  public function getInfo() {
+    $this->gameProgression = $gameProgression;
+    $this->setPlayers();
   }
 
   public function determineTurnOrder() {
     $action = \PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION;
     $context = array('currentTurnOrder' => $this->gameData->getPlayerTurnOrder());
     $this->performAction($action, $context);
-    //$this->notifyNextPlayer();
   }
 
   /**
@@ -48,22 +35,20 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'powerPlant' => $powerPlant
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
   }
 
   /**
    * @param   int
    * @param   int
    */ 
-  public function placeBid($playerId, $powerPlantId, $bidAmount) {
+  public function placeBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant, $bidAmount) {
     $action = \PowerGrid\Interfaces\GameData::PLACE_BID_ACTION;
     $context = array(
-      'playerId' => $playerId,
-      'powerPlantId' => $powerPlantId,
+      'playerId' => $player,
+      'powerPlantId' => $powerPlant,
       'bidAmount' => $bidAmount
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
   }
 
   /**
@@ -76,7 +61,6 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'resourceOrder' => $resourceOrder
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
   }
 
   /**
@@ -89,7 +73,6 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'cityNames' => $cityNames
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
   }
 
   /**
@@ -104,17 +87,22 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
       'resourcePayment' => $resourcePayment
     );
     $this->performAction($action, $context);
-    $this->notifyNextPlayer();
+  }
+
+  protected function setPlayers() {
+    foreach ($this->gameData->getPlayers() AS $player) {
+      $this->players[$player->getId()] = $player;
+    }
   }
 
   protected function performAction($action, $contextMap) {
-    $this->startAction();
+    $this->beginAction();
 
     $rules = $this->getRules($action);
     $turnData = new \Ruler\Context($contextMap);
     $rules->execute($this->gameData, $turnData);
 
-    $this->finishAction();
+    $this->completeAction();
   }
 
   protected function getRules($action) {
@@ -131,18 +119,28 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     $this->players[$nextPlayerId]->notify($nextAction);
   }
 
+  protected function beginAction() {
+    $this->beginActionHook();
+  }
+
+  protected function completeAction() {
+    $this->progressGame();
+    $this->notifyNextPlayer();
+    $this->completeActionHook();
+  }
+
   /**
    * Run at the start of any action.
    *
    * @param   void
    * @return  void
    */
-  abstract protected function startAction();
+  abstract protected function beginActionHook();
 
   /**
    * Run at the end of any action, but before the next player is notified
    * of his/her next action (since notifying a player is not part of an
    * action).
    */
-  abstract protected function finishAction();
+  abstract protected function completeActionHook();
 }

@@ -61,8 +61,6 @@ class MapInstall {
     $this->buildCityNodes();
     $this->cityGraph = new \PowerGrid\Structures\CityConnectionsGraph();
     $this->cityGraph->populateFromIncompleteGraphNodes($this->cityGraphNodes);
-    var_dump($this->cityGraph->print_representation());
-    exit();
     $this->installAllShortestPaths();
   }
 

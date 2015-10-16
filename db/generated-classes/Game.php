@@ -85,6 +85,12 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     $this->setPhaseNumber($nextPhaseNumber);
   }
 
+  protected function adavanceRound() {
+    $nextRoundNumber = $this->getRoundNumber() + 1;
+
+    $this->setRoundNumber($nextRoundNumber);
+  }
+
   protected function advanceStep() {
     $nextStepNumber = $this->getStepNumber() + 1;
 
