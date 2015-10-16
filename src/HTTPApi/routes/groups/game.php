@@ -23,6 +23,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
+    $userGameCreator->setGameName($name);
     $newGame = $userGameCreator->createGame();
     $newGame->save();
     $newGameId = $newGame->getId();

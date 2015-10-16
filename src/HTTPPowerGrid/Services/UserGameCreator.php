@@ -14,6 +14,10 @@ class UserGameCreator {
     $this->user = $user;
   }
 
+  public function setGameName($name) {
+    $this->gameName = $name;
+  }
+
   public function createGame() {
     $this->game = new \Game();
     $this->setGameMetaInfo();

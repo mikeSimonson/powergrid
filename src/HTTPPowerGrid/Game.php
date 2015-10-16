@@ -7,13 +7,13 @@ class Game extends \PowerGrid\Abstracts\Game {
   /**
    *
    */
-  protected function startAction() {
+  protected function beginActionHook() {
   }
 
   /**
    * Commit any changes made by rules to the gameData.
    */
-  protected function finishAction() {
+  protected function completeActionHook() {
     $this->gameData->save();
   }
 }

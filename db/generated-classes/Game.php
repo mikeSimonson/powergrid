@@ -69,19 +69,6 @@ class Game extends BaseGame implements \PowerGrid\Interfaces\GameData
     $this->setHasStarted(TRUE);
   }
 
-  public function getNextPlayerId() {
-    $currentPlayerId = parent::getNextPlayerId();
-    $turnOrderQuery = \TurnOrderQuery::create()
-      ->filterByGame($this)
-      ->filterByRoundNumber($this->getRoundNumber());
-
-    $currentPlayerIdRank = $turnOrderQuery->filterByPlayerId($currentPlayerId);
-    $turnOrder = \TurnOrderQuery::create()
-      ->filterByGame($this)
-      ->filterByRoundNumber($this->getRoundNumber());
-    $newNextPlayerId = 
-  }
-
   /* MUTATORS */
 
   public function addPlayer(\Player $player) {

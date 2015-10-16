@@ -3,6 +3,7 @@
 namespace PowerGrid\Services;
 
 class GamePlayerManager {
+  const MAX_PLAYERS_PER_GAME = 6;
   protected $gameData;
   protected $player;
 
@@ -21,7 +22,10 @@ class GamePlayerManager {
 
   public function joinPlayerToGame() {
     if ($this->isPlayerInGame()) {
-      throw new \PowerGrid\Exceptions\PlayerAlreadyInGame();
+      throw new \PowerGrid\Exceptions\Administrative\PlayerAlreadyInGame();
+    }
+    else if (count($this->gameData->getPlayers()) >= static::MAX_PLAYERS_PER_GAME) {
+      throw new \PowerGrid\Exceptions\Administrative\MaxPlayersAlreadyInGame(static::MAX_PLAYERS_PER_GAME);
     }
     $this->gameData->addPlayer($this->player);
   }
