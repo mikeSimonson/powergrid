@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/game', function() use ($app, $json_result) {
 
+  $token = $app->request->params('token');
+  $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
+
   $app->get('/list', function() use ($app, $json_result) {
     $games = \GameQuery::create()->find();
     $gameLister = new \PowerGrid\Services\GameLister($games);
@@ -16,11 +19,8 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); //END /game/list GET route
   
-  $app->post('/create', function() use ($app, $json_result) {
+  $app->post('/create', function() use ($app, $json_result, $user) {
     $name = $app->request->params('name');
-    $token = $app->request->params('token');
-
-    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
     $userGameCreator->setGameName($name);
@@ -34,17 +34,16 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); // END /game/create POST route
 
-  $app->post('/:gameId/start', function($gameId) use ($app, $json_result) {
-    $token = $app->request->params('token');
+  $app->post('/:gameId/start', function($gameId) use ($app, $json_result, $user) {
+    $game = \GameQuery::create()->findPK($gameId);
 
-    $q = \GameQuery::create();
-    $game = $q->findPK($gameId);
-    
-    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
-
-    $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game);
+    if (is_null($game)) {
+      $json_result->addError('Game with id ' . intval($gameId) . ' does not exist.');
+      return;
+    }
 
     try {
+      $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game);
       $gameStarter->setStartingUser($user);
       $gameStarter->startGame();
       $json_result->setSuccess('Game started');
@@ -58,11 +57,9 @@ $app->group('/game', function() use ($app, $json_result) {
     $app->response->setBody($json_result->getJSON());
   }); // END /game/:gameId/start POST route
 
-  $app->post('/:gameId/join', function($gameId) use ($app, $json_result) {
-    $token = $app->request->params('token');
+  $app->post('/:gameId/join', function($gameId) use ($app, $json_result, $user) {
     $playerName = $app->request->params('name');
 
-    $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
     $userServices = new \HTTPPowerGrid\Services\UserServices($user);
 
     $player = \HTTPPowerGrid\Services\PlayerServices::createPlayer();

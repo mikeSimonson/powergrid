@@ -106,7 +106,7 @@
       <reference local="map_id" foreign="id"/>
     </foreign-key>
   </table>
-  <table name="card_status" phpName="CardStatus">
+  <table name="card_status" phpName="CardStatus"> <!-- What the shit was card status again? Oh. Probably in or out of the deck, or in auction? -->
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar" size="64"/>
   </table>
@@ -129,7 +129,8 @@
   <table name="game_card" phpName="GameCard">
     <column name="game_id" type="integer" required="true" primaryKey="true"/>
     <column name="card_id" type="integer" required="true" primaryKey="true"/>
-    <column name="card_status_id" type="integer" required="true" primaryKey="true"/>
+    <column name="deck_position" type="integer" required="false"/>
+    <column name="card_status_id" type="integer" required="false"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCard">
       <reference local="game_id" foreign="id"/>
     </foreign-key>

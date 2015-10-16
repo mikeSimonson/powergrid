@@ -9,8 +9,9 @@ class GameStarter {
 
   protected $gameData;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $gameData) {
+  public function __construct(\PowerGrid\Interfaces\GameData $gameData, \PowerGrid\Services\CardShuffler $cardShuffler) {
     $this->gameData = $gameData;
+    $this->cardShuffler = $cardShuffler;
   }
 
   public function startGame() {
@@ -68,6 +69,7 @@ class GameStarter {
 
   protected function setStartingGameDefaults() {
     $this->setCardLimit();
+    $this->cardShuffler->shuffleFreshDeck($this->gameData->countPlayers());
     $this->setGameHasStarted();
   }
 
