@@ -19,13 +19,12 @@ class TokenAuthentication extends \Slim\Middleware {
 
     if ($this->uriRouteRequiresToken($uriRoute) === TRUE) {
       if ($this->gaveAuthenticationToken($token) === FALSE) {
-        $this->app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
-        $this->json_result->addError('No authentication token provided. (param: token)');
-        $this->app->response->setBody($this->json_result->getJSON());
+        $this->app->response->setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
+        $this->json_result->addError('No authentication token provided. (param: token)'); $this->app->response->setBody($this->json_result->getJSON());
         $success = FALSE;
       }
       else if ($this->isTokenValid($token) === FALSE){
-        $this->app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
+        $this->app->response->setStatus(HTTPResponse::HTTP_UNAUTHORIZED);
         $this->json_result->addError('Invalid authentication token. (param: token)');
         $this->app->response->setBody($this->json_result->getJSON());
         $success = FALSE;
