@@ -9,6 +9,14 @@
       <unique-column name="email"/>
     </unique>
   </table>
+  <table name="user_group_authorization" phpName="UserGroupAuthorization">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="group_name" type="varchar"/>
+    <column name="user_id" type="integer"/>
+    <foreign-key foreignTable="user" phpName="GroupUser" refPhpName="AuthorizationGroup">
+      <reference local="user_id" foreign="id"/>
+    </foreign-key>
+  </table>
   <table name="user_token" phpName="UserToken">
     <column name="token_string" type="varchar" size="255" required="true" primaryKey="true"/>
     <column name="user_id" type="integer" required="true"/>

@@ -158,6 +158,13 @@ class UserTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('AuthorizationGroup', '\\UserGroupAuthorization', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':user_id',
+    1 => ':id',
+  ),
+), null, null, 'AuthorizationGroups', false);
         $this->addRelation('UserToken', '\\UserToken', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

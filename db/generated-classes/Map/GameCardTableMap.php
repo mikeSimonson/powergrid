@@ -59,7 +59,7 @@ class GameCardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class GameCardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the game_id field
@@ -80,6 +80,11 @@ class GameCardTableMap extends TableMap
      * the column name for the card_id field
      */
     const COL_CARD_ID = 'game_card.card_id';
+
+    /**
+     * the column name for the deck_position field
+     */
+    const COL_DECK_POSITION = 'game_card.deck_position';
 
     /**
      * the column name for the card_status_id field
@@ -98,11 +103,11 @@ class GameCardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('GameId', 'CardId', 'CardStatusId', ),
-        self::TYPE_CAMELNAME     => array('gameId', 'cardId', 'cardStatusId', ),
-        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID, GameCardTableMap::COL_CARD_ID, GameCardTableMap::COL_CARD_STATUS_ID, ),
-        self::TYPE_FIELDNAME     => array('game_id', 'card_id', 'card_status_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('GameId', 'CardId', 'DeckPosition', 'CardStatusId', ),
+        self::TYPE_CAMELNAME     => array('gameId', 'cardId', 'deckPosition', 'cardStatusId', ),
+        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID, GameCardTableMap::COL_CARD_ID, GameCardTableMap::COL_DECK_POSITION, GameCardTableMap::COL_CARD_STATUS_ID, ),
+        self::TYPE_FIELDNAME     => array('game_id', 'card_id', 'deck_position', 'card_status_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -112,11 +117,11 @@ class GameCardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('GameId' => 0, 'CardId' => 1, 'CardStatusId' => 2, ),
-        self::TYPE_CAMELNAME     => array('gameId' => 0, 'cardId' => 1, 'cardStatusId' => 2, ),
-        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID => 0, GameCardTableMap::COL_CARD_ID => 1, GameCardTableMap::COL_CARD_STATUS_ID => 2, ),
-        self::TYPE_FIELDNAME     => array('game_id' => 0, 'card_id' => 1, 'card_status_id' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('GameId' => 0, 'CardId' => 1, 'DeckPosition' => 2, 'CardStatusId' => 3, ),
+        self::TYPE_CAMELNAME     => array('gameId' => 0, 'cardId' => 1, 'deckPosition' => 2, 'cardStatusId' => 3, ),
+        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID => 0, GameCardTableMap::COL_CARD_ID => 1, GameCardTableMap::COL_DECK_POSITION => 2, GameCardTableMap::COL_CARD_STATUS_ID => 3, ),
+        self::TYPE_FIELDNAME     => array('game_id' => 0, 'card_id' => 1, 'deck_position' => 2, 'card_status_id' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -138,7 +143,8 @@ class GameCardTableMap extends TableMap
         // columns
         $this->addForeignPrimaryKey('game_id', 'GameId', 'INTEGER' , 'game', 'id', true, null, null);
         $this->addForeignPrimaryKey('card_id', 'CardId', 'INTEGER' , 'card', 'id', true, null, null);
-        $this->addForeignPrimaryKey('card_status_id', 'CardStatusId', 'INTEGER' , 'card_status', 'id', true, null, null);
+        $this->addColumn('deck_position', 'DeckPosition', 'INTEGER', false, null, null);
+        $this->addForeignKey('card_status_id', 'CardStatusId', 'INTEGER', 'card_status', 'id', false, null, null);
     } // initialize()
 
     /**
@@ -184,7 +190,7 @@ class GameCardTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled()) {
             if (null === $key) {
-                $key = serialize(array((string) $obj->getGameId(), (string) $obj->getCardId(), (string) $obj->getCardStatusId()));
+                $key = serialize(array((string) $obj->getGameId(), (string) $obj->getCardId()));
             } // if key === null
             self::$instances[$key] = $obj;
         }
@@ -204,11 +210,11 @@ class GameCardTableMap extends TableMap
     {
         if (Propel::isInstancePoolingEnabled() && null !== $value) {
             if (is_object($value) && $value instanceof \GameCard) {
-                $key = serialize(array((string) $value->getGameId(), (string) $value->getCardId(), (string) $value->getCardStatusId()));
+                $key = serialize(array((string) $value->getGameId(), (string) $value->getCardId()));
 
-            } elseif (is_array($value) && count($value) === 3) {
+            } elseif (is_array($value) && count($value) === 2) {
                 // assume we've been passed a primary key";
-                $key = serialize(array((string) $value[0], (string) $value[1], (string) $value[2]));
+                $key = serialize(array((string) $value[0], (string) $value[1]));
             } elseif ($value instanceof Criteria) {
                 self::$instances = [];
 
@@ -238,11 +244,11 @@ class GameCardTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 2 + $offset : static::translateFieldName('CardStatusId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 2 + $offset : static::translateFieldName('CardStatusId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)]));
     }
 
     /**
@@ -270,11 +276,6 @@ class GameCardTableMap extends TableMap
             $indexType == TableMap::TYPE_NUM
                 ? 1 + $offset
                 : self::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
-        $pks[] = (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 2 + $offset
-                : self::translateFieldName('CardStatusId', TableMap::TYPE_PHPNAME, $indexType)
         ];
 
         return $pks;
@@ -379,10 +380,12 @@ class GameCardTableMap extends TableMap
         if (null === $alias) {
             $criteria->addSelectColumn(GameCardTableMap::COL_GAME_ID);
             $criteria->addSelectColumn(GameCardTableMap::COL_CARD_ID);
+            $criteria->addSelectColumn(GameCardTableMap::COL_DECK_POSITION);
             $criteria->addSelectColumn(GameCardTableMap::COL_CARD_STATUS_ID);
         } else {
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.card_id');
+            $criteria->addSelectColumn($alias . '.deck_position');
             $criteria->addSelectColumn($alias . '.card_status_id');
         }
     }
@@ -444,7 +447,6 @@ class GameCardTableMap extends TableMap
             foreach ($values as $value) {
                 $criterion = $criteria->getNewCriterion(GameCardTableMap::COL_GAME_ID, $value[0]);
                 $criterion->addAnd($criteria->getNewCriterion(GameCardTableMap::COL_CARD_ID, $value[1]));
-                $criterion->addAnd($criteria->getNewCriterion(GameCardTableMap::COL_CARD_STATUS_ID, $value[2]));
                 $criteria->addOr($criterion);
             }
         }
