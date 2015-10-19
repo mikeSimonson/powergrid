@@ -8,10 +8,13 @@ class GameStarter {
   const STARTING_CARD_LIMIT_MORE_THAN_2_PLAYERS = 3;
 
   protected $gameData;
+  protected $cardShuffler;
+  protected $auctionServices;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $gameData, \PowerGrid\Services\CardShuffler $cardShuffler) {
+  public function __construct(\PowerGrid\Interfaces\GameData $gameData, \PowerGrid\Services\CardShuffler $cardShuffler, \PowerGrid\Services\AuctionServices $auctionServices) {
     $this->gameData = $gameData;
     $this->cardShuffler = $cardShuffler;
+    $this->auctionServices = $auctionServices;
   }
 
   public function startGame() {
@@ -69,7 +72,9 @@ class GameStarter {
 
   protected function setStartingGameDefaults() {
     $this->setCardLimit();
-    $this->cardShuffler->shuffleFreshDeck($this->gameData->countPlayers());
+    $this->auctionServices->setupStartingAuction();
+    $this->cardShuffler->shuffle();
+    $this->cardShuffler->removeExtraCards();
     $this->setGameHasStarted();
   }
 

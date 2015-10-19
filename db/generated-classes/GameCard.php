@@ -12,7 +12,7 @@ use Base\GameCard as BaseGameCard;
  * long as it does not already exist in the output directory.
  *
  */
-class GameCard extends BaseGameCard
+class GameCard extends BaseGameCard implements \PowerGrid\Interfaces\GameCardData
 {
 
 }
