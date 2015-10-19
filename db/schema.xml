@@ -130,6 +130,10 @@
 
   <!-- Relation tables -->
 
+  <!--
+       All possible cards associated with a game, except those that have been trashed.
+       These may be in a user's hand or in the auction.
+  -->
   <table name="game_card" phpName="GameCard">
     <column name="id" type="integer" required="true" autoIncrement="true"/>
     <column name="card_id" type="integer" required="false"/>
@@ -142,15 +146,18 @@
       <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
+  <!-- Only the cards active in the auction at the time. -->
   <table name="game_auction" phpName="GameAuction">
     <column name="id"/>
     <column name="game_id" type="integer"/>
-    <column name=""/>
-  </table>
-  <table name="game_deck" phpName="GameDeck">
-    <column name="card_id" type="integer" required="false"/>
-    <column name="game_id" type="integer" required="false"/>
-    <column name="deck_position" type="integer" required="false"/>
+    <column name="card_id" type="integer"/>
+    <column name="auction_position" type="integer"/>
+    <foreign-key foreignTable="game" phpName="AuctionGame" refPhpName="GameAuction">
+      <reference local="game_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="game_card" phpName="AuctionCard" refPhpName="AuctionGameCard">
+      <reference local="card_id" foreign="card_id"/>
+    </foreign-key>
   </table>
   <table name="player_resource" phpName="PlayerResource">
     <column name="resource_type_id" type="integer" required="true" primaryKey="true"/>
