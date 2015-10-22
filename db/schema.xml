@@ -132,13 +132,12 @@
 
   <!--
        All possible cards associated with a game, except those that have been trashed.
-       These may be in a user's hand or in the auction.
+       These may be in a user's hand, the deck, or the auction.
   -->
   <table name="game_card" phpName="GameCard">
-    <column name="id" type="integer" required="true" autoIncrement="true"/>
+    <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="card_id" type="integer" required="false"/>
     <column name="game_id" type="integer" required="false"/>
-    <column name="deck_position" type="integer" required="false"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCard">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
@@ -147,29 +146,53 @@
     </foreign-key>
   </table>
   <!-- Only the cards active in the auction at the time. -->
-  <table name="game_auction" phpName="GameAuction">
-    <column name="id"/>
+  <table name="game_deck_card" phpName="GameDeckCard">
+    <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="game_id" type="integer"/>
+    <column name="card_id" type="integer"/>
+    <column name="deck_position" type="integer"/>
+    <foreign-key foreignTable="game" phpName="DeckGame" refPhpName="GameDeck">
+      <reference local="game_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="game_card" phpName="DeckCard" refPhpName="GameDeckCard">
+      <reference local="card_id" foreign="card_id"/>
+    </foreign-key>
+  </table>
+  <!-- Only the cards active in the auction at the time. -->
+  <table name="game_auction_card" phpName="GameAuctionCard">
+    <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="game_id" type="integer"/>
     <column name="card_id" type="integer"/>
     <column name="auction_position" type="integer"/>
     <foreign-key foreignTable="game" phpName="AuctionGame" refPhpName="GameAuction">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="game_card" phpName="AuctionCard" refPhpName="AuctionGameCard">
+    <foreign-key foreignTable="game_card" phpName="AuctionCard" refPhpName="GameCardAuction">
+      <reference local="card_id" foreign="card_id"/>
+    </foreign-key>
+  </table>
+  <table name="game_deck_special_card" phpName="GameDeckSpecialCard">
+    <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="game_id" type="integer"/>
+    <column name="card_id" type="integer"/>
+    <column name="step_number" type="integer"/>
+    <foreign-key foreignTable="game" phpName="SpecialCardGame" refPhpName="GameSpecialCard">
+      <reference local="game_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="game_card" phpName="SpecialCardGameCard" refPhpName="GameCardSpecialCard">
       <reference local="card_id" foreign="card_id"/>
     </foreign-key>
   </table>
   <table name="player_resource" phpName="PlayerResource">
     <column name="resource_type_id" type="integer" required="true" primaryKey="true"/>
     <column name="player_id" type="integer" required="true" primaryKey="true"/>
+    <column name="quantity" type="integer" required="true"/>
     <foreign-key foreignTable="resource_type" phpName="ResourceType" refPhpName="PlayerResource">
       <reference local="resource_type_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerResource">
       <reference local="player_id" foreign="id"/>
     </foreign-key>
-
-    <column name="quantity" type="integer" required="true"/>
   </table>
   <table name="player_city" phpName="PlayerCity">
     <column name="player_id" type="integer" required="true" primaryKey="true"/>

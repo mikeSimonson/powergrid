@@ -59,7 +59,7 @@ class GameCardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 4;
+    const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -69,12 +69,12 @@ class GameCardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 4;
+    const NUM_HYDRATE_COLUMNS = 3;
 
     /**
-     * the column name for the game_id field
+     * the column name for the id field
      */
-    const COL_GAME_ID = 'game_card.game_id';
+    const COL_ID = 'game_card.id';
 
     /**
      * the column name for the card_id field
@@ -82,14 +82,9 @@ class GameCardTableMap extends TableMap
     const COL_CARD_ID = 'game_card.card_id';
 
     /**
-     * the column name for the deck_position field
+     * the column name for the game_id field
      */
-    const COL_DECK_POSITION = 'game_card.deck_position';
-
-    /**
-     * the column name for the card_status_id field
-     */
-    const COL_CARD_STATUS_ID = 'game_card.card_status_id';
+    const COL_GAME_ID = 'game_card.game_id';
 
     /**
      * The default string format for model objects of the related table
@@ -103,11 +98,11 @@ class GameCardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('GameId', 'CardId', 'DeckPosition', 'CardStatusId', ),
-        self::TYPE_CAMELNAME     => array('gameId', 'cardId', 'deckPosition', 'cardStatusId', ),
-        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID, GameCardTableMap::COL_CARD_ID, GameCardTableMap::COL_DECK_POSITION, GameCardTableMap::COL_CARD_STATUS_ID, ),
-        self::TYPE_FIELDNAME     => array('game_id', 'card_id', 'deck_position', 'card_status_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id', 'CardId', 'GameId', ),
+        self::TYPE_CAMELNAME     => array('id', 'cardId', 'gameId', ),
+        self::TYPE_COLNAME       => array(GameCardTableMap::COL_ID, GameCardTableMap::COL_CARD_ID, GameCardTableMap::COL_GAME_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'card_id', 'game_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -117,11 +112,11 @@ class GameCardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('GameId' => 0, 'CardId' => 1, 'DeckPosition' => 2, 'CardStatusId' => 3, ),
-        self::TYPE_CAMELNAME     => array('gameId' => 0, 'cardId' => 1, 'deckPosition' => 2, 'cardStatusId' => 3, ),
-        self::TYPE_COLNAME       => array(GameCardTableMap::COL_GAME_ID => 0, GameCardTableMap::COL_CARD_ID => 1, GameCardTableMap::COL_DECK_POSITION => 2, GameCardTableMap::COL_CARD_STATUS_ID => 3, ),
-        self::TYPE_FIELDNAME     => array('game_id' => 0, 'card_id' => 1, 'deck_position' => 2, 'card_status_id' => 3, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'CardId' => 1, 'GameId' => 2, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'cardId' => 1, 'gameId' => 2, ),
+        self::TYPE_COLNAME       => array(GameCardTableMap::COL_ID => 0, GameCardTableMap::COL_CARD_ID => 1, GameCardTableMap::COL_GAME_ID => 2, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'card_id' => 1, 'game_id' => 2, ),
+        self::TYPE_NUM           => array(0, 1, 2, )
     );
 
     /**
@@ -139,12 +134,11 @@ class GameCardTableMap extends TableMap
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\GameCard');
         $this->setPackage('');
-        $this->setUseIdGenerator(false);
+        $this->setUseIdGenerator(true);
         // columns
-        $this->addForeignPrimaryKey('game_id', 'GameId', 'INTEGER' , 'game', 'id', true, null, null);
-        $this->addForeignPrimaryKey('card_id', 'CardId', 'INTEGER' , 'card', 'id', true, null, null);
-        $this->addColumn('deck_position', 'DeckPosition', 'INTEGER', false, null, null);
-        $this->addForeignKey('card_status_id', 'CardStatusId', 'INTEGER', 'card_status', 'id', false, null, null);
+        $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
+        $this->addForeignKey('card_id', 'CardId', 'INTEGER', 'card', 'id', false, null, null);
+        $this->addForeignKey('game_id', 'GameId', 'INTEGER', 'game', 'id', false, null, null);
     } // initialize()
 
     /**
@@ -166,67 +160,28 @@ class GameCardTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('CardStatus', '\\CardStatus', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('GameDeckCard', '\\GameDeckCard', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':card_status_id',
-    1 => ':id',
+    0 => ':card_id',
+    1 => ':card_id',
   ),
-), null, null, null, false);
+), null, null, 'GameDeckCards', false);
+        $this->addRelation('GameCardAuction', '\\GameAuctionCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':card_id',
+  ),
+), null, null, 'GameCardAuctions', false);
+        $this->addRelation('GameCardSpecialCard', '\\GameDeckSpecialCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':card_id',
+  ),
+), null, null, 'GameCardSpecialCards', false);
     } // buildRelations()
-
-    /**
-     * Adds an object to the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database. In some cases you may need to explicitly add objects
-     * to the cache in order to ensure that the same objects are always returned by find*()
-     * and findPk*() calls.
-     *
-     * @param \GameCard $obj A \GameCard object.
-     * @param string $key             (optional) key to use for instance map (for performance boost if key was already calculated externally).
-     */
-    public static function addInstanceToPool($obj, $key = null)
-    {
-        if (Propel::isInstancePoolingEnabled()) {
-            if (null === $key) {
-                $key = serialize(array((string) $obj->getGameId(), (string) $obj->getCardId()));
-            } // if key === null
-            self::$instances[$key] = $obj;
-        }
-    }
-
-    /**
-     * Removes an object from the instance pool.
-     *
-     * Propel keeps cached copies of objects in an instance pool when they are retrieved
-     * from the database.  In some cases -- especially when you override doDelete
-     * methods in your stub classes -- you may need to explicitly remove objects
-     * from the cache in order to prevent returning objects that no longer exist.
-     *
-     * @param mixed $value A \GameCard object or a primary key value.
-     */
-    public static function removeInstanceFromPool($value)
-    {
-        if (Propel::isInstancePoolingEnabled() && null !== $value) {
-            if (is_object($value) && $value instanceof \GameCard) {
-                $key = serialize(array((string) $value->getGameId(), (string) $value->getCardId()));
-
-            } elseif (is_array($value) && count($value) === 2) {
-                // assume we've been passed a primary key";
-                $key = serialize(array((string) $value[0], (string) $value[1]));
-            } elseif ($value instanceof Criteria) {
-                self::$instances = [];
-
-                return;
-            } else {
-                $e = new PropelException("Invalid value passed to removeInstanceFromPool().  Expected primary key or \GameCard object; got " . (is_object($value) ? get_class($value) . ' object.' : var_export($value, true)));
-                throw $e;
-            }
-
-            unset(self::$instances[$key]);
-        }
-    }
 
     /**
      * Retrieves a string version of the primary key from the DB resultset row that can be used to uniquely identify a row in this table.
@@ -244,11 +199,11 @@ class GameCardTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)] === null && $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return serialize(array((string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)], (string) $row[TableMap::TYPE_NUM == $indexType ? 1 + $offset : static::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)]));
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -265,20 +220,11 @@ class GameCardTableMap extends TableMap
      */
     public static function getPrimaryKeyFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-            $pks = [];
-
-        $pks[] = (int) $row[
+        return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('GameId', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Id', TableMap::TYPE_PHPNAME, $indexType)
         ];
-        $pks[] = (int) $row[
-            $indexType == TableMap::TYPE_NUM
-                ? 1 + $offset
-                : self::translateFieldName('CardId', TableMap::TYPE_PHPNAME, $indexType)
-        ];
-
-        return $pks;
     }
 
     /**
@@ -378,15 +324,13 @@ class GameCardTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(GameCardTableMap::COL_GAME_ID);
+            $criteria->addSelectColumn(GameCardTableMap::COL_ID);
             $criteria->addSelectColumn(GameCardTableMap::COL_CARD_ID);
-            $criteria->addSelectColumn(GameCardTableMap::COL_DECK_POSITION);
-            $criteria->addSelectColumn(GameCardTableMap::COL_CARD_STATUS_ID);
+            $criteria->addSelectColumn(GameCardTableMap::COL_GAME_ID);
         } else {
-            $criteria->addSelectColumn($alias . '.game_id');
+            $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.card_id');
-            $criteria->addSelectColumn($alias . '.deck_position');
-            $criteria->addSelectColumn($alias . '.card_status_id');
+            $criteria->addSelectColumn($alias . '.game_id');
         }
     }
 
@@ -438,17 +382,7 @@ class GameCardTableMap extends TableMap
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
             $criteria = new Criteria(GameCardTableMap::DATABASE_NAME);
-            // primary key is composite; we therefore, expect
-            // the primary key passed to be an array of pkey values
-            if (count($values) == count($values, COUNT_RECURSIVE)) {
-                // array is not multi-dimensional
-                $values = array($values);
-            }
-            foreach ($values as $value) {
-                $criterion = $criteria->getNewCriterion(GameCardTableMap::COL_GAME_ID, $value[0]);
-                $criterion->addAnd($criteria->getNewCriterion(GameCardTableMap::COL_CARD_ID, $value[1]));
-                $criteria->addOr($criterion);
-            }
+            $criteria->add(GameCardTableMap::COL_ID, (array) $values, Criteria::IN);
         }
 
         $query = GameCardQuery::create()->mergeWith($criteria);
@@ -494,6 +428,10 @@ class GameCardTableMap extends TableMap
             $criteria = clone $criteria; // rename for clarity
         } else {
             $criteria = $criteria->buildCriteria(); // build Criteria from GameCard object
+        }
+
+        if ($criteria->containsKey(GameCardTableMap::COL_ID) && $criteria->keyContainsValue(GameCardTableMap::COL_ID) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.GameCardTableMap::COL_ID.')');
         }
 
 
