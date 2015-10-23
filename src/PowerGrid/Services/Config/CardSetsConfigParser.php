@@ -15,10 +15,10 @@ class CardSetsConfigParser extends \PowerGrid\Abstracts\ConfigParser {
       $cardSetObj =  $this->preMangle[$currentIndex];
 
       // Make sure both name and filename attributes exist
-      if (!isset($cardSetObj['name'], $cardSetObj['filename'])) {
+      if (!isset($cardSetObj->name, $cardSetObj->filename)) {
         $parseError = TRUE;
       }
-      else if (!is_string($cardSetObj['name']) || !is_string($cardSetObj['filename'])) {
+      else if (!is_string($cardSetObj->name) || !is_string($cardSetObj->filename)) {
         $parseError = TRUE;
       }
 
