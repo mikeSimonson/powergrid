@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Services\Config;
 
-class CityConnectionsConfigParser extends \PowerGrid\Abstracts\ConfigParser {
+class CardSetsConfigParser extends \PowerGrid\Abstracts\ConfigParser {
   protected function mangle() {
     return $this->preMangle;
   }
