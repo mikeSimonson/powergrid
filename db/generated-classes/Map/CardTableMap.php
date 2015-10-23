@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'card' table.
+ * This class defines the structure of the 'card_set' table.
  *
  *
  *
@@ -44,7 +44,7 @@ class CardTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'card';
+    const TABLE_NAME = 'card_set';
 
     /**
      * The related Propel class for this table
@@ -59,7 +59,7 @@ class CardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 3;
+    const NUM_COLUMNS = 2;
 
     /**
      * The number of lazy-loaded columns
@@ -69,22 +69,17 @@ class CardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 3;
+    const NUM_HYDRATE_COLUMNS = 2;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'card.id';
+    const COL_ID = 'card_set.id';
 
     /**
-     * the column name for the resource_cost field
+     * the column name for the name field
      */
-    const COL_RESOURCE_COST = 'card.resource_cost';
-
-    /**
-     * the column name for the resource_type_id field
-     */
-    const COL_RESOURCE_TYPE_ID = 'card.resource_type_id';
+    const COL_NAME = 'card_set.name';
 
     /**
      * The default string format for model objects of the related table
@@ -98,11 +93,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'ResourceCost', 'ResourceTypeId', ),
-        self::TYPE_CAMELNAME     => array('id', 'resourceCost', 'resourceTypeId', ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_RESOURCE_COST, CardTableMap::COL_RESOURCE_TYPE_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'resource_cost', 'resource_type_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id', 'Name', ),
+        self::TYPE_CAMELNAME     => array('id', 'name', ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_NAME, ),
+        self::TYPE_FIELDNAME     => array('id', 'name', ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -112,11 +107,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'ResourceCost' => 1, 'ResourceTypeId' => 2, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'resourceCost' => 1, 'resourceTypeId' => 2, ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_RESOURCE_COST => 1, CardTableMap::COL_RESOURCE_TYPE_ID => 2, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'resource_cost' => 1, 'resource_type_id' => 2, ),
-        self::TYPE_NUM           => array(0, 1, 2, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_NAME => 1, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, ),
+        self::TYPE_NUM           => array(0, 1, )
     );
 
     /**
@@ -129,7 +124,7 @@ class CardTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('card');
+        $this->setName('card_set');
         $this->setPhpName('Card');
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Card');
@@ -137,8 +132,7 @@ class CardTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('resource_cost', 'ResourceCost', 'INTEGER', false, null, null);
-        $this->addForeignKey('resource_type_id', 'ResourceTypeId', 'INTEGER', 'resource_type', 'id', false, null, null);
+        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
     } // initialize()
 
     /**
@@ -146,27 +140,13 @@ class CardTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('ResourceType', '\\ResourceType', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('CardSetCard', '\\Card', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
-    0 => ':resource_type_id',
+    0 => ':card_set_id',
     1 => ':id',
   ),
-), null, null, null, false);
-        $this->addRelation('GameCard', '\\GameCard', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':card_id',
-    1 => ':id',
-  ),
-), null, null, 'GameCards', false);
-        $this->addRelation('PlayerCard', '\\PlayerCard', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':card_id',
-    1 => ':id',
-  ),
-), null, null, 'PlayerCards', false);
+), null, null, 'CardSetCards', false);
     } // buildRelations()
 
     /**
@@ -311,12 +291,10 @@ class CardTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(CardTableMap::COL_ID);
-            $criteria->addSelectColumn(CardTableMap::COL_RESOURCE_COST);
-            $criteria->addSelectColumn(CardTableMap::COL_RESOURCE_TYPE_ID);
+            $criteria->addSelectColumn(CardTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.resource_cost');
-            $criteria->addSelectColumn($alias . '.resource_type_id');
+            $criteria->addSelectColumn($alias . '.name');
         }
     }
 
@@ -385,7 +363,7 @@ class CardTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the card table.
+     * Deletes all rows from the card_set table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).

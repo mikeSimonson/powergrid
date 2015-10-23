@@ -276,13 +276,6 @@ class GameTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'GameAuctions', false);
-        $this->addRelation('GameSpecialCard', '\\GameDeckSpecialCard', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':game_id',
-    1 => ':id',
-  ),
-), null, null, 'GameSpecialCards', false);
         $this->addRelation('GameCity', '\\GameCity', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

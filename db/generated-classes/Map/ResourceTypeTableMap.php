@@ -140,13 +140,13 @@ class ResourceTypeTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Card', '\\Card', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('CardResourceType', '\\CardResource', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':resource_type_id',
     1 => ':id',
   ),
-), null, null, 'Cards', false);
+), null, null, 'CardResourceTypes', false);
         $this->addRelation('ResourceStore', '\\ResourceStore', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

@@ -87,10 +87,14 @@
       <reference local="card_set_id" foreign="id"/>
     </foreign-key>
   </table>
+  <table name="resource_type" phpName="ResourceType">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="name" type="varchar" size="64"/>
+  </table>
   <table name="card_resource" phpName="CardResource">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="card_id" type="integer"/>
-    <column name="resource_type_id"/>
+    <column name="resource_type_id" type="integer"/>
     <foreign-key foreignTable="resource_type" phpName="ResourceType" refPhpName="CardResourceType">
       <reference local="resource_type_id" foreign="id"/>
     </foreign-key>
@@ -101,10 +105,6 @@
   <table name="card_set" phpName="Card">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar"/>
-  </table>
-  <table name="resource_type" phpName="ResourceType">
-    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="name" type="varchar" size="64"/>
   </table>
   <table name="resource_store" phpName="ResourceStore">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>

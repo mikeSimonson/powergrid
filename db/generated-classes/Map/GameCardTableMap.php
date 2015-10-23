@@ -174,13 +174,6 @@ class GameCardTableMap extends TableMap
     1 => ':card_id',
   ),
 ), null, null, 'GameCardAuctions', false);
-        $this->addRelation('GameCardSpecialCard', '\\GameDeckSpecialCard', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':card_id',
-    1 => ':card_id',
-  ),
-), null, null, 'GameCardSpecialCards', false);
     } // buildRelations()
 
     /**
