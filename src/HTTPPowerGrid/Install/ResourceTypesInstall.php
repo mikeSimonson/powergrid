@@ -7,8 +7,7 @@ class ResourceTypesInstall {
   protected $config;
   protected $resourceTypesConfigToDBMap;
 
-  public function __construct($resourceTypesConfig, \CardSet $cardSet) {
-    $this->cardSet = $cardSet;
+  public function __construct($resourceTypesConfig) {
     $this->config = $resourceTypesConfig;
   }
 
@@ -16,7 +15,6 @@ class ResourceTypesInstall {
     foreach (array_keys($this->config) AS $resourceTypeKey) {
       $dbResourceType = new \ResourceType();
       $dbResourceType->setName($this->config[$resourceTypeKey]);
-      $dbResourceType->setCardSet($this->cardSet);
       $dbResourceType->save();
       $this->resourceTypesConfigToDBMap[$resourceTypeKey] = $dbResourceType;
     }
