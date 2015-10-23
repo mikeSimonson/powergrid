@@ -3,7 +3,6 @@
 namespace HTTPPowerGrid\Install;
 
 class ResourceTypesInstall {
-  protected $cardSet;
   protected $config;
   protected $resourceTypesConfigToDBMap;
 
