@@ -3,16 +3,16 @@
 namespace HTTPPowerGrid\Install;
 
 class CardSetInstall {
-  protected $cardSetName;
+  protected $cardSetConfig;
   protected $installedCardSet;
 
-  public function __construct($cardSetName) {
-    $this->cardSetName = $cardSetName;
+  public function __construct($cardSetConfig) {
+    $this->cardSetConfig = $cardSetConfig;
   }
 
   public function installCardSet() {
     $cardSet = new \CardSet();
-    $cardSet->setName($this->cardSetName);
+    $cardSet->setName($this->cardSetConfig['name']);
     $cardSet->save();
     $this->installedCardSet = $cardSet;
   }
