@@ -105,10 +105,6 @@
   <table name="resource_type" phpName="ResourceType">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar" size="64"/>
-    <column name="card_set_id" type="integer"/>
-    <foreign-key foreignTable="card_set" phpName="CardSet" refPhpName="CardSetCard">
-      <reference local="card_set_id" foreign="id"/>
-    </foreign-key>
   </table>
   <table name="resource_store" phpName="ResourceStore">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
