@@ -11,7 +11,7 @@ class CardSetsConfigParser extends \PowerGrid\Abstracts\ConfigParser {
     $parseError = FALSE;
 
     $currentIndex = 0;
-    while ($parseError == FALSE && $currentIndex < count($this->current)) {
+    while ($parseError == FALSE && $currentIndex < count($this->preMangle)) {
       $cardSetObj =  $this->preMangle[$currentIndex];
 
       // Make sure both name and filename attributes exist

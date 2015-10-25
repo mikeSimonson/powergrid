@@ -4,10 +4,12 @@ namespace PowerGrid\Services\Config;
 
 class MapConfigParser extends \PowerGrid\Abstracts\ConfigParser {
   protected function checkValidity() {
-    foreach ($this->preMangle AS $city_name) {
-      if (!is_string($city_name)) {
-        throw new \PowerGrid\Exceptions\Application\BadGameConfigFormat();
-      }
+    if (!is_string($this->preMangle['name'])) {
+      throw new \PowerGrid\Exceptions\Application\BadGameConfigFormat();
+    }
+
+    if (!array_filter($this->preMangle['filenames'], 'is_string')) {
+      throw new \PowerGrid\Exceptions\Application\BadGameConfigFormat();
     }
   }
 

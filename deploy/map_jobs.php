@@ -8,7 +8,7 @@ function installMaps() {
   $mapsFile = json_decode($mapsFile, TRUE);
 
   foreach ($mapsFile as $mapConfig) {
-    $mapConfigParser = \PowerGrid\Services\Config\MapConfigParser($mapConfig);
+    $mapConfigParser = new \PowerGrid\Services\Config\MapConfigParser($mapConfig);
     $mapConfig = $mapConfigParser->parse();
 
     $connectionsConfigFile = $gameconfigDir . '/' . $mapConfig['filenames']['connections'];
