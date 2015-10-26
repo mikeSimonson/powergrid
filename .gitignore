@@ -11,3 +11,4 @@ composer
 *.swp
 *.swo
 ctags
+deploy/new_install.sh
