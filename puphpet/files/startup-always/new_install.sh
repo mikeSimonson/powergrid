@@ -10,5 +10,5 @@ cd /var/www
 ./composer install
 
 # Install PowerGrid
-cd deploy
+cd /var/www/deploy
 php install.php
