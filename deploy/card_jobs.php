@@ -16,7 +16,7 @@ function installCardSets() {
   foreach ($cardSetsConfig AS $cardSetConfig) {
     $installer = new \HTTPPowerGrid\Install\CardSetInstall($cardSetConfig);
     $installer->installCardSet();
-    $cardSetFileNameToDB[$cardSetConfig->filename] = $installer->getInstalledCardSet();
+    $cardSetFileNameToDB[$cardSetConfig['filename']] = $installer->getInstalledCardSet();
   }
 }
 
@@ -30,7 +30,8 @@ function installResources() {
   $resourceTypesConfig = $resourceTypesConfigParser->parse();
 
   $installer = new \HTTPPowerGrid\Install\ResourceTypesInstall($resourceTypesConfig);
-  $resourceTypesConfigToDBMap = $installer->installResources();
+  $installer->installResources();
+  $resourceTypesConfigToDBMap = $installer->getResourceTypesConfigToDBMap();
 }
 
 function installCards() {
@@ -46,7 +47,7 @@ function installCards() {
 
   foreach ($cardSetFileNameToDB AS $cardsPath => $cardSet) {
     $cardsFile = file_get_contents("$gameconfigDir/$cardsPath");
-    $cardsConfig = json_decode($cardsFile);
+    $cardsConfig = json_decode($cardsFile, TRUE);
     $cardsConfigParser = new \PowerGrid\Services\Config\CardsConfigParser($cardsConfig);
     $cardsConfig = $cardsConfigParser->parse();
 
