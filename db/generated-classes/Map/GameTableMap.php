@@ -220,14 +220,14 @@ class GameTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('GameBank', '\\Bank', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Bank', '\\Bank', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':bank_id',
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('GameMap', '\\Map', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Map', '\\Map', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':map_id',
