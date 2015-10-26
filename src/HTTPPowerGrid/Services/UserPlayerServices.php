@@ -15,11 +15,11 @@ class UserPlayerServices {
   }
 
   public function getGameController() {
-    $gameData = $this->player->getGame();
+    $game = $this->player->getGame();
     $ruleFactory = new \PowerGrid\Factories\RuleFactory();
-    $gameProgression = new \HTTPPowerGrid\GameProgression($gameData);
+    $gameProgression = new \HTTPPowerGrid\GameProgression($game);
 
-    $gameController = new \HTTPPowerGrid\Game($gameData, $gameProgression, $ruleFactory);
+    $gameController = new \HTTPPowerGrid\Game($game, $gameProgression, $ruleFactory);
 
     return $gameController;
   }

@@ -7,7 +7,7 @@ class GamePlayerManager extends \PowerGrid\Services\GamePlayerManager implements
   protected function isUserInGameByPlayer() {
     $userInGame = FALSE;
     $playerUserId = $this->player->getUserId();
-    foreach ($this->gameData->getPlayers() as $gamePlayer) {
+    foreach ($this->game->getPlayers() as $gamePlayer) {
       $gamePlayerUserId = $gamePlayer->getUserId();
       if ($gamePlayerUserId === $playerUserId) {
         $userInGame = TRUE;
@@ -26,6 +26,6 @@ class GamePlayerManager extends \PowerGrid\Services\GamePlayerManager implements
 
   public function saveObjects() {
     $this->player->save();
-    $this->gameData->save();
+    $this->game->save();
   }
 }

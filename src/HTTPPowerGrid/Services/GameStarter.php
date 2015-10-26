@@ -18,7 +18,7 @@ class GameStarter extends \PowerGrid\Services\GameStarter implements \HTTPPowerG
 
   public function isUserGameOwner() {
     $userIsGameOwner = FALSE;
-    if ($this->gameData->getOwnerId() === $this->user->getId()) {
+    if ($this->game->getOwnerId() === $this->user->getId()) {
       return TRUE;
     }
     return $userIsGameOwner;
@@ -34,10 +34,10 @@ class GameStarter extends \PowerGrid\Services\GameStarter implements \HTTPPowerG
 
   protected function setStartingGameDefaults() {
     parent::setStartingGameDefaults();
-    $this->gameData->setOwnerUser($this->user);
+    $this->game->setOwnerUser($this->user);
   }
 
   public function saveObjects() {
-    $this->gameData->save();
+    $this->game->save();
   }
 }

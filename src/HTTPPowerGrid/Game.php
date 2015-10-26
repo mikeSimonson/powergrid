@@ -11,9 +11,9 @@ class Game extends \PowerGrid\Abstracts\Game {
   }
 
   /**
-   * Commit any changes made by rules to the gameData.
+   * Commit any changes made by rules to the game.
    */
   protected function completeActionHook() {
-    $this->gameData->save();
+    $this->game->save();
   }
 }
