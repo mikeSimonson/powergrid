@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'card_set' table.
+ * This class defines the structure of the 'card' table.
  *
  *
  *
@@ -44,7 +44,7 @@ class CardTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'card_set';
+    const TABLE_NAME = 'card';
 
     /**
      * The related Propel class for this table
@@ -59,7 +59,7 @@ class CardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 2;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,17 +69,32 @@ class CardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 2;
+    const NUM_HYDRATE_COLUMNS = 5;
 
     /**
      * the column name for the id field
      */
-    const COL_ID = 'card_set.id';
+    const COL_ID = 'card.id';
 
     /**
-     * the column name for the name field
+     * the column name for the starting_auction_price field
      */
-    const COL_NAME = 'card_set.name';
+    const COL_STARTING_AUCTION_PRICE = 'card.starting_auction_price';
+
+    /**
+     * the column name for the resource_cost field
+     */
+    const COL_RESOURCE_COST = 'card.resource_cost';
+
+    /**
+     * the column name for the power_output field
+     */
+    const COL_POWER_OUTPUT = 'card.power_output';
+
+    /**
+     * the column name for the card_set_id field
+     */
+    const COL_CARD_SET_ID = 'card.card_set_id';
 
     /**
      * The default string format for model objects of the related table
@@ -93,11 +108,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Name', ),
-        self::TYPE_CAMELNAME     => array('id', 'name', ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_NAME, ),
-        self::TYPE_FIELDNAME     => array('id', 'name', ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id', 'StartingAuctionPrice', 'ResourceCost', 'PowerOutput', 'CardSetId', ),
+        self::TYPE_CAMELNAME     => array('id', 'startingAuctionPrice', 'resourceCost', 'powerOutput', 'cardSetId', ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_STARTING_AUCTION_PRICE, CardTableMap::COL_RESOURCE_COST, CardTableMap::COL_POWER_OUTPUT, CardTableMap::COL_CARD_SET_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'starting_auction_price', 'resource_cost', 'power_output', 'card_set_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -107,11 +122,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Name' => 1, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'name' => 1, ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_NAME => 1, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'name' => 1, ),
-        self::TYPE_NUM           => array(0, 1, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'StartingAuctionPrice' => 1, 'ResourceCost' => 2, 'PowerOutput' => 3, 'CardSetId' => 4, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'startingAuctionPrice' => 1, 'resourceCost' => 2, 'powerOutput' => 3, 'cardSetId' => 4, ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_STARTING_AUCTION_PRICE => 1, CardTableMap::COL_RESOURCE_COST => 2, CardTableMap::COL_POWER_OUTPUT => 3, CardTableMap::COL_CARD_SET_ID => 4, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'starting_auction_price' => 1, 'resource_cost' => 2, 'power_output' => 3, 'card_set_id' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -124,7 +139,7 @@ class CardTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('card_set');
+        $this->setName('card');
         $this->setPhpName('Card');
         $this->setIdentifierQuoting(false);
         $this->setClassName('\\Card');
@@ -132,7 +147,10 @@ class CardTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
+        $this->addColumn('starting_auction_price', 'StartingAuctionPrice', 'INTEGER', false, null, null);
+        $this->addColumn('resource_cost', 'ResourceCost', 'INTEGER', false, null, null);
+        $this->addColumn('power_output', 'PowerOutput', 'INTEGER', false, null, null);
+        $this->addForeignKey('card_set_id', 'CardSetId', 'INTEGER', 'card_set', 'id', false, null, null);
     } // initialize()
 
     /**
@@ -140,13 +158,34 @@ class CardTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('CardSetCard', '\\Card', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('CardSet', '\\CardSet', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':card_set_id',
     1 => ':id',
   ),
-), null, null, 'CardSetCards', false);
+), null, null, null, false);
+        $this->addRelation('CardResourceType', '\\CardResource', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'CardResourceTypes', false);
+        $this->addRelation('GameCard', '\\GameCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'GameCards', false);
+        $this->addRelation('PlayerCard', '\\PlayerCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'PlayerCards', false);
     } // buildRelations()
 
     /**
@@ -291,10 +330,16 @@ class CardTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(CardTableMap::COL_ID);
-            $criteria->addSelectColumn(CardTableMap::COL_NAME);
+            $criteria->addSelectColumn(CardTableMap::COL_STARTING_AUCTION_PRICE);
+            $criteria->addSelectColumn(CardTableMap::COL_RESOURCE_COST);
+            $criteria->addSelectColumn(CardTableMap::COL_POWER_OUTPUT);
+            $criteria->addSelectColumn(CardTableMap::COL_CARD_SET_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.name');
+            $criteria->addSelectColumn($alias . '.starting_auction_price');
+            $criteria->addSelectColumn($alias . '.resource_cost');
+            $criteria->addSelectColumn($alias . '.power_output');
+            $criteria->addSelectColumn($alias . '.card_set_id');
         }
     }
 
@@ -363,7 +408,7 @@ class CardTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the card_set table.
+     * Deletes all rows from the card table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
