@@ -26,7 +26,9 @@ class CardsInstall {
       // Add the types of resources allowed for this card.
       foreach ($cardConfig['resource_types'] AS $resourceTypeConfigId) {
         $dbResourceType = $this->resourceTypesConfigToDBMap[$resourceTypeConfigId];
-        $dbCard->addCardResourceType($dbResourceType);
+        $dbCardResource = new \CardResource();
+        $dbCardResource->setResourceType($dbResourceType);
+        $dbCard->addCardResourceType($dbCardResource);
       }
 
       $dbCard->setStartingAuctionPrice($cardConfig['starting_auction_price']);
