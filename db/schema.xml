@@ -102,7 +102,7 @@
       <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
-  <table name="card_set" phpName="Card">
+  <table name="card_set" phpName="CardSet">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar"/>
   </table>
