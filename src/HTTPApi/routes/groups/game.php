@@ -37,15 +37,30 @@ $app->group('/game', function() use ($app, $json_result) {
         ->findOne();
     }
 
+    if (is_numeric($app->request->params('map'))) {
+      $map = \MapQuery::create()
+        ->findPK($app->request->params('map'));
+    }
+    else {
+      $map = \MapQuery::create()
+       ->filterByName('USA')
+       ->limit(1)
+       ->findOne();
+    }
+
     $user = \HTTPPowerGrid\Services\UserServices::getUserByToken($token);
 
     $name = $app->request->params('name');
 
     $userGameCreator = new \HTTPPowerGrid\Services\UserGameCreator($user);
     $userGameCreator->setGameName($name);
+
     $newGame = $userGameCreator->createGame();
     $newGame->setCardSet($cardSet);
+    $newGame->setMap($map);
+    $newGame->setBank();
     $newGame->save();
+
     $newGameId = $newGame->getId();
 
     $json_result->setSuccess('Game created.');
@@ -67,6 +82,10 @@ $app->group('/game', function() use ($app, $json_result) {
       return;
     }
 
+    $turnOrderStarter = new \HTTPPowerGrid\Services\TurnOrderStarter($game, $game->getPlayers());
+
+    $gameBankStarter = new \HTTPPowerGrid\Services\GameBankStarter($game);
+
     $gameDeckSearcher = new \HTTPPowerGrid\Services\GameDeckSearcher($game);    
     $auctionStarter = new \HTTPPowerGrid\Services\AuctionStarter($game, $gameDeckSearcher);
 
@@ -74,7 +93,7 @@ $app->group('/game', function() use ($app, $json_result) {
     $deckStarter = new \HTTPPowerGrid\Services\GameDeckStarter($game, $game->getCardSet(), $cardShuffler);
 
     try {
-      $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game, $deckStarter, $auctionStarter);
+      $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game, $deckStarter, $auctionStarter, $gameBankStarter, $turnOrderStarter);
       $gameStarter->setStartingUser($user);
       $gameStarter->startGame();
       $json_result->setSuccess('Game started');

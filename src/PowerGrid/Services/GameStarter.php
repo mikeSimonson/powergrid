@@ -10,11 +10,15 @@ class GameStarter {
   protected $game;
   protected $gameDeckStarter;
   protected $auctionStarter;
+  protected $bankStarter;
+  protected $turnOrderStarter;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\GameDeckStarter $gameDeckStarter, \PowerGrid\Abstracts\AuctionStarter $auctionStarter) {
+  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\GameDeckStarter $gameDeckStarter, \PowerGrid\Abstracts\AuctionStarter $auctionStarter, \PowerGrid\Abstracts\GameBankStarter $bankStarter, \PowerGrid\Abstracts\TurnOrderStarter $turnOrderStarter) {
     $this->game = $game;
     $this->gameDeckStarter = $gameDeckStarter;
     $this->auctionStarter = $auctionStarter;
+    $this->bankStarter = $bankStarter;
+    $this->turnOrderStarter = $turnOrderStarter;
   }
 
   public function startGame() {
@@ -85,6 +89,8 @@ class GameStarter {
 
   protected function setStartingGameDefaults() {
     $this->setCardLimit();
+    $this->bankStarter->setup();
+    $this->turnOrderStarter->setup();
     $this->gameDeckStarter->setup();
     $this->auctionStarter->setup();
     $this->setGameHasStarted();
