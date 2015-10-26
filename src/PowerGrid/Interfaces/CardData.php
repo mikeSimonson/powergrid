@@ -2,5 +2,6 @@
 
 namespace PowerGrid\Interfaces;
 
-interface GameCardData {
+interface CardData {
+
 }

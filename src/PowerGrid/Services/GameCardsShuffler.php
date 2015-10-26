@@ -2,48 +2,30 @@
 
 namespace PowerGrid\Services;
 
-class GameCardsShuffler implements \PowerGrid\Interfaces\Service {
+class GameCardsShuffler {
 
-  protected $gameData;
+  protected $deckCards;
+  protected $game;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $gameData, Array $gameCards) {
-    foreach ($gameCards AS $gameCard) {
-      if (!($gameCard instanceof \PowerGrid\Interfaces\GameCardData)) {
-        throw new \PowerGrid\Exceptions\Application\UnexpectedObjectType('Array of \PowerGrid\Interfaces\GameCardData', $gameCard);
+  public function __construct(\PowerGrid\Interfaces\GameData $game) {
+    $this->game = $game;
+  }
+
+  public function setDeckCards($deckCards) {
+    foreach ($deckCards AS $deckCard) {
+      if (!($deckCard instanceof \PowerGrid\Interfaces\GameDeckCardData)) {
+        throw new \PowerGrid\Exceptions\Application\UnexpectedObjectType('Array of \PowerGrid\Interfaces\GameDeckCardData', $deckCard);
       }
     }
-    $this->gameData = $gameData;
-    $this->gameCards = $gameCards;
+
+    $this->deckCards = $deckCards;
   }
 
   public function shuffle() {
-    $randomized_deck_positions = shuffle(range(1, count($this->gameCards)));
-    foreach ($this->gameCards AS $card) {
-      $card->setDeckPosition(array_pop($randomized_deck_positions));
+    $deck_positions = range(1, count($this->deckCards));
+    shuffle($deck_positions);
+    foreach ($this->deckCards AS $deckCard) {
+      $deckCard->setDeckPosition(array_pop($deck_positions));
     }
-  }
-
-  public function removeExtraCards() {
-    switch ($this->gameData->countPlayers()) {
-      case 2:
-      case 3:
-        $numberToRemove = 8;
-      case 4:
-        $numberToRemove = 4;
-      default:
-        $numberToRemove = 0;
-    }
-
-    for ($i = 0; $i < $numberToRemove; ++$i) {
-      $this->removeRandomCard();
-    }
-  }
-
-  /**
-   * Returns removed card.
-   */
-  protected function removeRandomCard() {
-    $card = array_pop($this->gameCards);
-    return $card;
   }
 }

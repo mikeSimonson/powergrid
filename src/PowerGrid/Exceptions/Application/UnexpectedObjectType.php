@@ -9,6 +9,6 @@ class UnexpectedObjectType extends \PowerGrid\Exceptions\Exception {
     $receivedClass = get_class($receivedObject);
     $receivedInterfaces = implode(', ', class_implements($receivedClass));
     $message = "Expected type $expectedType, received $receivedClass, which implements $receivedInterfaces.";
-    parent::construct($message);
+    parent::__construct($message);
   }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace PowerGrid\Administrative;
+namespace PowerGrid\Exceptions\Administrative;
 
 class MaxPlayersAlreadyInGame extends \PowerGrid\Exceptions\Administrative {
   protected $defaultMessage = 'The maximum number of players in this game has been reached.';

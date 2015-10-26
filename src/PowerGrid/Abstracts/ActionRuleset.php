@@ -4,7 +4,7 @@ namespace PowerGrid\Abstracts;
 
 abstract class ActionRuleset {
   protected $ruleSet;
-  protected $gameData;
+  protected $game;
 
   public function __construct() {
     $this->ruleSet = new \Ruler\RuleSet();
@@ -14,13 +14,13 @@ abstract class ActionRuleset {
     $this->compileRules();
   }
 
-  public function execute(\PowerGrid\Interfaces\GameData $gameData, \Ruler\Context $turnData) {
+  public function execute(\PowerGrid\Interfaces\GameData $game, \Ruler\Context $turnData) {
     var_dump('execute_called');
-    $this->gameData = $gameData;
+    $this->game = $game;
 
     $this->ruleSet->executeRules($turnData);
 
-    return $this->gameData;
+    return $this->game;
   }
 
   /**

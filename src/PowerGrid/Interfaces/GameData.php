@@ -25,9 +25,13 @@ interface GameData {
 
   public function getNextPlayer();
 
-  public function getPlayers();
-
   public function getHasStarted();
+
+  public function getAuctionCards();
+
+  public function addAuctionCard(\GameAuctionCard $auctionCard);
+
+  public function getPlayers();
 
   public function countPlayers();
 

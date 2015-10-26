@@ -1,15 +1,14 @@
 <?php
 
-namespace PowerGrid\Services;
+namespace PowerGrid\Abstracts;
 
-class GameSettingsManager {
+abstract class GameDeckSearcher {
+
   protected $game;
 
   public function __construct(\PowerGrid\Interfaces\GameData $game) {
     $this->game = $game;
   }
 
-  public function intializeGameDefaults() {
-    
-  }
+  abstract public function getCheapestCards($quantity);
 }

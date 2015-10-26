@@ -7,24 +7,24 @@ class GameStarter {
   const STARTING_CARD_LIMIT_2_PLAYERS = 4;
   const STARTING_CARD_LIMIT_MORE_THAN_2_PLAYERS = 3;
 
-  protected $gameData;
-  protected $cardShuffler;
-  protected $auctionServices;
+  protected $game;
+  protected $gameDeckStarter;
+  protected $auctionStarter;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $gameData, \PowerGrid\Services\CardShuffler $cardShuffler, \PowerGrid\Services\AuctionServices $auctionServices) {
-    $this->gameData = $gameData;
-    $this->cardShuffler = $cardShuffler;
-    $this->auctionServices = $auctionServices;
+  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\GameDeckStarter $gameDeckStarter, \PowerGrid\Abstracts\AuctionStarter $auctionStarter) {
+    $this->game = $game;
+    $this->gameDeckStarter = $gameDeckStarter;
+    $this->auctionStarter = $auctionStarter;
   }
 
   public function startGame() {
     $this->raiseAnyGameStartExceptions();
     $this->setStartingGameDefaults();
-    $this->gameData->save();
+    $this->game->save();
   }
 
   protected function raiseAnyGameStartExceptions() {
-    if ($this->gameData->getHasStarted() === TRUE) {
+    if ($this->game->getHasStarted() === TRUE) {
       throw new \PowerGrid\Exceptions\Administrative\GameHasAlreadyStarted();
     }
 
@@ -36,7 +36,7 @@ class GameStarter {
   protected function isNumberOfJoinedPlayersValid() {
     $result = FALSE;
     
-    $playerCount = $this->gameData->countPlayers();
+    $playerCount = $this->game->countPlayers();
     
     $minPlayers = $this->getMinimumNumberOfPlayers();
     $maxPlayers = $this->getMaximumNumberOfPlayers();
@@ -51,7 +51,7 @@ class GameStarter {
   protected function haveMinimumNumberOfPlayersJoined() {
     $result = FALSE;
     
-    $playerCount = $this->gameData->countPlayers();
+    $playerCount = $this->game->countPlayers();
     
     $minPlayers = $this->getMinimumNumberOfPlayers();
 
@@ -70,24 +70,23 @@ class GameStarter {
     return \PowerGrid\Interfaces\GameData::MAX_PLAYERS;
   }
 
-  protected function setStartingGameDefaults() {
-    $this->setCardLimit();
-    $this->auctionServices->setupStartingAuction();
-    $this->cardShuffler->shuffle();
-    $this->cardShuffler->removeExtraCards();
-    $this->setGameHasStarted();
-  }
-
   protected function setGameHasStarted() {
-    $this->gameData->setHasStarted(TRUE);
+    $this->game->setHasStarted(TRUE);
   }
 
   protected function setCardLimit() {
-    if ($this->gameData->countPlayers() == 2) {
-      $this->gameData->setCardLimit(static::STARTING_CARD_LIMIT_2_PLAYERS);
+    if ($this->game->countPlayers() == 2) {
+      $this->game->setCardLimit(static::STARTING_CARD_LIMIT_2_PLAYERS);
     }
     else {
-      $this->gameData->setCardLimit(static::STARTING_CARD_LIMIT_MORE_THAN_2_PLAYERS);
+      $this->game->setCardLimit(static::STARTING_CARD_LIMIT_MORE_THAN_2_PLAYERS);
     }
+  }
+
+  protected function setStartingGameDefaults() {
+    $this->setCardLimit();
+    $this->gameDeckStarter->setup();
+    $this->auctionStarter->setup();
+    $this->setGameHasStarted();
   }
 }

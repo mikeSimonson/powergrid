@@ -4,17 +4,17 @@ namespace PowerGrid\Services;
 
 class GamePlayerManager {
   const MAX_PLAYERS_PER_GAME = 6;
-  protected $gameData;
+  protected $game;
   protected $player;
 
   public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Interfaces\PlayerData $player) {
-    $this->gameData = $game;
+    $this->game = $game;
     $this->player = $player;
   }
 
   protected function isPlayerInGame() {
     $playerInGame = FALSE;
-    if ($this->gameData->getId() === $this->player->getGameId()) {
+    if ($this->game->getId() === $this->player->getGameId()) {
       $playerInGame = TRUE;
     }
     return $playerInGame;
@@ -24,9 +24,9 @@ class GamePlayerManager {
     if ($this->isPlayerInGame()) {
       throw new \PowerGrid\Exceptions\Administrative\PlayerAlreadyInGame();
     }
-    else if (count($this->gameData->getPlayers()) >= static::MAX_PLAYERS_PER_GAME) {
+    else if (count($this->game->getPlayers()) >= static::MAX_PLAYERS_PER_GAME) {
       throw new \PowerGrid\Exceptions\Administrative\MaxPlayersAlreadyInGame(static::MAX_PLAYERS_PER_GAME);
     }
-    $this->gameData->addPlayer($this->player);
+    $this->game->addPlayer($this->player);
   }
 }

@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Services;
 
-class DeckStarter implements \PowerGrid\Interfaces\Service {
+class DeckStarter {
   public function __construct() {
   
   }

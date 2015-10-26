@@ -4,8 +4,8 @@ namespace PowerGrid\Abstracts;
 
 class GameProgression {
 
-  public function __construct(\PowerGrid\Interfaces\GameData $gameData) {
-    $this->gameData = $gameData;
+  public function __construct(\PowerGrid\Interfaces\GameData $game) {
+    $this->game = $game;
   }
 
   public function progressGame() {
@@ -20,8 +20,8 @@ class GameProgression {
   }
 
   protected function advanceTurnNumber() {
-    $currentTurnNumber = $this->gameData->getTurnNumber();
-    $this->gameData->setTurnNumber($currentTurnNumber + 1);
+    $currentTurnNumber = $this->game->getTurnNumber();
+    $this->game->setTurnNumber($currentTurnNumber + 1);
   }
 
   protected function progressRound() {

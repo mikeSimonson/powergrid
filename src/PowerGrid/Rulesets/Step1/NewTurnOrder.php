@@ -30,7 +30,7 @@ class NewTurnOrder extends \PowerGrid\Abstracts\ActionRuleset {
 
   protected function randomlyShufflePlayers() {
     $action = function() {
-      $players = $this->gameData->getPlayers();
+      $players = $this->game->getPlayers();
       var_dump($players);
       $playerOrder = array();
       foreach ($players as $player) {
@@ -40,7 +40,7 @@ class NewTurnOrder extends \PowerGrid\Abstracts\ActionRuleset {
       shuffle($playerOrder);
 
       var_dump($playerOrder);
-      $this->gameData->setPlayerTurnOrder($playerOrder);
+      $this->game->setPlayerTurnOrder($playerOrder);
     };
 
     return $action;
