@@ -59,7 +59,7 @@ class CardTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 6;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class CardTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 6;
 
     /**
      * the column name for the id field
@@ -92,6 +92,11 @@ class CardTableMap extends TableMap
     const COL_POWER_OUTPUT = 'card.power_output';
 
     /**
+     * the column name for the trigger_step field
+     */
+    const COL_TRIGGER_STEP = 'card.trigger_step';
+
+    /**
      * the column name for the card_set_id field
      */
     const COL_CARD_SET_ID = 'card.card_set_id';
@@ -108,11 +113,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'StartingAuctionPrice', 'ResourceCost', 'PowerOutput', 'CardSetId', ),
-        self::TYPE_CAMELNAME     => array('id', 'startingAuctionPrice', 'resourceCost', 'powerOutput', 'cardSetId', ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_STARTING_AUCTION_PRICE, CardTableMap::COL_RESOURCE_COST, CardTableMap::COL_POWER_OUTPUT, CardTableMap::COL_CARD_SET_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'starting_auction_price', 'resource_cost', 'power_output', 'card_set_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'StartingAuctionPrice', 'ResourceCost', 'PowerOutput', 'TriggerStep', 'CardSetId', ),
+        self::TYPE_CAMELNAME     => array('id', 'startingAuctionPrice', 'resourceCost', 'powerOutput', 'triggerStep', 'cardSetId', ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID, CardTableMap::COL_STARTING_AUCTION_PRICE, CardTableMap::COL_RESOURCE_COST, CardTableMap::COL_POWER_OUTPUT, CardTableMap::COL_TRIGGER_STEP, CardTableMap::COL_CARD_SET_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'starting_auction_price', 'resource_cost', 'power_output', 'trigger_step', 'card_set_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -122,11 +127,11 @@ class CardTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'StartingAuctionPrice' => 1, 'ResourceCost' => 2, 'PowerOutput' => 3, 'CardSetId' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'startingAuctionPrice' => 1, 'resourceCost' => 2, 'powerOutput' => 3, 'cardSetId' => 4, ),
-        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_STARTING_AUCTION_PRICE => 1, CardTableMap::COL_RESOURCE_COST => 2, CardTableMap::COL_POWER_OUTPUT => 3, CardTableMap::COL_CARD_SET_ID => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'starting_auction_price' => 1, 'resource_cost' => 2, 'power_output' => 3, 'card_set_id' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'StartingAuctionPrice' => 1, 'ResourceCost' => 2, 'PowerOutput' => 3, 'TriggerStep' => 4, 'CardSetId' => 5, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'startingAuctionPrice' => 1, 'resourceCost' => 2, 'powerOutput' => 3, 'triggerStep' => 4, 'cardSetId' => 5, ),
+        self::TYPE_COLNAME       => array(CardTableMap::COL_ID => 0, CardTableMap::COL_STARTING_AUCTION_PRICE => 1, CardTableMap::COL_RESOURCE_COST => 2, CardTableMap::COL_POWER_OUTPUT => 3, CardTableMap::COL_TRIGGER_STEP => 4, CardTableMap::COL_CARD_SET_ID => 5, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'starting_auction_price' => 1, 'resource_cost' => 2, 'power_output' => 3, 'trigger_step' => 4, 'card_set_id' => 5, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, )
     );
 
     /**
@@ -150,6 +155,7 @@ class CardTableMap extends TableMap
         $this->addColumn('starting_auction_price', 'StartingAuctionPrice', 'INTEGER', false, null, null);
         $this->addColumn('resource_cost', 'ResourceCost', 'INTEGER', false, null, null);
         $this->addColumn('power_output', 'PowerOutput', 'INTEGER', false, null, null);
+        $this->addColumn('trigger_step', 'TriggerStep', 'INTEGER', false, null, null);
         $this->addForeignKey('card_set_id', 'CardSetId', 'INTEGER', 'card_set', 'id', false, null, null);
     } // initialize()
 
@@ -333,12 +339,14 @@ class CardTableMap extends TableMap
             $criteria->addSelectColumn(CardTableMap::COL_STARTING_AUCTION_PRICE);
             $criteria->addSelectColumn(CardTableMap::COL_RESOURCE_COST);
             $criteria->addSelectColumn(CardTableMap::COL_POWER_OUTPUT);
+            $criteria->addSelectColumn(CardTableMap::COL_TRIGGER_STEP);
             $criteria->addSelectColumn(CardTableMap::COL_CARD_SET_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.starting_auction_price');
             $criteria->addSelectColumn($alias . '.resource_cost');
             $criteria->addSelectColumn($alias . '.power_output');
+            $criteria->addSelectColumn($alias . '.trigger_step');
             $criteria->addSelectColumn($alias . '.card_set_id');
         }
     }

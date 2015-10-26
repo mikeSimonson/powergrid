@@ -160,20 +160,20 @@ class GameCardTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('GameDeckCard', '\\GameDeckCard', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('DeckCard', '\\GameDeckCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'DeckCards', false);
+        $this->addRelation('AuctionCard', '\\GameAuctionCard', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':card_id',
     1 => ':card_id',
   ),
-), null, null, 'GameDeckCards', false);
-        $this->addRelation('GameCardAuction', '\\GameAuctionCard', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':card_id',
-    1 => ':card_id',
-  ),
-), null, null, 'GameCardAuctions', false);
+), null, null, 'AuctionCards', false);
     } // buildRelations()
 
     /**

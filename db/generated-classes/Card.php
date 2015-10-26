@@ -12,7 +12,7 @@ use Base\Card as BaseCard;
  * long as it does not already exist in the output directory.
  *
  */
-class Card extends BaseCard
+class Card extends BaseCard implements \PowerGrid\Interfaces\CardData
 {
 
 }
