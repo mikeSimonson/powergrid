@@ -45,17 +45,17 @@
   <table name="game" phpName="Game">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="name" type="varchar" size="255"/>
-    <column name="has_started" type="boolean" required="true" defaultValue="false"/>
-    <column name="player_turn_order" type="array"/>
-    <column name="phase_number" type="integer" defaultValue="1"/>
+    <column name="has_started" type="boolean" defaultValue="false"/>
     <column name="card_limit" type="integer"/>
     <column name="turn_number" type="integer" defaultValue="1"/>
+    <column name="phase_number" type="integer" defaultValue="1"/>
     <column name="round_number" type="integer" defaultValue="1"/>
     <column name="step_number" type="integer" defaultValue="1"/>
     <column name="next_player_id" type="integer"/>
     <column name="owner_id" type="integer"/>
     <column name="bank_id" type="integer"/>
     <column name="map_id" type="integer"/>
+    <column name="card_set_id" type="integer"/>
     <foreign-key foreignTable="player" phpName="NextPlayer" refPhpName="Game">
       <reference local="next_player_id" foreign="id"/>
     </foreign-key>
@@ -67,6 +67,9 @@
     </foreign-key>
     <foreign-key foreignTable="map" phpName="GameMap" refPhpName="Game">
       <reference local="map_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="card_set" phpName="CardSet" refPhpName="Game">
+      <reference local="card_set_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="bank" phpName="Bank">
@@ -82,8 +85,9 @@
     <column name="starting_auction_price" type="integer"/>
     <column name="resource_cost" type="integer"/>
     <column name="power_output" type="integer"/>
+    <column name="trigger_step" type="integer"/>
     <column name="card_set_id" type="integer"/>
-    <foreign-key foreignTable="card_set" phpName="CardSet" refPhpName="CardSetCard">
+    <foreign-key foreignTable="card_set" phpName="CardSet" refPhpName="Card">
       <reference local="card_set_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -168,12 +172,11 @@
     <column name="game_id" type="integer"/>
     <column name="card_id" type="integer"/>
     <column name="deck_position" type="integer"/>
-    <column name="trigger_step" type="integer"/>
-    <foreign-key foreignTable="game" phpName="DeckGame" refPhpName="GameDeck">
+    <foreign-key foreignTable="game" phpName="Game" refPhpName="DeckCard">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="game_card" phpName="DeckCard" refPhpName="GameDeckCard">
-      <reference local="card_id" foreign="card_id"/>
+    <foreign-key foreignTable="game_card" phpName="GameCard" refPhpName="DeckCard">
+      <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
   <!-- Only the cards active in the auction at the time. -->
@@ -181,11 +184,10 @@
     <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="game_id" type="integer"/>
     <column name="card_id" type="integer"/>
-    <column name="auction_position" type="integer"/>
-    <foreign-key foreignTable="game" phpName="AuctionGame" refPhpName="GameAuction">
+    <foreign-key foreignTable="game" phpName="Game" refPhpName="AuctionCard">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="game_card" phpName="AuctionCard" refPhpName="GameCardAuction">
+    <foreign-key foreignTable="game_card" phpName="GameCard" refPhpName="AuctionCard">
       <reference local="card_id" foreign="card_id"/>
     </foreign-key>
   </table>
