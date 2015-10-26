@@ -8,7 +8,6 @@ installMaps();
 require_once('admin_user_jobs.php');
 $adminUsername = getenv('DEV_PG_ADMIN_HTTP_API_USERNAME');
 $adminPassword = getenv('DEV_PG_ADMIN_HTTP_API_PASSWORD');
-var_dump($adminUsername, $adminPassword);
 installAdminUser($adminUsername, $adminPassword);
 
 require_once('card_jobs.php');
