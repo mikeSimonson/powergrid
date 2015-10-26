@@ -51,7 +51,6 @@
     <column name="phase_number" type="integer" defaultValue="1"/>
     <column name="round_number" type="integer" defaultValue="1"/>
     <column name="step_number" type="integer" defaultValue="1"/>
-    <column name="next_player_id" type="integer"/>
     <column name="owner_id" type="integer"/>
     <column name="bank_id" type="integer"/>
     <column name="map_id" type="integer"/>
@@ -62,10 +61,10 @@
     <foreign-key foreignTable="user" phpName="OwnerUser" refPhpName="Game">
       <reference local="owner_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="bank" phpName="GameBank" refPhpName="Game">
+    <foreign-key foreignTable="bank" phpName="Bank" refPhpName="Game">
       <reference local="bank_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="map" phpName="GameMap" refPhpName="Game">
+    <foreign-key foreignTable="map" phpName="Map" refPhpName="Game">
       <reference local="map_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="card_set" phpName="CardSet" refPhpName="Game">
