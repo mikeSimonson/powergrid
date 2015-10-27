@@ -5,8 +5,6 @@ require_once('../bootstrap.php');
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
 $app->group('/player', function() use ($app, $json_result) {
-
-
   $app->post('/startBid', function($playerId) use ($app, $json_result) {
     try {
       $powerPlant = \HTTPPowerGrid\Services\CardServices::findCardById($app->request->params('cardId'));
