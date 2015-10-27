@@ -108,7 +108,6 @@
   </table>
   <table name="resource_store" phpName="ResourceStore">
     <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
-    <column name="minimum_price" type="integer" required="true"/>
     <column name="quantity" type="integer" required="true"/>
     <column name="game_id" type="integer" required="true"/>
     <column name="resource_type_id" type="integer" required="true"/>
@@ -216,17 +215,6 @@
     </foreign-key>
     <foreign-key foreignTable="card" phpName="Card" refPhpName="PlayerCard">
       <reference local="card_id" foreign="id"/>
-    </foreign-key>
-  </table>
-  <table name="game_city" phpName="GameCity">
-    <column name="game_id" type="integer" required="true" primaryKey="true"/>
-    <column name="city_id" type="integer" required="true" primaryKey="true"/>
-    <column name="build_order" type="enum" valueSet="1,2,3"/>
-    <foreign-key foreignTable="game" phpName="Game" refPhpName="GameCity">
-      <reference local="game_id" foreign="id"/>
-    </foreign-key>
-    <foreign-key foreignTable="city" phpName="City" refPhpName="GameCity">
-      <reference local="city_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="city_connection" phpName="CityConnection">
