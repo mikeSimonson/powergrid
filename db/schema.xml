@@ -55,9 +55,6 @@
     <column name="bank_id" type="integer"/>
     <column name="map_id" type="integer"/>
     <column name="card_set_id" type="integer"/>
-    <foreign-key foreignTable="player" phpName="NextPlayer" refPhpName="Game">
-      <reference local="next_player_id" foreign="id"/>
-    </foreign-key>
     <foreign-key foreignTable="user" phpName="OwnerUser" refPhpName="Game">
       <reference local="owner_id" foreign="id"/>
     </foreign-key>

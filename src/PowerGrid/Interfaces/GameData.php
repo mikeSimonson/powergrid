@@ -23,8 +23,6 @@ interface GameData {
 
   public function getStepNumber();
 
-  public function getNextPlayer();
-
   public function getHasStarted();
 
   public function getAuctionCards();
