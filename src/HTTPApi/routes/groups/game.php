@@ -82,18 +82,20 @@ $app->group('/game', function() use ($app, $json_result) {
       return;
     }
 
+    $resourceStoreStarter = new \HTTPPowerGrid\Services\GameResourceStoreStarter($game);
+
     $turnOrderStarter = new \HTTPPowerGrid\Services\TurnOrderStarter($game, $game->getPlayers());
 
-    $gameBankStarter = new \HTTPPowerGrid\Services\GameBankStarter($game);
+    $bankStarter = new \HTTPPowerGrid\Services\GameBankStarter($game);
 
-    $gameDeckSearcher = new \HTTPPowerGrid\Services\GameDeckSearcher($game);    
-    $auctionStarter = new \HTTPPowerGrid\Services\AuctionStarter($game, $gameDeckSearcher);
+    $deckSearcher = new \HTTPPowerGrid\Services\GameDeckSearcher($game);    
+    $auctionStarter = new \HTTPPowerGrid\Services\AuctionStarter($game, $deckSearcher);
 
     $cardShuffler = new \HTTPPowerGrid\Services\GameCardsShuffler($game);
     $deckStarter = new \HTTPPowerGrid\Services\GameDeckStarter($game, $game->getCardSet(), $cardShuffler);
 
     try {
-      $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game, $deckStarter, $auctionStarter, $gameBankStarter, $turnOrderStarter);
+      $gameStarter = new \HTTPPowerGrid\Services\GameStarter($game, $deckStarter, $auctionStarter, $bankStarter, $turnOrderStarter, $resourceStoreStarter);
       $gameStarter->setStartingUser($user);
       $gameStarter->startGame();
       $json_result->setSuccess('Game started');
