@@ -59,7 +59,7 @@ class ResourceStoreTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 4;
 
     /**
      * The number of lazy-loaded columns
@@ -69,17 +69,12 @@ class ResourceStoreTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 4;
 
     /**
      * the column name for the id field
      */
     const COL_ID = 'resource_store.id';
-
-    /**
-     * the column name for the minimum_price field
-     */
-    const COL_MINIMUM_PRICE = 'resource_store.minimum_price';
 
     /**
      * the column name for the quantity field
@@ -108,11 +103,11 @@ class ResourceStoreTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'MinimumPrice', 'Quantity', 'GameId', 'ResourceTypeId', ),
-        self::TYPE_CAMELNAME     => array('id', 'minimumPrice', 'quantity', 'gameId', 'resourceTypeId', ),
-        self::TYPE_COLNAME       => array(ResourceStoreTableMap::COL_ID, ResourceStoreTableMap::COL_MINIMUM_PRICE, ResourceStoreTableMap::COL_QUANTITY, ResourceStoreTableMap::COL_GAME_ID, ResourceStoreTableMap::COL_RESOURCE_TYPE_ID, ),
-        self::TYPE_FIELDNAME     => array('id', 'minimum_price', 'quantity', 'game_id', 'resource_type_id', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Quantity', 'GameId', 'ResourceTypeId', ),
+        self::TYPE_CAMELNAME     => array('id', 'quantity', 'gameId', 'resourceTypeId', ),
+        self::TYPE_COLNAME       => array(ResourceStoreTableMap::COL_ID, ResourceStoreTableMap::COL_QUANTITY, ResourceStoreTableMap::COL_GAME_ID, ResourceStoreTableMap::COL_RESOURCE_TYPE_ID, ),
+        self::TYPE_FIELDNAME     => array('id', 'quantity', 'game_id', 'resource_type_id', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -122,11 +117,11 @@ class ResourceStoreTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'MinimumPrice' => 1, 'Quantity' => 2, 'GameId' => 3, 'ResourceTypeId' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'minimumPrice' => 1, 'quantity' => 2, 'gameId' => 3, 'resourceTypeId' => 4, ),
-        self::TYPE_COLNAME       => array(ResourceStoreTableMap::COL_ID => 0, ResourceStoreTableMap::COL_MINIMUM_PRICE => 1, ResourceStoreTableMap::COL_QUANTITY => 2, ResourceStoreTableMap::COL_GAME_ID => 3, ResourceStoreTableMap::COL_RESOURCE_TYPE_ID => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'minimum_price' => 1, 'quantity' => 2, 'game_id' => 3, 'resource_type_id' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Quantity' => 1, 'GameId' => 2, 'ResourceTypeId' => 3, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'quantity' => 1, 'gameId' => 2, 'resourceTypeId' => 3, ),
+        self::TYPE_COLNAME       => array(ResourceStoreTableMap::COL_ID => 0, ResourceStoreTableMap::COL_QUANTITY => 1, ResourceStoreTableMap::COL_GAME_ID => 2, ResourceStoreTableMap::COL_RESOURCE_TYPE_ID => 3, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'quantity' => 1, 'game_id' => 2, 'resource_type_id' => 3, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, )
     );
 
     /**
@@ -147,7 +142,6 @@ class ResourceStoreTableMap extends TableMap
         $this->setUseIdGenerator(true);
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
-        $this->addColumn('minimum_price', 'MinimumPrice', 'INTEGER', true, null, null);
         $this->addColumn('quantity', 'Quantity', 'INTEGER', true, null, null);
         $this->addForeignKey('game_id', 'GameId', 'INTEGER', 'game', 'id', true, null, null);
         $this->addForeignKey('resource_type_id', 'ResourceTypeId', 'INTEGER', 'resource_type', 'id', true, null, null);
@@ -316,13 +310,11 @@ class ResourceStoreTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(ResourceStoreTableMap::COL_ID);
-            $criteria->addSelectColumn(ResourceStoreTableMap::COL_MINIMUM_PRICE);
             $criteria->addSelectColumn(ResourceStoreTableMap::COL_QUANTITY);
             $criteria->addSelectColumn(ResourceStoreTableMap::COL_GAME_ID);
             $criteria->addSelectColumn(ResourceStoreTableMap::COL_RESOURCE_TYPE_ID);
         } else {
             $criteria->addSelectColumn($alias . '.id');
-            $criteria->addSelectColumn($alias . '.minimum_price');
             $criteria->addSelectColumn($alias . '.quantity');
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.resource_type_id');

@@ -185,13 +185,6 @@ class PlayerTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('Game', '\\Game', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':next_player_id',
-    1 => ':id',
-  ),
-), null, null, 'Games', false);
         $this->addRelation('TurnOrderPlayer', '\\TurnOrder', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -220,6 +213,13 @@ class PlayerTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'PlayerCards', false);
+        $this->addRelation('PlayerAuctionAction', '\\PlayerAuctionAction', RelationMap::ONE_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':player_id',
+    1 => ':id',
+  ),
+), null, null, null, false);
     } // buildRelations()
 
     /**

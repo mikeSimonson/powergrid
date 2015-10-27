@@ -192,6 +192,13 @@ class CardTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'PlayerCards', false);
+        $this->addRelation('CurrentAuctionPlant', '\\CurrentAuctionPlant', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'CurrentAuctionPlants', false);
     } // buildRelations()
 
     /**
