@@ -20,12 +20,6 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     $this->setPlayers();
   }
 
-  public function determineTurnOrder() {
-    $action = \PowerGrid\Interfaces\GameData::NEW_TURN_ORDER_ACTION;
-    $context = array('currentTurnOrder' => $this->game->getPlayerTurnOrder());
-    $this->performAction($action, $context);
-  }
-
   /**
    * @param   int
    */
