@@ -29,11 +29,12 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   /**
    * @param   int
    */
-  public function startBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant) {
+  public function startBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant, $bid) {
     $action = \PowerGrid\Interfaces\GameData::START_BID_ACTION;
     $context = array(
       'player' => $player,
-      'powerPlant' => $powerPlant
+      'powerPlant' => $powerPlant,
+      'bid' => $bid
     );
     $this->performAction($action, $context);
   }
