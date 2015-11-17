@@ -35,6 +35,13 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
 
   /**
    * @param   int
+   */
+  public function passOnBidding(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant) {
+    // This is how a user says they don't want to bid
+  }
+
+  /**
+   * @param   int
    * @param   int
    */ 
   public function placeBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant, $bidAmount) {
