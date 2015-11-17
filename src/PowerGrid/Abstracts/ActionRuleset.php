@@ -14,11 +14,11 @@ abstract class ActionRuleset {
     $this->compileRules();
   }
 
-  public function execute(\PowerGrid\Interfaces\GameData $game, \Ruler\Context $turnData) {
-    var_dump('execute_called');
+  public function execute(\PowerGrid\Interfaces\GameData $game, \Ruler\Context $context) {
     $this->game = $game;
+    $this->context = $context;
 
-    $this->ruleSet->executeRules($turnData);
+    $this->ruleSet->executeRules($this->context);
 
     return $this->game;
   }
