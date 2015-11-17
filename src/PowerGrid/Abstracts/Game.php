@@ -12,8 +12,9 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
    * @param   obj     A rule factory.
    * @param   obj     An assoc array of \PowerGrid\Abstract\Player objs.
    */
-  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Abstracts\GameProgression $gameProgression, \PowerGrid\Factories\RuleFactory $ruleFactory) {
+  public function __construct(\PowerGrid\Interfaces\GameData $dataSource, \PowerGrid\Abstracts\GameProgression $gameProgression, \PowerGrid\Factories\RuleFactory $ruleFactory, \PowerGrid\Propositions $propositions) {
     $this->game = $dataSource;
+    $this->propositions = $propositions;
     $this->ruleFactory = $ruleFactory;
     $this->gameProgression = $gameProgression;
     $this->setPlayers();
