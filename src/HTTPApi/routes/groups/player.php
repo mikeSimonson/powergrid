@@ -4,7 +4,12 @@ require_once('../bootstrap.php');
 
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 
-$app->group('/player', function() use ($app, $json_result) {
+$loadPropositionsMiddleware = function() {
+  $propositionContainer = \PowerGrid\Propositions::inst();
+  \HTTPPowerGrid\PropositionLoader::load($propositionContainer);
+}
+
+$app->group('/player', 'loadPropositionsMiddleware', function() use ($app, $json_result) {
   $app->post('/startBid', function($playerId) use ($app, $json_result) {
     try {
       $powerPlant = \HTTPPowerGrid\Services\CardServices::findCardById($app->request->params('cardId'));
@@ -17,11 +22,13 @@ $app->group('/player', function() use ($app, $json_result) {
       $app->response->setStatus(HTTPResponse::HTTP_BAD_REQUEST);
       $app->response->setBody($json_result->getJSON());
     }
+    
+    $bidAmount = $app->request->params('bid') ? $app->request->params('bid') : $powerPlant->getStartingAuctionPrice();
 
     $gameController = $userPlayerServices->getGameController();
 
     try {
-      $gameController->startBid($player, $powerPlant);
+      $gameController->startBid($player, $powerPlant, $bid);
       $json_result->setSuccess('Bidding started on plant');
       $app->response->setStatus(HTTPResponse::HTTP_OK);
     }
