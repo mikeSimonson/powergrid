@@ -2,11 +2,21 @@
 
 namespace PowerGrid;
 
-class Container {
+class Container implements \PowerGrid\Interfaces\Singleton {
+
+  static protected $instance;
 
   protected $registry = array();
 
   protected $namespaces = array();
+
+  static public function instance() {
+    if (is_null(static::$instance)) {
+      static::$instance = new static();
+    }
+
+    return static::$instance;
+  }
 
   public function register($className, $referenceName) {
     $this->registry[$referenceName] = $className;
