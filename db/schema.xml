@@ -161,7 +161,7 @@
       <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
-  <!-- Only the cards active in the auction at the time. -->
+  <!-- Only the cards active in the deck at the time. -->
   <table name="game_deck_card" phpName="GameDeckCard">
     <column name="id" type="integer" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="game_id" type="integer"/>
@@ -236,6 +236,7 @@
     <column name="game_id" type="integer" required="true" primaryKey="true"/>
     <column name="card_id" type="integer"/>
     <column name="highest_bid" type="integer"/>
+    <column name="highest_bidder_id" type="integer"/>
     <column name="round_number" type="integer"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="CurrentAuctionPlant">
       <reference local="game_id" foreign="id"/>
@@ -243,18 +244,26 @@
     <foreign-key foreignTable="card" phpName="Card" refPhpName="CurrentAuctionPlant">
       <reference local="card_id" foreign="id"/>
     </foreign-key>
+    <foreign-key foreignTable="player" phpName="HighestBidder" refPhpName="CurrentAuctionPlant">
+      <reference local="highest_bidder_id" foreign="id"/>
+    </foreign-key>
   </table>
   <!-- Keeps track of auction progress during the auction phase -->
   <table name="player_auction_action">
     <column name="player_id" type="integer" required="true" primaryKey="true"/>
     <column name="game_id" type="integer"/>
-    <column name="acted" type="boolean"/>
+    <column name="has_bid" type="boolean"/>
+    <column name="has_passed" type="boolean"/>
     <column name="round_number" type="integer"/>
+    <column name="current_auction_plant_id"/>
     <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerAuctionAction">
       <reference local="player_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="PlayerAuctionAction">
       <reference local="game_id" foreign="id"/>
+    </foreign-key>
+    <foreign-key foreignTable="current_auction_plant" phpName="CurrentAuctionPlant" refPhpName="PlayerAuctionAction">
+      <reference local="current_auction_plant_id" foreign="game_id"/>
     </foreign-key>
   </table>
 </database>
