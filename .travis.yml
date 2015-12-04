@@ -14,4 +14,4 @@ before_script:
   - mkdir -p build/logs
 script: phpunit --configuration ./phpunit.xml tests/automated
 after_script:
-  - php ./tools/coveralls -v
+  - php ./vendor/bin/coveralls -v
