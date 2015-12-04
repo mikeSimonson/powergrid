@@ -1,7 +1,5 @@
 <?php
 
-require_once('../bootstrap.php');
-
 use Symfony\Component\HttpFoundation\Response as HTTPResponse;
 use Propel\Runtime\ActiveQuery\Criteria;
 
