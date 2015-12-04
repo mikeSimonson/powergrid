@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/eppeters/powergrid.svg)](https://travis-ci.org/eppeters/powergrid)
+
 # powergrid
 A full HTTP API implementation of the board game Power Grid written by me for educational purposes.
 
