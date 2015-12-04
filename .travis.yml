@@ -6,9 +6,8 @@ php:
   - '7' # or '7.0'
   - hhvm
   - nightly
-sudo: required
 install:
-  - composer install --dev
+  - composer install
 script: phpunit --configuration ./phpunit.xml tests/automated
 after_script:
-  - php vendor/bin/coveralls -v
+  - php tools/coveralls -v
