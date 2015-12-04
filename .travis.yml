@@ -7,7 +7,7 @@ php:
   - hhvm
   - nightly
 install:
-  - composer install
+  - composer install --dev
 script: phpunit --configuration ./phpunit.xml tests/automated
 after_script:
   - php vendor/bin/coveralls -v
