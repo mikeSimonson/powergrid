@@ -9,3 +9,5 @@ php:
 install:
   - composer install
 script: phpunit --bootstrap ./bootstrap.php tests/automated
+after_script:
+  - php vendor/bin/coveralls -v
