@@ -8,6 +8,6 @@ php:
   - nightly
 install:
   - composer install
-script: phpunit --bootstrap ./bootstrap.php tests/automated
+script: phpunit --configuration ./phpunit.xml tests/automated
 after_script:
   - php vendor/bin/coveralls -v
