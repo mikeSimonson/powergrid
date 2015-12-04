@@ -2,7 +2,12 @@
 
 namespace PowerGrid\Abstracts;
 
-abstract class Game implements \PowerGrid\Interfaces\GameControls {
+abstract class Game implements \PowerGrid\Interfaces\GameControls, \PowerGrid\Interfaces\Observable {
+
+  const ACTION_COMPLETE_EVENT_POSTFIX = ':COMPLETE';
+  const EVENT_NAMESPACE = 'GameAction';
+  
+  protected $observers = array();
 
   protected $players = array();
   protected $ruleFactory = NULL;
@@ -99,13 +104,13 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
   }
 
   protected function performAction($action, $contextMap) {
-    $this->beginAction();
+    $this->beginAction($action);
 
     $rules = $this->getRules($action);
     $turnData = new \Ruler\Context($contextMap);
     $rules->execute($this->game, $turnData);
 
-    $this->completeAction();
+    $this->completeAction($action, $contextMap);
   }
 
   protected function getRules($action) {
@@ -122,14 +127,30 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls {
     $this->players[$nextPlayerId]->notify($nextAction);
   }
 
-  protected function beginAction() {
+  protected function beginAction($action) {
     $this->beginActionHook();
   }
 
-  protected function completeAction() {
-    $this->progressGame();
+  protected function completeAction($action, $contextMap) {
+    $this->progressGame($action, $contextMap);
     $this->notifyNextPlayer();
     $this->completeActionHook();
+  }
+
+  protected function progressGame($action, $contextMap) {
+    $event = \PowerGrid\Structures\Event::create(
+      $action . static::ACTION_COMPLETE_EVENT_POSTFIX,
+      static::EVENT_NAMESPACE,
+      $contextMap
+    );
+
+    foreach ($this->observers AS $observer) {
+      $observer->notify($event);
+    }
+  }
+
+  public function subscribe(\PowerGrid\Interfaces\Observer $observer) {
+    $this->observers[] = $observer;
   }
 
   /**
