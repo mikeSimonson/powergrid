@@ -37,7 +37,6 @@ class Container implements \PowerGrid\Interfaces\Singleton {
    * Arguments is ignored.
    */
   public function __call($referenceName, $arguments) {
-    var_dump($referenceName);
     if (!is_string($this->registry[$referenceName])) {
       throw new \PowerGrid\Exceptions\Application\ClassNotRegisteredOnContainer($referenceName, __CLASS__);
     }
