@@ -3,7 +3,9 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.4/phpunit.xsd"
          bootstrap="./bootstrap.php"
          backupGlobals="false"
-         verbose="true">
+         verbose="true"
+         processIsolation="true"
+         >
   <logging>
     <log type="coverage-clover" target="build/logs/clover.xml"/>
   </logging>
