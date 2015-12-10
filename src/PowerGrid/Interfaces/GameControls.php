@@ -7,15 +7,16 @@ interface GameControls {
   /**
    * @param   int
    * @param   int
+   * @param   int
    */
-  public function startBid($playerId, $powerPlantId);
+  public function startBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant, $bid);
 
   /**
    * @param   int
    * @param   int
    * @param   int
    */ 
-  public function placeBid($playerId, $powerPlantId, $bidAmount);
+  public function placeBid(\PowerGrid\Interfaces\PlayerData $player, \PowerGrid\Interfaces\PowerPlantData $powerPlant, $bidAmount);
 
   /**
    * @param   int
