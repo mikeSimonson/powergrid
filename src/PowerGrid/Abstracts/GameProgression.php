@@ -2,7 +2,7 @@
 
 namespace PowerGrid\Abstracts;
 
-class GameProgression {
+abstract class GameProgression {
 
   public function __construct(\PowerGrid\Interfaces\GameData $game) {
     $this->game = $game;
