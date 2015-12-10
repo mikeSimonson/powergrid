@@ -6,6 +6,9 @@ php:
   - '7' # or '7.0'
   - hhvm
   - nightly
+matrix:
+  allow_failures:
+    - php: nightly
 install:
   - composer require satooshi/php-coveralls:~0.6@stable
   - composer self-update
