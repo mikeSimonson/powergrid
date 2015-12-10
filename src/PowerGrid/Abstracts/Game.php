@@ -121,10 +121,16 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls, \PowerGrid\In
   }
 
   protected function notifyNextPlayer() {
+    /*
+      @TODO: Come up with way to sanely notify next player
+     */
+
+    /*
     $nextPlayerId = $this->game->getNextPlayerId();
     $nextAction = $this->game->getNextPhaseId();
 
     $this->players[$nextPlayerId]->notify($nextAction);
+     */
   }
 
   protected function beginAction($action) {
