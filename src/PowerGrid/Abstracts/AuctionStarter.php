@@ -3,10 +3,13 @@
 namespace PowerGrid\Abstracts;
 
 abstract class AuctionStarter {
+  
+  protected $auctionStatus;
   protected $game;
   protected $gameDeck;
 
-  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\GameDeckSearcher $gameDeck) {
+  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\GameDeckSearcher $gameDeck, \PowerGrid\Abstracts\AuctionStatus $auctionStatus) {
+    $this->auctionStatus = $auctionStatus;
     $this->game = $game;
     $this->gameDeck = $gameDeck;
   }
@@ -26,7 +29,7 @@ abstract class AuctionStarter {
     $player = $eventObject['player'];
     $this->updateAuctionActionForPlayer($player, $eventObject);
     $this->updateCurrentAuctionPlant($player, $eventObject);
-    if ($this->auctionIsComplete($eventObject)) {
+    if ($this->auctionStatus->isComplete()) {
       $this->giveWinningPlayerCard($eventObject);
     }
   }
@@ -39,8 +42,6 @@ abstract class AuctionStarter {
   
   abstract protected function updateAuctionActionForPlayer($player, $eventObject);
   
-  abstract protected function auctionIsComplete($eventObject);
-
   abstract protected function giveWinningPlayerCard($eventObject);
 
   abstract protected function moveDeckCardsIntoAuction($deckCards);

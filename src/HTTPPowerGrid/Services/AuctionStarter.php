@@ -9,6 +9,7 @@ class AuctionStarter extends \PowerGrid\Abstracts\AuctionStarter {
       $auctionCard->setGame($this->game);
       $auctionCard->setGameCard($deckCard->getGameCard());
       $auctionCard->save();
+      $deckCard->delete();
     }
   }
 
@@ -33,7 +34,6 @@ class AuctionStarter extends \PowerGrid\Abstracts\AuctionStarter {
     $playerAuctionAction->setGame($this->game);
     $playerAuctionAction->setRoundNumber($this->game->getRoundNumber());
     $playerAuctionAction->setPlayer($player);
-    $playerAuctionAction->setCurrentAuctionPlant($currentAuctionPlant);
 
     if ($player->getId() == $eventObject['player']->getId()) {
       $playerAuctionAction->setActed(TRUE);
@@ -65,36 +65,19 @@ class AuctionStarter extends \PowerGrid\Abstracts\AuctionStarter {
     $playerAuctionAction->save();
   }
 
-  protected function auctionIsComplete($eventObject) {
-    $auctionComplete = FALSE;
-    // Auction is complete when all but the highest bidder have passed.
-    $playersWhoHavePassed = \PlayerAuctionActionQuery::create()
-      ->filterByGame($this->game)
-      ->filterByHasPassed(FALSE)
-      ->orderBy('round_number', Criteria::Desc)
-      ->limit($this->game->countPlayers())
-      ->find();
-
-    if (count($playersWhoHavePassed) == $this->game->countPlayers() - 1) {
-      $auctionComplete = TRUE;
-    }
-
-    return $auctionComplete;
-  }
-
   protected function giveWinningPlayerCard($eventObject) {
     $currentAuctionPlant = \CurrentAuctionPlantQuery::create()
       ->findOneByPK($this->game->getId());
 
-    $card = $currentAuctionPlant->getCard();
-    $gameCard = \GameCardQuery::create()
-      ->filterByGame($this->game)
-      ->filterByCard($card)
-      ->findOne();
-    $auctionCard = \GameAuctionCardQuery::create()
-      ->findOneByGameCard($gameCard);
-    $auctionCard->delete();
+    $auctionCard = $currentAuctionPlant->getCard();
+    $gameCard = $auctionCard->getGameCard();
 
+    $auctionCard->delete();
+    
     $player = $currentAuctionPlant->getHighestBidder();
+
+    $playerCard = new \PlayerCard();
+    $playerCard->setPlayer($player);
+    $playerCard->setCard($gameCard);
   }
 }
