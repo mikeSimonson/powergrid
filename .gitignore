@@ -13,3 +13,4 @@ composer
 ctags
 deploy/new_install.sh
 composer.lock
+build/
