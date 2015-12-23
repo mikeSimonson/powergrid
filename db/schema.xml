@@ -136,6 +136,7 @@
     <column name="game_id" type="integer"/>
     <column name="player_id" type="integer"/>
     <column name="round_number" type="integer"/>
+    <column name="phase_number" type="integer"/>
     <column name="has_acted" type="boolean"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="TurnOrder">
       <reference local="game_id" foreign="id"/>
