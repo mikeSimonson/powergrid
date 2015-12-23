@@ -2,6 +2,8 @@
 
 namespace HTTPPowerGrid\Services;
 
+use Propel\Runtime\ActiveQuery\Criteria;
+
 class AuctionStatus extends \PowerGrid\Abstracts\AuctionStatus {
   public function isComplete() {
     $auctionComplete = FALSE;
@@ -10,7 +12,7 @@ class AuctionStatus extends \PowerGrid\Abstracts\AuctionStatus {
     $playersWhoHavePassed = \PlayerAuctionActionQuery::create()
       ->filterByGame($this->game)
       ->filterByHasPassed(TRUE)
-      ->orderBy('round_number', Criteria::Desc)
+      ->orderBy('round_number', Criteria::DESC)
       ->limit($this->game->countPlayers())
       ->find();
 
