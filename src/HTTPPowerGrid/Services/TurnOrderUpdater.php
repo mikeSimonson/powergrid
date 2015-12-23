@@ -40,7 +40,7 @@ class TurnOrderUpdater extends \PowerGrid\Abstracts\TurnOrderUpdater {
     foreach ($con->query($sql) AS $resultRow) {
       $playerId = $resultRow['player_id'];
 
-      $turnOrder = new \TurnOrder();
+      $turnOrder = \HTTPPowerGrid\Services\TurnOrderStarter::createNewTurnOrderObj();
       $turnOrder->setRank($rank);
       $turnOrder->setGame($this->game);
       $turnOrder->setPlayerId($playerId);

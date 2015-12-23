@@ -18,7 +18,7 @@ abstract class TurnOrderStarter {
     $turnOrders = range(1, count($this->players));
     shuffle($turnOrders);
     foreach ($this->players AS $player) {
-      $turn = $this->createNewTurnOrderObj();
+      $turn = static::createNewTurnOrderObj();
       $turn->setPlayer($player);
       $turn->setRank(array_pop($turnOrders));
       $turn->setRoundNumber($this->game->getRoundNumber());
@@ -26,5 +26,5 @@ abstract class TurnOrderStarter {
     }
   }
 
-  abstract protected function createNewTurnOrderObj();
+  abstract public static function createNewTurnOrderObj();
 }
