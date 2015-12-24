@@ -59,7 +59,7 @@ class TurnOrderTableMap extends TableMap
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 5;
+    const NUM_COLUMNS = 7;
 
     /**
      * The number of lazy-loaded columns
@@ -69,7 +69,7 @@ class TurnOrderTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 5;
+    const NUM_HYDRATE_COLUMNS = 7;
 
     /**
      * the column name for the id field
@@ -97,6 +97,16 @@ class TurnOrderTableMap extends TableMap
     const COL_ROUND_NUMBER = 'turn_order.round_number';
 
     /**
+     * the column name for the phase_number field
+     */
+    const COL_PHASE_NUMBER = 'turn_order.phase_number';
+
+    /**
+     * the column name for the has_acted field
+     */
+    const COL_HAS_ACTED = 'turn_order.has_acted';
+
+    /**
      * The default string format for model objects of the related table
      */
     const DEFAULT_STRING_FORMAT = 'YAML';
@@ -108,11 +118,11 @@ class TurnOrderTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Id', 'Rank', 'GameId', 'PlayerId', 'RoundNumber', ),
-        self::TYPE_CAMELNAME     => array('id', 'rank', 'gameId', 'playerId', 'roundNumber', ),
-        self::TYPE_COLNAME       => array(TurnOrderTableMap::COL_ID, TurnOrderTableMap::COL_RANK, TurnOrderTableMap::COL_GAME_ID, TurnOrderTableMap::COL_PLAYER_ID, TurnOrderTableMap::COL_ROUND_NUMBER, ),
-        self::TYPE_FIELDNAME     => array('id', 'rank', 'game_id', 'player_id', 'round_number', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id', 'Rank', 'GameId', 'PlayerId', 'RoundNumber', 'PhaseNumber', 'HasActed', ),
+        self::TYPE_CAMELNAME     => array('id', 'rank', 'gameId', 'playerId', 'roundNumber', 'phaseNumber', 'hasActed', ),
+        self::TYPE_COLNAME       => array(TurnOrderTableMap::COL_ID, TurnOrderTableMap::COL_RANK, TurnOrderTableMap::COL_GAME_ID, TurnOrderTableMap::COL_PLAYER_ID, TurnOrderTableMap::COL_ROUND_NUMBER, TurnOrderTableMap::COL_PHASE_NUMBER, TurnOrderTableMap::COL_HAS_ACTED, ),
+        self::TYPE_FIELDNAME     => array('id', 'rank', 'game_id', 'player_id', 'round_number', 'phase_number', 'has_acted', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -122,11 +132,11 @@ class TurnOrderTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Id' => 0, 'Rank' => 1, 'GameId' => 2, 'PlayerId' => 3, 'RoundNumber' => 4, ),
-        self::TYPE_CAMELNAME     => array('id' => 0, 'rank' => 1, 'gameId' => 2, 'playerId' => 3, 'roundNumber' => 4, ),
-        self::TYPE_COLNAME       => array(TurnOrderTableMap::COL_ID => 0, TurnOrderTableMap::COL_RANK => 1, TurnOrderTableMap::COL_GAME_ID => 2, TurnOrderTableMap::COL_PLAYER_ID => 3, TurnOrderTableMap::COL_ROUND_NUMBER => 4, ),
-        self::TYPE_FIELDNAME     => array('id' => 0, 'rank' => 1, 'game_id' => 2, 'player_id' => 3, 'round_number' => 4, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
+        self::TYPE_PHPNAME       => array('Id' => 0, 'Rank' => 1, 'GameId' => 2, 'PlayerId' => 3, 'RoundNumber' => 4, 'PhaseNumber' => 5, 'HasActed' => 6, ),
+        self::TYPE_CAMELNAME     => array('id' => 0, 'rank' => 1, 'gameId' => 2, 'playerId' => 3, 'roundNumber' => 4, 'phaseNumber' => 5, 'hasActed' => 6, ),
+        self::TYPE_COLNAME       => array(TurnOrderTableMap::COL_ID => 0, TurnOrderTableMap::COL_RANK => 1, TurnOrderTableMap::COL_GAME_ID => 2, TurnOrderTableMap::COL_PLAYER_ID => 3, TurnOrderTableMap::COL_ROUND_NUMBER => 4, TurnOrderTableMap::COL_PHASE_NUMBER => 5, TurnOrderTableMap::COL_HAS_ACTED => 6, ),
+        self::TYPE_FIELDNAME     => array('id' => 0, 'rank' => 1, 'game_id' => 2, 'player_id' => 3, 'round_number' => 4, 'phase_number' => 5, 'has_acted' => 6, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
     );
 
     /**
@@ -151,6 +161,8 @@ class TurnOrderTableMap extends TableMap
         $this->addForeignKey('game_id', 'GameId', 'INTEGER', 'game', 'id', false, null, null);
         $this->addForeignKey('player_id', 'PlayerId', 'INTEGER', 'player', 'id', false, null, null);
         $this->addColumn('round_number', 'RoundNumber', 'INTEGER', false, null, null);
+        $this->addColumn('phase_number', 'PhaseNumber', 'INTEGER', false, null, null);
+        $this->addColumn('has_acted', 'HasActed', 'BOOLEAN', false, null, null);
     } // initialize()
 
     /**
@@ -320,12 +332,16 @@ class TurnOrderTableMap extends TableMap
             $criteria->addSelectColumn(TurnOrderTableMap::COL_GAME_ID);
             $criteria->addSelectColumn(TurnOrderTableMap::COL_PLAYER_ID);
             $criteria->addSelectColumn(TurnOrderTableMap::COL_ROUND_NUMBER);
+            $criteria->addSelectColumn(TurnOrderTableMap::COL_PHASE_NUMBER);
+            $criteria->addSelectColumn(TurnOrderTableMap::COL_HAS_ACTED);
         } else {
             $criteria->addSelectColumn($alias . '.id');
             $criteria->addSelectColumn($alias . '.rank');
             $criteria->addSelectColumn($alias . '.game_id');
             $criteria->addSelectColumn($alias . '.player_id');
             $criteria->addSelectColumn($alias . '.round_number');
+            $criteria->addSelectColumn($alias . '.phase_number');
+            $criteria->addSelectColumn($alias . '.has_acted');
         }
     }
 

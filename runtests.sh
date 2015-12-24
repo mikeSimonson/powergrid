@@ -1,3 +1,4 @@
 #!/bin/bash
 
-phpunit --configuration ./phpunit.xml tests/automated
+./tests/rununittests.sh
+./tests/runintegrationtests.sh

@@ -132,7 +132,7 @@ class PlayerCardTableMap extends TableMap
         $this->setUseIdGenerator(false);
         // columns
         $this->addForeignPrimaryKey('player_id', 'PlayerId', 'INTEGER' , 'player', 'id', true, null, null);
-        $this->addForeignPrimaryKey('card_id', 'CardId', 'INTEGER' , 'card', 'id', true, null, null);
+        $this->addForeignPrimaryKey('card_id', 'CardId', 'INTEGER' , 'game_card', 'id', true, null, null);
     } // initialize()
 
     /**
@@ -147,7 +147,7 @@ class PlayerCardTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, null, false);
-        $this->addRelation('Card', '\\Card', RelationMap::MANY_TO_ONE, array (
+        $this->addRelation('Card', '\\GameCard', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':card_id',

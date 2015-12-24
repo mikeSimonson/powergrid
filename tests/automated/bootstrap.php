@@ -11,3 +11,5 @@ function loadTestClasses($className) {
 }
 
 spl_autoload_register('loadTestClasses');
+
+if (!defined('TEST_SQLITE3_DB_FILENAME')) define('TEST_SQLITE3_DB_FILENAME', BASE_DIR . '/db/integration_tests_sqlite3.db');

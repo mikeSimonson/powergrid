@@ -183,7 +183,7 @@ class GameTableMap extends TableMap
         // columns
         $this->addPrimaryKey('id', 'Id', 'INTEGER', true, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
-        $this->addColumn('has_started', 'HasStarted', 'BOOLEAN', false, 1, false);
+        $this->addColumn('has_started', 'HasStarted', 'BOOLEAN', false, null, false);
         $this->addColumn('card_limit', 'CardLimit', 'INTEGER', false, null, null);
         $this->addColumn('turn_number', 'TurnNumber', 'INTEGER', false, null, 1);
         $this->addColumn('phase_number', 'PhaseNumber', 'INTEGER', false, null, 1);

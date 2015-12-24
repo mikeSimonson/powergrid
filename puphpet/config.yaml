@@ -173,6 +173,7 @@ php:
             - cli
             - intl
             - mcrypt
+            - sqlite
         pear: {  }
         pecl:
             - pecl_http

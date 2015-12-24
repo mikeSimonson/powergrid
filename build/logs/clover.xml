@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1450641719">
-  <project timestamp="1450641719">
+<coverage generated="1450980987">
+  <project timestamp="1450980987">
     <package name="HTTPApi\Exceptions">
       <file name="/var/www/src/HTTPApi/Exceptions/Base.php">
         <class name="Base" namespace="HTTPApi\Exceptions">
@@ -192,6 +192,43 @@
         <metrics loc="80" ncloc="80" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="53" coveredstatements="0" elements="58" coveredelements="0"/>
       </file>
     </package>
+    <file name="/var/www/src/HTTPApi/RouteHandler.php">
+      <class name="RouteHandler" namespace="global">
+        <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="16" coveredelements="0"/>
+      </class>
+      <line num="4" type="method" name="__construct" crap="2" count="0"/>
+      <line num="5" type="stmt" count="0"/>
+      <line num="6" type="stmt" count="0"/>
+      <line num="8" type="method" name="__invoke" crap="12" count="0"/>
+      <line num="9" type="stmt" count="0"/>
+      <line num="10" type="stmt" count="0"/>
+      <line num="11" type="stmt" count="0"/>
+      <line num="12" type="stmt" count="0"/>
+      <line num="13" type="stmt" count="0"/>
+      <line num="14" type="stmt" count="0"/>
+      <line num="15" type="stmt" count="0"/>
+      <line num="17" type="stmt" count="0"/>
+      <line num="18" type="stmt" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="21" type="stmt" count="0"/>
+      <metrics loc="22" ncloc="22" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="16" coveredelements="0"/>
+    </file>
+    <file name="/var/www/src/HTTPApi/container.php">
+      <line num="3" type="stmt" count="0"/>
+      <line num="5" type="stmt" count="0"/>
+      <line num="6" type="stmt" count="0"/>
+      <line num="7" type="stmt" count="0"/>
+      <line num="10" type="stmt" count="0"/>
+      <line num="11" type="stmt" count="0"/>
+      <line num="14" type="stmt" count="0"/>
+      <line num="15" type="stmt" count="0"/>
+      <line num="18" type="stmt" count="0"/>
+      <line num="19" type="stmt" count="0"/>
+      <line num="22" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <metrics loc="23" ncloc="23" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="12" coveredelements="0"/>
+    </file>
     <file name="/var/www/src/HTTPApi/routes/groups/admin.php">
       <line num="9" type="stmt" count="0"/>
       <line num="10" type="stmt" count="0"/>
@@ -362,26 +399,23 @@
     </file>
     <file name="/var/www/src/HTTPApi/routes/groups/player.php">
       <line num="3" type="stmt" count="0"/>
-      <line num="8" type="stmt" count="0"/>
+      <line num="4" type="stmt" count="0"/>
       <line num="9" type="stmt" count="0"/>
       <line num="10" type="stmt" count="0"/>
-      <line num="14" type="stmt" count="0"/>
-      <line num="15" type="stmt" count="0"/>
-      <line num="16" type="stmt" count="0"/>
+      <line num="11" type="stmt" count="0"/>
       <line num="17" type="stmt" count="0"/>
       <line num="18" type="stmt" count="0"/>
       <line num="19" type="stmt" count="0"/>
-      <line num="20" type="stmt" count="0"/>
       <line num="21" type="stmt" count="0"/>
       <line num="22" type="stmt" count="0"/>
       <line num="23" type="stmt" count="0"/>
       <line num="24" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
       <line num="26" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
       <line num="28" type="stmt" count="0"/>
       <line num="30" type="stmt" count="0"/>
-      <line num="31" type="stmt" count="0"/>
       <line num="32" type="stmt" count="0"/>
-      <line num="33" type="stmt" count="0"/>
       <line num="34" type="stmt" count="0"/>
       <line num="35" type="stmt" count="0"/>
       <line num="36" type="stmt" count="0"/>
@@ -389,19 +423,29 @@
       <line num="38" type="stmt" count="0"/>
       <line num="39" type="stmt" count="0"/>
       <line num="40" type="stmt" count="0"/>
-      <line num="43" type="stmt" count="0"/>
+      <line num="41" type="stmt" count="0"/>
+      <line num="42" type="stmt" count="0"/>
+      <line num="44" type="stmt" count="0"/>
       <line num="45" type="stmt" count="0"/>
-      <line num="46" type="stmt" count="0"/>
-      <line num="47" type="stmt" count="0"/>
-      <line num="48" type="stmt" count="0"/>
       <line num="49" type="stmt" count="0"/>
-      <line num="50" type="stmt" count="0"/>
       <line num="51" type="stmt" count="0"/>
       <line num="52" type="stmt" count="0"/>
       <line num="53" type="stmt" count="0"/>
-      <line num="54" type="stmt" count="0"/>
       <line num="55" type="stmt" count="0"/>
-      <metrics loc="55" ncloc="55" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="40" coveredstatements="0" elements="40" coveredelements="0"/>
+      <line num="56" type="stmt" count="0"/>
+      <line num="57" type="stmt" count="0"/>
+      <line num="58" type="stmt" count="0"/>
+      <line num="59" type="stmt" count="0"/>
+      <line num="60" type="stmt" count="0"/>
+      <line num="61" type="stmt" count="0"/>
+      <line num="62" type="stmt" count="0"/>
+      <line num="63" type="stmt" count="0"/>
+      <line num="64" type="stmt" count="0"/>
+      <line num="65" type="stmt" count="0"/>
+      <line num="66" type="stmt" count="0"/>
+      <line num="68" type="stmt" count="0"/>
+      <line num="70" type="stmt" count="0"/>
+      <metrics loc="70" ncloc="70" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="0" elements="47" coveredelements="0"/>
     </file>
     <file name="/var/www/src/HTTPApi/routes/groups/user.php">
       <line num="3" type="stmt" count="0"/>
@@ -639,20 +683,43 @@
       </file>
       <file name="/var/www/src/HTTPPowerGrid/Game.php">
         <class name="Game" namespace="HTTPPowerGrid">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="5" coveredelements="0"/>
         </class>
-        <line num="10" type="method" name="beginActionHook" crap="1" count="2"/>
-        <line num="11" type="stmt" count="2"/>
-        <line num="16" type="method" name="completeActionHook" crap="1" count="2"/>
-        <line num="17" type="stmt" count="2"/>
-        <line num="18" type="stmt" count="2"/>
-        <metrics loc="19" ncloc="13" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="3" elements="5" coveredelements="5"/>
+        <line num="10" type="method" name="beginActionHook" crap="2" count="0"/>
+        <line num="11" type="stmt" count="0"/>
+        <line num="16" type="method" name="completeActionHook" crap="2" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <metrics loc="19" ncloc="13" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="5" coveredelements="0"/>
       </file>
       <file name="/var/www/src/HTTPPowerGrid/GameProgression.php">
         <class name="GameProgression" namespace="HTTPPowerGrid">
-          <metrics methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
         </class>
-        <metrics loc="7" ncloc="7" classes="1" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+        <line num="9" type="method" name="progressPhase" crap="12" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <line num="11" type="stmt" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="22" type="method" name="progressRound" crap="6" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="29" type="method" name="advanceTurnNumber" crap="2" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="34" type="method" name="progressStep" crap="2" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <metrics loc="37" ncloc="37" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
       </file>
       <file name="/var/www/src/HTTPPowerGrid/Player.php">
         <class name="Player" namespace="HTTPPowerGrid">
@@ -902,7 +969,7 @@
     <package name="HTTPPowerGrid\Services">
       <file name="/var/www/src/HTTPPowerGrid/Services/AuctionStarter.php">
         <class name="AuctionStarter" namespace="HTTPPowerGrid\Services">
-          <metrics methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="71" coveredstatements="0" elements="77" coveredelements="0"/>
+          <metrics methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="0" elements="62" coveredelements="0"/>
         </class>
         <line num="6" type="method" name="moveDeckCardsIntoAuction" crap="6" count="0"/>
         <line num="7" type="stmt" count="0"/>
@@ -912,20 +979,20 @@
         <line num="11" type="stmt" count="0"/>
         <line num="12" type="stmt" count="0"/>
         <line num="13" type="stmt" count="0"/>
-        <line num="15" type="method" name="createCurrentAuctionPlant" crap="6" count="0"/>
-        <line num="16" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="16" type="method" name="createCurrentAuctionPlant" crap="6" count="0"/>
         <line num="17" type="stmt" count="0"/>
-        <line num="19" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
         <line num="20" type="stmt" count="0"/>
         <line num="21" type="stmt" count="0"/>
-        <line num="23" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
         <line num="24" type="stmt" count="0"/>
         <line num="25" type="stmt" count="0"/>
         <line num="26" type="stmt" count="0"/>
-        <line num="28" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
         <line num="29" type="stmt" count="0"/>
-        <line num="31" type="method" name="createAuctionActionForPlayer" crap="6" count="0"/>
-        <line num="32" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="32" type="method" name="createAuctionActionForPlayer" crap="6" count="0"/>
         <line num="33" type="stmt" count="0"/>
         <line num="34" type="stmt" count="0"/>
         <line num="35" type="stmt" count="0"/>
@@ -955,33 +1022,37 @@
         <line num="64" type="stmt" count="0"/>
         <line num="65" type="stmt" count="0"/>
         <line num="66" type="stmt" count="0"/>
-        <line num="68" type="method" name="auctionIsComplete" crap="6" count="0"/>
+        <line num="68" type="method" name="giveWinningPlayerCard" crap="2" count="0"/>
         <line num="69" type="stmt" count="0"/>
-        <line num="71" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
         <line num="72" type="stmt" count="0"/>
         <line num="73" type="stmt" count="0"/>
-        <line num="74" type="stmt" count="0"/>
         <line num="75" type="stmt" count="0"/>
-        <line num="76" type="stmt" count="0"/>
-        <line num="78" type="stmt" count="0"/>
+        <line num="77" type="stmt" count="0"/>
         <line num="79" type="stmt" count="0"/>
         <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
         <line num="82" type="stmt" count="0"/>
-        <line num="83" type="stmt" count="0"/>
-        <line num="85" type="method" name="giveWinningPlayerCard" crap="2" count="0"/>
-        <line num="86" type="stmt" count="0"/>
-        <line num="87" type="stmt" count="0"/>
-        <line num="89" type="stmt" count="0"/>
-        <line num="90" type="stmt" count="0"/>
-        <line num="91" type="stmt" count="0"/>
-        <line num="92" type="stmt" count="0"/>
-        <line num="93" type="stmt" count="0"/>
-        <line num="94" type="stmt" count="0"/>
-        <line num="95" type="stmt" count="0"/>
-        <line num="96" type="stmt" count="0"/>
-        <line num="98" type="stmt" count="0"/>
-        <line num="99" type="stmt" count="0"/>
-        <metrics loc="100" ncloc="98" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="71" coveredstatements="0" elements="77" coveredelements="0"/>
+        <metrics loc="83" ncloc="83" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="57" coveredstatements="0" elements="62" coveredelements="0"/>
+      </file>
+      <file name="/var/www/src/HTTPPowerGrid/Services/AuctionStatus.php">
+        <class name="AuctionStatus" namespace="HTTPPowerGrid\Services">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="13" coveredelements="0"/>
+        </class>
+        <line num="8" type="method" name="isComplete" crap="6" count="0"/>
+        <line num="9" type="stmt" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <metrics loc="25" ncloc="23" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="12" coveredstatements="0" elements="13" coveredelements="0"/>
       </file>
       <file name="/var/www/src/HTTPPowerGrid/Services/CardServices.php">
         <class name="CardServices" namespace="HTTPPowerGrid\Services">
@@ -1218,6 +1289,50 @@
         <line num="9" type="stmt" count="0"/>
         <metrics loc="10" ncloc="10" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
       </file>
+      <file name="/var/www/src/HTTPPowerGrid/Services/TurnOrderUpdater.php">
+        <class name="TurnOrderUpdater" namespace="HTTPPowerGrid\Services">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="38" coveredelements="0"/>
+        </class>
+        <line num="7" type="method" name="newOrder" crap="6" count="0"/>
+        <line num="8" type="stmt" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="45" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <metrics loc="56" ncloc="52" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="37" coveredstatements="0" elements="38" coveredelements="0"/>
+      </file>
       <file name="/var/www/src/HTTPPowerGrid/Services/UserGameCreator.php">
         <class name="UserGameCreator" namespace="HTTPPowerGrid\Services">
           <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="18" coveredelements="0"/>
@@ -1327,30 +1442,40 @@
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/AuctionStarter.php">
         <class name="AuctionStarter" namespace="PowerGrid\Abstracts">
-          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="21" coveredelements="0"/>
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="22" coveredelements="0"/>
         </class>
-        <line num="9" type="method" name="__construct" crap="2" count="0"/>
-        <line num="10" type="stmt" count="0"/>
-        <line num="11" type="stmt" count="0"/>
+        <line num="11" type="method" name="__construct" crap="2" count="0"/>
         <line num="12" type="stmt" count="0"/>
-        <line num="14" type="method" name="setup" crap="2" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
         <line num="15" type="stmt" count="0"/>
-        <line num="16" type="stmt" count="0"/>
-        <line num="18" type="method" name="startAuctionRound" crap="6" count="0"/>
+        <line num="17" type="method" name="setup" crap="2" count="0"/>
+        <line num="18" type="stmt" count="0"/>
         <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="21" type="stmt" count="0"/>
+        <line num="21" type="method" name="startAuctionRound" crap="6" count="0"/>
         <line num="22" type="stmt" count="0"/>
         <line num="23" type="stmt" count="0"/>
-        <line num="25" type="method" name="updateAuction" crap="6" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
         <line num="26" type="stmt" count="0"/>
-        <line num="27" type="stmt" count="0"/>
-        <line num="28" type="stmt" count="0"/>
+        <line num="28" type="method" name="updateAuction" crap="6" count="0"/>
         <line num="29" type="stmt" count="0"/>
         <line num="30" type="stmt" count="0"/>
         <line num="31" type="stmt" count="0"/>
         <line num="32" type="stmt" count="0"/>
-        <metrics loc="47" ncloc="47" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="21" coveredelements="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <metrics loc="48" ncloc="48" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="22" coveredelements="0"/>
+      </file>
+      <file name="/var/www/src/PowerGrid/Abstracts/AuctionStatus.php">
+        <class name="AuctionStatus" namespace="PowerGrid\Abstracts">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
+        </class>
+        <line num="9" type="method" name="__construct" crap="2" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <line num="11" type="stmt" count="0"/>
+        <metrics loc="15" ncloc="15" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="2" coveredstatements="0" elements="3" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/ConfigParser.php">
         <class name="ConfigParser" namespace="PowerGrid\Abstracts">
@@ -1367,91 +1492,102 @@
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/Game.php">
         <class name="Game" namespace="PowerGrid\Abstracts">
-          <metrics methods="15" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="67" coveredstatements="42" elements="82" coveredelements="50"/>
+          <metrics methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="0" elements="93" coveredelements="0"/>
         </class>
-        <line num="20" type="method" name="__construct" crap="1" count="2"/>
-        <line num="21" type="stmt" count="2"/>
-        <line num="22" type="stmt" count="2"/>
-        <line num="23" type="stmt" count="2"/>
-        <line num="24" type="stmt" count="2"/>
-        <line num="25" type="stmt" count="2"/>
-        <line num="26" type="stmt" count="2"/>
-        <line num="31" type="method" name="startBid" crap="1" count="2"/>
-        <line num="32" type="stmt" count="2"/>
-        <line num="34" type="stmt" count="2"/>
-        <line num="35" type="stmt" count="2"/>
-        <line num="37" type="stmt" count="2"/>
-        <line num="38" type="stmt" count="2"/>
-        <line num="39" type="stmt" count="2"/>
+        <line num="20" type="method" name="__construct" crap="2" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="31" type="method" name="startBid" crap="2" count="0"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="37" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="39" type="stmt" count="0"/>
         <line num="44" type="method" name="passOnBidding" crap="2" count="0"/>
         <line num="46" type="stmt" count="0"/>
         <line num="52" type="method" name="placeBid" crap="2" count="0"/>
         <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
         <line num="55" type="stmt" count="0"/>
         <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
         <line num="58" type="stmt" count="0"/>
         <line num="59" type="stmt" count="0"/>
         <line num="60" type="stmt" count="0"/>
         <line num="65" type="method" name="buyResources" crap="2" count="0"/>
         <line num="66" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
         <line num="68" type="stmt" count="0"/>
+        <line num="69" type="stmt" count="0"/>
         <line num="70" type="stmt" count="0"/>
         <line num="71" type="stmt" count="0"/>
         <line num="72" type="stmt" count="0"/>
         <line num="77" type="method" name="buildCities" crap="2" count="0"/>
         <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
         <line num="80" type="stmt" count="0"/>
+        <line num="81" type="stmt" count="0"/>
         <line num="82" type="stmt" count="0"/>
         <line num="83" type="stmt" count="0"/>
         <line num="84" type="stmt" count="0"/>
         <line num="90" type="method" name="powerCities" crap="2" count="0"/>
         <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
         <line num="93" type="stmt" count="0"/>
         <line num="94" type="stmt" count="0"/>
+        <line num="95" type="stmt" count="0"/>
         <line num="96" type="stmt" count="0"/>
         <line num="97" type="stmt" count="0"/>
         <line num="98" type="stmt" count="0"/>
-        <line num="100" type="method" name="setPlayers" crap="2.06" count="2"/>
-        <line num="101" type="stmt" count="2"/>
+        <line num="100" type="method" name="setPlayers" crap="6" count="0"/>
+        <line num="101" type="stmt" count="0"/>
         <line num="102" type="stmt" count="0"/>
-        <line num="103" type="stmt" count="2"/>
-        <line num="104" type="stmt" count="2"/>
-        <line num="106" type="method" name="performAction" crap="1" count="2"/>
-        <line num="107" type="stmt" count="2"/>
-        <line num="109" type="stmt" count="2"/>
-        <line num="110" type="stmt" count="2"/>
-        <line num="111" type="stmt" count="2"/>
-        <line num="113" type="stmt" count="2"/>
-        <line num="114" type="stmt" count="2"/>
-        <line num="116" type="method" name="getRules" crap="1" count="2"/>
-        <line num="117" type="stmt" count="2"/>
-        <line num="118" type="stmt" count="2"/>
-        <line num="120" type="stmt" count="2"/>
-        <line num="123" type="method" name="notifyNextPlayer" crap="1" count="2"/>
-        <line num="134" type="stmt" count="2"/>
-        <line num="136" type="method" name="beginAction" crap="1" count="2"/>
-        <line num="137" type="stmt" count="2"/>
-        <line num="138" type="stmt" count="2"/>
-        <line num="140" type="method" name="completeAction" crap="1" count="2"/>
-        <line num="141" type="stmt" count="2"/>
-        <line num="142" type="stmt" count="2"/>
-        <line num="143" type="stmt" count="2"/>
-        <line num="144" type="stmt" count="2"/>
-        <line num="146" type="method" name="progressGame" crap="2.00" count="2"/>
-        <line num="147" type="stmt" count="2"/>
-        <line num="148" type="stmt" count="2"/>
-        <line num="149" type="stmt" count="2"/>
-        <line num="150" type="stmt" count="2"/>
-        <line num="151" type="stmt" count="2"/>
-        <line num="152" type="stmt" count="2"/>
-        <line num="154" type="stmt" count="2"/>
+        <line num="103" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="106" type="method" name="performAction" crap="2" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="109" type="stmt" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="111" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="116" type="method" name="getRules" crap="2" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="120" type="stmt" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="123" type="method" name="notifyNextPlayer" crap="2" count="0"/>
+        <line num="134" type="stmt" count="0"/>
+        <line num="136" type="method" name="beginAction" crap="2" count="0"/>
+        <line num="137" type="stmt" count="0"/>
+        <line num="138" type="stmt" count="0"/>
+        <line num="140" type="method" name="completeAction" crap="2" count="0"/>
+        <line num="141" type="stmt" count="0"/>
+        <line num="142" type="stmt" count="0"/>
+        <line num="143" type="stmt" count="0"/>
+        <line num="144" type="stmt" count="0"/>
+        <line num="146" type="method" name="progressGame" crap="6" count="0"/>
+        <line num="147" type="stmt" count="0"/>
+        <line num="148" type="stmt" count="0"/>
+        <line num="149" type="stmt" count="0"/>
+        <line num="150" type="stmt" count="0"/>
+        <line num="151" type="stmt" count="0"/>
+        <line num="152" type="stmt" count="0"/>
+        <line num="154" type="stmt" count="0"/>
         <line num="155" type="stmt" count="0"/>
-        <line num="156" type="stmt" count="2"/>
-        <line num="157" type="stmt" count="2"/>
-        <line num="159" type="method" name="subscribe" crap="1" count="1"/>
-        <line num="160" type="stmt" count="1"/>
-        <line num="161" type="stmt" count="1"/>
-        <metrics loc="177" ncloc="130" classes="1" methods="15" coveredmethods="8" conditionals="0" coveredconditionals="0" statements="67" coveredstatements="42" elements="82" coveredelements="50"/>
+        <line num="156" type="stmt" count="0"/>
+        <line num="157" type="stmt" count="0"/>
+        <line num="159" type="method" name="subscribe" crap="2" count="0"/>
+        <line num="160" type="stmt" count="0"/>
+        <line num="161" type="stmt" count="0"/>
+        <metrics loc="177" ncloc="130" classes="1" methods="15" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="78" coveredstatements="0" elements="93" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/GameBankStarter.php">
         <class name="GameBankStarter" namespace="PowerGrid\Abstracts">
@@ -1521,27 +1657,27 @@
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/GameProgression.php">
         <class name="GameProgression" namespace="PowerGrid\Abstracts">
-          <metrics methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="18" coveredelements="0"/>
+          <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="18" coveredelements="0"/>
         </class>
-        <line num="7" type="method" name="__construct" crap="2" count="0"/>
-        <line num="8" type="stmt" count="0"/>
-        <line num="9" type="stmt" count="0"/>
-        <line num="11" type="method" name="progressGame" crap="2" count="0"/>
+        <line num="9" type="method" name="__construct" crap="2" count="0"/>
+        <line num="10" type="stmt" count="0"/>
+        <line num="11" type="stmt" count="0"/>
         <line num="12" type="stmt" count="0"/>
-        <line num="13" type="stmt" count="0"/>
-        <line num="14" type="stmt" count="0"/>
+        <line num="14" type="method" name="progressGame" crap="2" count="0"/>
         <line num="15" type="stmt" count="0"/>
-        <line num="17" type="method" name="progressTurn" crap="2" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
         <line num="18" type="stmt" count="0"/>
         <line num="19" type="stmt" count="0"/>
-        <line num="20" type="stmt" count="0"/>
-        <line num="22" type="method" name="advanceTurnNumber" crap="2" count="0"/>
+        <line num="21" type="method" name="progressTurn" crap="2" count="0"/>
+        <line num="22" type="stmt" count="0"/>
         <line num="23" type="stmt" count="0"/>
         <line num="24" type="stmt" count="0"/>
-        <line num="25" type="stmt" count="0"/>
-        <line num="27" type="method" name="progressRound" crap="2" count="0"/>
+        <line num="26" type="method" name="advanceTurnNumber" crap="2" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
         <line num="29" type="stmt" count="0"/>
-        <metrics loc="32" ncloc="32" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="18" coveredelements="0"/>
+        <metrics loc="37" ncloc="37" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="14" coveredstatements="0" elements="18" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Abstracts/GameResourceStoreStarter.php">
         <class name="GameResourceStoreStarter" namespace="PowerGrid\Abstracts">
@@ -1586,51 +1722,94 @@
         <line num="27" type="stmt" count="0"/>
         <metrics loc="30" ncloc="27" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="13" coveredstatements="0" elements="15" coveredelements="0"/>
       </file>
+      <file name="/var/www/src/PowerGrid/Abstracts/TurnOrderUpdater.php">
+        <class name="TurnOrderUpdater" namespace="PowerGrid\Abstracts">
+          <metrics methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+        </class>
+        <line num="11" type="method" name="__construct" crap="2" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <metrics loc="18" ncloc="18" classes="1" methods="1" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="3" coveredstatements="0" elements="4" coveredelements="0"/>
+      </file>
     </package>
+    <file name="/var/www/src/PowerGrid/Abstracts/NextPlayerObserver.php">
+      <class name="NextPlayerObserver" namespace="global">
+        <metrics methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
+      </class>
+      <line num="8" type="method" name="__construct" crap="2" count="0"/>
+      <line num="9" type="stmt" count="0"/>
+      <line num="10" type="stmt" count="0"/>
+      <line num="11" type="stmt" count="0"/>
+      <line num="13" type="method" name="notify" crap="12" count="0"/>
+      <line num="14" type="stmt" count="0"/>
+      <line num="15" type="stmt" count="0"/>
+      <line num="16" type="stmt" count="0"/>
+      <line num="17" type="stmt" count="0"/>
+      <line num="19" type="method" name="generateValidEventNames" crap="6" count="0"/>
+      <line num="20" type="stmt" count="0"/>
+      <line num="21" type="stmt" count="0"/>
+      <line num="22" type="stmt" count="0"/>
+      <line num="23" type="stmt" count="0"/>
+      <line num="24" type="stmt" count="0"/>
+      <line num="25" type="stmt" count="0"/>
+      <line num="27" type="stmt" count="0"/>
+      <line num="28" type="stmt" count="0"/>
+      <line num="29" type="stmt" count="0"/>
+      <line num="30" type="stmt" count="0"/>
+      <line num="31" type="stmt" count="0"/>
+      <line num="33" type="method" name="setNextPlayer" crap="2" count="0"/>
+      <line num="35" type="stmt" count="0"/>
+      <metrics loc="36" ncloc="36" classes="1" methods="4" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="19" coveredstatements="0" elements="23" coveredelements="0"/>
+    </file>
     <package name="PowerGrid">
       <file name="/var/www/src/PowerGrid/Container.php">
         <class name="Container" namespace="PowerGrid">
-          <metrics methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="18" elements="29" coveredelements="20"/>
+          <metrics methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="34" coveredelements="0"/>
         </class>
         <line num="13" type="method" name="instance" crap="6" count="0"/>
         <line num="14" type="stmt" count="0"/>
         <line num="15" type="stmt" count="0"/>
         <line num="16" type="stmt" count="0"/>
         <line num="18" type="stmt" count="0"/>
-        <line num="21" type="method" name="register" crap="1" count="1"/>
-        <line num="22" type="stmt" count="1"/>
-        <line num="23" type="stmt" count="1"/>
-        <line num="32" type="method" name="addNamespace" crap="1" count="1"/>
-        <line num="33" type="stmt" count="1"/>
-        <line num="34" type="stmt" count="1"/>
-        <line num="39" type="method" name="__call" crap="2.06" count="1"/>
-        <line num="40" type="stmt" count="1"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="21" type="method" name="register" crap="2" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="32" type="method" name="addNamespace" crap="2" count="0"/>
+        <line num="33" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="39" type="method" name="__call" crap="6" count="0"/>
+        <line num="40" type="stmt" count="0"/>
         <line num="41" type="stmt" count="0"/>
-        <line num="44" type="stmt" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="49" type="method" name="prependNamespace" crap="5.01" count="1"/>
-        <line num="50" type="stmt" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
-        <line num="54" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
-        <line num="56" type="stmt" count="1"/>
-        <line num="57" type="stmt" count="1"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="59" type="stmt" count="1"/>
-        <line num="61" type="stmt" count="1"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="44" type="stmt" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="49" type="method" name="prependNamespace" crap="30" count="0"/>
+        <line num="50" type="stmt" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="56" type="stmt" count="0"/>
+        <line num="57" type="stmt" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="61" type="stmt" count="0"/>
         <line num="62" type="stmt" count="0"/>
-        <line num="65" type="stmt" count="1"/>
-        <metrics loc="67" ncloc="57" classes="1" methods="5" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="24" coveredstatements="18" elements="29" coveredelements="20"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <metrics loc="67" ncloc="57" classes="1" methods="5" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="29" coveredstatements="0" elements="34" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/GameManager.php">
         <class name="GameManager" namespace="PowerGrid">
-          <metrics methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="25" coveredelements="0"/>
+          <metrics methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="24" coveredelements="0"/>
         </class>
         <line num="8" type="method" name="__construct" crap="2" count="0"/>
         <line num="9" type="stmt" count="0"/>
         <line num="10" type="stmt" count="0"/>
-        <line num="11" type="stmt" count="0"/>
         <line num="12" type="stmt" count="0"/>
         <line num="13" type="stmt" count="0"/>
         <line num="15" type="method" name="setUpObservers" crap="2" count="0"/>
@@ -1652,7 +1831,7 @@
         <line num="36" type="method" name="powerCities" crap="2" count="0"/>
         <line num="37" type="stmt" count="0"/>
         <line num="38" type="stmt" count="0"/>
-        <metrics loc="39" ncloc="39" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="18" coveredstatements="0" elements="25" coveredelements="0"/>
+        <metrics loc="39" ncloc="37" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="17" coveredstatements="0" elements="24" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Propositions.php">
         <class name="Propositions" namespace="PowerGrid">
@@ -1831,13 +2010,16 @@
     <package name="PowerGrid\Factories">
       <file name="/var/www/src/PowerGrid/Factories/RuleFactory.php">
         <class name="RuleFactory" namespace="PowerGrid\Factories">
-          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="0" elements="18" coveredelements="0"/>
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="23" coveredelements="0"/>
         </class>
         <line num="13" type="method" name="makeRules" crap="2" count="0"/>
         <line num="14" type="stmt" count="0"/>
         <line num="16" type="stmt" count="0"/>
         <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
         <line num="21" type="method" name="makeActionFactory" crap="20" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
         <line num="25" type="stmt" count="0"/>
         <line num="26" type="stmt" count="0"/>
         <line num="27" type="stmt" count="0"/>
@@ -1849,9 +2031,11 @@
         <line num="33" type="stmt" count="0"/>
         <line num="34" type="stmt" count="0"/>
         <line num="35" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
         <line num="37" type="stmt" count="0"/>
         <line num="39" type="stmt" count="0"/>
-        <metrics loc="41" ncloc="35" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="16" coveredstatements="0" elements="18" coveredelements="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <metrics loc="41" ncloc="35" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="21" coveredstatements="0" elements="23" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Factories/Step1Factory.php">
         <class name="Step1Factory" namespace="PowerGrid\Factories">
@@ -1904,7 +2088,7 @@
       <metrics loc="40" ncloc="17" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="/var/www/src/PowerGrid/Interfaces/GameData.php">
-      <metrics loc="37" ncloc="37" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
+      <metrics loc="38" ncloc="38" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
     <file name="/var/www/src/PowerGrid/Interfaces/GameDeckCardData.php">
       <metrics loc="6" ncloc="6" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
@@ -2052,26 +2236,26 @@
     <package name="PowerGrid\Services">
       <file name="/var/www/src/PowerGrid/Services/AuctionProgressObserver.php">
         <class name="AuctionProgressObserver" namespace="PowerGrid\Services">
-          <metrics methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="17" coveredelements="17"/>
+          <metrics methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="17" coveredelements="0"/>
         </class>
-        <line num="11" type="method" name="__construct" crap="1" count="2"/>
-        <line num="12" type="stmt" count="2"/>
-        <line num="13" type="stmt" count="2"/>
-        <line num="14" type="stmt" count="2"/>
-        <line num="15" type="stmt" count="2"/>
-        <line num="16" type="stmt" count="2"/>
-        <line num="17" type="stmt" count="2"/>
-        <line num="19" type="method" name="notify" crap="4" count="2"/>
-        <line num="20" type="stmt" count="2"/>
-        <line num="21" type="stmt" count="2"/>
-        <line num="22" type="stmt" count="1"/>
-        <line num="23" type="stmt" count="1"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
-        <line num="26" type="stmt" count="1"/>
-        <line num="27" type="stmt" count="2"/>
-        <line num="28" type="stmt" count="2"/>
-        <metrics loc="29" ncloc="29" classes="1" methods="2" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="15" elements="17" coveredelements="17"/>
+        <line num="11" type="method" name="__construct" crap="2" count="0"/>
+        <line num="12" type="stmt" count="0"/>
+        <line num="13" type="stmt" count="0"/>
+        <line num="14" type="stmt" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
+        <line num="19" type="method" name="notify" crap="20" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="28" type="stmt" count="0"/>
+        <metrics loc="29" ncloc="29" classes="1" methods="2" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="17" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Services/DeckStarter.php">
         <class name="DeckStarter" namespace="PowerGrid\Services">
@@ -2083,87 +2267,93 @@
       </file>
       <file name="/var/www/src/PowerGrid/Services/DijkstraShortestPathAlgorithm.php">
         <class name="DijkstraShortestPathAlgorithm" namespace="PowerGrid\Services">
-          <metrics methods="16" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="61" elements="78" coveredelements="76"/>
+          <metrics methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="68" coveredstatements="0" elements="84" coveredelements="0"/>
         </class>
-        <line num="18" type="method" name="__construct" crap="1" count="1"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="20" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="1"/>
-        <line num="23" type="method" name="setNodes" crap="3.04" count="1"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
+        <line num="18" type="method" name="__construct" crap="2" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="20" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
+        <line num="23" type="method" name="setNodes" crap="12" count="0"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
         <line num="26" type="stmt" count="0"/>
-        <line num="29" type="stmt" count="1"/>
-        <line num="30" type="stmt" count="1"/>
-        <line num="31" type="stmt" count="1"/>
-        <line num="33" type="method" name="initialize" crap="1" count="1"/>
-        <line num="34" type="stmt" count="1"/>
-        <line num="36" type="stmt" count="1"/>
-        <line num="38" type="stmt" count="1"/>
-        <line num="40" type="stmt" count="1"/>
-        <line num="42" type="stmt" count="1"/>
-        <line num="43" type="stmt" count="1"/>
-        <line num="45" type="method" name="addNode" crap="1" count="1"/>
-        <line num="46" type="stmt" count="1"/>
-        <line num="47" type="stmt" count="1"/>
-        <line num="48" type="stmt" count="1"/>
-        <line num="50" type="method" name="setStartNode" crap="1" count="1"/>
-        <line num="51" type="stmt" count="1"/>
-        <line num="52" type="stmt" count="1"/>
-        <line num="53" type="stmt" count="1"/>
-        <line num="54" type="stmt" count="1"/>
-        <line num="55" type="stmt" count="1"/>
-        <line num="57" type="method" name="setEndNode" crap="1" count="1"/>
-        <line num="58" type="stmt" count="1"/>
-        <line num="59" type="stmt" count="1"/>
-        <line num="61" type="method" name="calculateShortestPath" crap="4" count="1"/>
-        <line num="62" type="stmt" count="1"/>
-        <line num="63" type="stmt" count="1"/>
-        <line num="64" type="stmt" count="1"/>
-        <line num="65" type="stmt" count="1"/>
-        <line num="66" type="stmt" count="1"/>
-        <line num="67" type="stmt" count="1"/>
-        <line num="69" type="stmt" count="1"/>
-        <line num="70" type="stmt" count="1"/>
-        <line num="71" type="stmt" count="1"/>
-        <line num="73" type="stmt" count="1"/>
-        <line num="76" type="method" name="setNextCurrentNode" crap="1" count="1"/>
-        <line num="77" type="stmt" count="1"/>
-        <line num="78" type="stmt" count="1"/>
-        <line num="79" type="stmt" count="1"/>
-        <line num="80" type="stmt" count="1"/>
-        <line num="82" type="method" name="getLowestTentativeDistanceNodeId" crap="1" count="1"/>
-        <line num="83" type="stmt" count="1"/>
-        <line num="86" type="method" name="isUnvisited" crap="1" count="1"/>
-        <line num="87" type="stmt" count="1"/>
-        <line num="90" type="method" name="markVisited" crap="1" count="1"/>
-        <line num="91" type="stmt" count="1"/>
-        <line num="92" type="stmt" count="1"/>
-        <line num="94" type="method" name="markUnvisited" crap="1" count="1"/>
-        <line num="95" type="stmt" count="1"/>
-        <line num="96" type="stmt" count="1"/>
-        <line num="98" type="method" name="checkForNewTenativeDistance" crap="2" count="1"/>
-        <line num="99" type="stmt" count="1"/>
-        <line num="100" type="stmt" count="1"/>
-        <line num="102" type="stmt" count="1"/>
-        <line num="104" type="stmt" count="1"/>
-        <line num="105" type="stmt" count="1"/>
-        <line num="106" type="stmt" count="1"/>
-        <line num="107" type="stmt" count="1"/>
-        <line num="109" type="method" name="distanceIsLessThanTentativeForNode" crap="3" count="1"/>
-        <line num="110" type="stmt" count="1"/>
-        <line num="112" type="stmt" count="1"/>
-        <line num="113" type="stmt" count="1"/>
-        <line num="114" type="stmt" count="1"/>
-        <line num="115" type="stmt" count="1"/>
-        <line num="117" type="stmt" count="1"/>
-        <line num="120" type="method" name="setTentativeDistanceForNode" crap="1" count="1"/>
-        <line num="121" type="stmt" count="1"/>
-        <line num="122" type="stmt" count="1"/>
-        <line num="123" type="stmt" count="1"/>
-        <line num="125" type="method" name="getDistanceToStartNode" crap="1" count="1"/>
-        <line num="126" type="stmt" count="1"/>
-        <metrics loc="129" ncloc="129" classes="1" methods="16" coveredmethods="15" conditionals="0" coveredconditionals="0" statements="62" coveredstatements="61" elements="78" coveredelements="76"/>
+        <line num="27" type="stmt" count="0"/>
+        <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
+        <line num="33" type="method" name="initialize" crap="2" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="36" type="stmt" count="0"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="42" type="stmt" count="0"/>
+        <line num="43" type="stmt" count="0"/>
+        <line num="45" type="method" name="addNode" crap="2" count="0"/>
+        <line num="46" type="stmt" count="0"/>
+        <line num="47" type="stmt" count="0"/>
+        <line num="48" type="stmt" count="0"/>
+        <line num="50" type="method" name="setStartNode" crap="2" count="0"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="52" type="stmt" count="0"/>
+        <line num="53" type="stmt" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
+        <line num="57" type="method" name="setEndNode" crap="2" count="0"/>
+        <line num="58" type="stmt" count="0"/>
+        <line num="59" type="stmt" count="0"/>
+        <line num="61" type="method" name="calculateShortestPath" crap="20" count="0"/>
+        <line num="62" type="stmt" count="0"/>
+        <line num="63" type="stmt" count="0"/>
+        <line num="64" type="stmt" count="0"/>
+        <line num="65" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="0"/>
+        <line num="67" type="stmt" count="0"/>
+        <line num="69" type="stmt" count="0"/>
+        <line num="70" type="stmt" count="0"/>
+        <line num="71" type="stmt" count="0"/>
+        <line num="73" type="stmt" count="0"/>
+        <line num="74" type="stmt" count="0"/>
+        <line num="76" type="method" name="setNextCurrentNode" crap="2" count="0"/>
+        <line num="77" type="stmt" count="0"/>
+        <line num="78" type="stmt" count="0"/>
+        <line num="79" type="stmt" count="0"/>
+        <line num="80" type="stmt" count="0"/>
+        <line num="82" type="method" name="getLowestTentativeDistanceNodeId" crap="2" count="0"/>
+        <line num="83" type="stmt" count="0"/>
+        <line num="84" type="stmt" count="0"/>
+        <line num="86" type="method" name="isUnvisited" crap="2" count="0"/>
+        <line num="87" type="stmt" count="0"/>
+        <line num="88" type="stmt" count="0"/>
+        <line num="90" type="method" name="markVisited" crap="2" count="0"/>
+        <line num="91" type="stmt" count="0"/>
+        <line num="92" type="stmt" count="0"/>
+        <line num="94" type="method" name="markUnvisited" crap="2" count="0"/>
+        <line num="95" type="stmt" count="0"/>
+        <line num="96" type="stmt" count="0"/>
+        <line num="98" type="method" name="checkForNewTenativeDistance" crap="6" count="0"/>
+        <line num="99" type="stmt" count="0"/>
+        <line num="100" type="stmt" count="0"/>
+        <line num="102" type="stmt" count="0"/>
+        <line num="104" type="stmt" count="0"/>
+        <line num="105" type="stmt" count="0"/>
+        <line num="106" type="stmt" count="0"/>
+        <line num="107" type="stmt" count="0"/>
+        <line num="109" type="method" name="distanceIsLessThanTentativeForNode" crap="12" count="0"/>
+        <line num="110" type="stmt" count="0"/>
+        <line num="112" type="stmt" count="0"/>
+        <line num="113" type="stmt" count="0"/>
+        <line num="114" type="stmt" count="0"/>
+        <line num="115" type="stmt" count="0"/>
+        <line num="117" type="stmt" count="0"/>
+        <line num="118" type="stmt" count="0"/>
+        <line num="120" type="method" name="setTentativeDistanceForNode" crap="2" count="0"/>
+        <line num="121" type="stmt" count="0"/>
+        <line num="122" type="stmt" count="0"/>
+        <line num="123" type="stmt" count="0"/>
+        <line num="125" type="method" name="getDistanceToStartNode" crap="2" count="0"/>
+        <line num="126" type="stmt" count="0"/>
+        <line num="127" type="stmt" count="0"/>
+        <metrics loc="129" ncloc="129" classes="1" methods="16" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="68" coveredstatements="0" elements="84" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Services/GameCardsShuffler.php">
         <class name="GameCardsShuffler" namespace="PowerGrid\Services">
@@ -2524,27 +2714,31 @@
     <package name="PowerGrid\Structures">
       <file name="/var/www/src/PowerGrid/Structures/CityConnectionsGraph.php">
         <class name="CityConnectionsGraph" namespace="PowerGrid\Structures">
-          <metrics methods="7" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="7" elements="49" coveredelements="8"/>
+          <metrics methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="0" elements="54" coveredelements="0"/>
         </class>
         <line num="9" type="method" name="populateFromIncompleteGraphNodes" crap="2" count="0"/>
         <line num="10" type="stmt" count="0"/>
         <line num="11" type="stmt" count="0"/>
         <line num="12" type="stmt" count="0"/>
-        <line num="14" type="method" name="getNodes" crap="1" count="1"/>
-        <line num="15" type="stmt" count="1"/>
-        <line num="18" type="method" name="getMatchingNode" crap="8.12" count="1"/>
-        <line num="19" type="stmt" count="1"/>
-        <line num="21" type="stmt" count="1"/>
+        <line num="14" type="method" name="getNodes" crap="2" count="0"/>
+        <line num="15" type="stmt" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="18" type="method" name="getMatchingNode" crap="30" count="0"/>
+        <line num="19" type="stmt" count="0"/>
+        <line num="21" type="stmt" count="0"/>
         <line num="22" type="stmt" count="0"/>
         <line num="23" type="stmt" count="0"/>
-        <line num="24" type="stmt" count="1"/>
-        <line num="25" type="stmt" count="1"/>
-        <line num="26" type="stmt" count="1"/>
+        <line num="24" type="stmt" count="0"/>
+        <line num="25" type="stmt" count="0"/>
+        <line num="26" type="stmt" count="0"/>
         <line num="27" type="stmt" count="0"/>
         <line num="28" type="stmt" count="0"/>
         <line num="29" type="stmt" count="0"/>
+        <line num="30" type="stmt" count="0"/>
         <line num="31" type="stmt" count="0"/>
-        <line num="34" type="stmt" count="1"/>
+        <line num="32" type="stmt" count="0"/>
+        <line num="34" type="stmt" count="0"/>
+        <line num="35" type="stmt" count="0"/>
         <line num="37" type="method" name="saveNodeRefs" crap="12" count="0"/>
         <line num="38" type="stmt" count="0"/>
         <line num="39" type="stmt" count="0"/>
@@ -2575,11 +2769,12 @@
         <line num="70" type="stmt" count="0"/>
         <line num="71" type="stmt" count="0"/>
         <line num="72" type="stmt" count="0"/>
-        <metrics loc="74" ncloc="71" classes="1" methods="7" coveredmethods="1" conditionals="0" coveredconditionals="0" statements="42" coveredstatements="7" elements="49" coveredelements="8"/>
+        <line num="73" type="stmt" count="0"/>
+        <metrics loc="74" ncloc="71" classes="1" methods="7" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="47" coveredstatements="0" elements="54" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Structures/Event.php">
         <class name="Event" namespace="PowerGrid\Structures">
-          <metrics methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="16" coveredelements="0"/>
+          <metrics methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="21" coveredelements="0"/>
         </class>
         <line num="10" type="method" name="__construct" crap="2" count="0"/>
         <line num="11" type="stmt" count="0"/>
@@ -2589,25 +2784,31 @@
         <line num="15" type="stmt" count="0"/>
         <line num="17" type="method" name="getName" crap="2" count="0"/>
         <line num="18" type="stmt" count="0"/>
+        <line num="19" type="stmt" count="0"/>
         <line num="21" type="method" name="getNamespace" crap="2" count="0"/>
         <line num="22" type="stmt" count="0"/>
+        <line num="23" type="stmt" count="0"/>
         <line num="25" type="method" name="getObject" crap="2" count="0"/>
         <line num="26" type="stmt" count="0"/>
+        <line num="27" type="stmt" count="0"/>
         <line num="29" type="method" name="getStatus" crap="2" count="0"/>
         <line num="30" type="stmt" count="0"/>
+        <line num="31" type="stmt" count="0"/>
         <line num="33" type="method" name="create" crap="2" count="0"/>
         <line num="34" type="stmt" count="0"/>
-        <metrics loc="36" ncloc="36" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="10" coveredstatements="0" elements="16" coveredelements="0"/>
+        <line num="35" type="stmt" count="0"/>
+        <metrics loc="36" ncloc="36" classes="1" methods="6" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="15" coveredstatements="0" elements="21" coveredelements="0"/>
       </file>
       <file name="/var/www/src/PowerGrid/Structures/GraphNode.php">
         <class name="GraphNode" namespace="PowerGrid\Structures">
-          <metrics methods="9" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="26" coveredstatements="4" elements="35" coveredelements="6"/>
+          <metrics methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="41" coveredelements="0"/>
         </class>
         <line num="11" type="method" name="__construct" crap="2" count="0"/>
         <line num="12" type="stmt" count="0"/>
         <line num="13" type="stmt" count="0"/>
-        <line num="15" type="method" name="getId" crap="1" count="1"/>
-        <line num="16" type="stmt" count="1"/>
+        <line num="15" type="method" name="getId" crap="2" count="0"/>
+        <line num="16" type="stmt" count="0"/>
+        <line num="17" type="stmt" count="0"/>
         <line num="19" type="method" name="addNeighbor" crap="6" count="0"/>
         <line num="20" type="stmt" count="0"/>
         <line num="21" type="stmt" count="0"/>
@@ -2621,26 +2822,31 @@
         <line num="31" type="stmt" count="0"/>
         <line num="32" type="stmt" count="0"/>
         <line num="33" type="stmt" count="0"/>
-        <line num="35" type="method" name="getConnectionWeightForNeighbor" crap="2.15" count="1"/>
-        <line num="36" type="stmt" count="1"/>
+        <line num="35" type="method" name="getConnectionWeightForNeighbor" crap="6" count="0"/>
+        <line num="36" type="stmt" count="0"/>
         <line num="37" type="stmt" count="0"/>
-        <line num="40" type="stmt" count="1"/>
+        <line num="38" type="stmt" count="0"/>
+        <line num="40" type="stmt" count="0"/>
+        <line num="41" type="stmt" count="0"/>
         <line num="43" type="method" name="isNeighbor" crap="6" count="0"/>
         <line num="44" type="stmt" count="0"/>
         <line num="46" type="stmt" count="0"/>
         <line num="47" type="stmt" count="0"/>
         <line num="48" type="stmt" count="0"/>
         <line num="50" type="stmt" count="0"/>
-        <line num="53" type="method" name="getNeighbors" crap="1" count="1"/>
-        <line num="54" type="stmt" count="1"/>
+        <line num="51" type="stmt" count="0"/>
+        <line num="53" type="method" name="getNeighbors" crap="2" count="0"/>
+        <line num="54" type="stmt" count="0"/>
+        <line num="55" type="stmt" count="0"/>
         <line num="56" type="method" name="setName" crap="2" count="0"/>
         <line num="57" type="stmt" count="0"/>
         <line num="58" type="stmt" count="0"/>
         <line num="60" type="method" name="getName" crap="2" count="0"/>
         <line num="61" type="stmt" count="0"/>
-        <metrics loc="63" ncloc="63" classes="1" methods="9" coveredmethods="2" conditionals="0" coveredconditionals="0" statements="26" coveredstatements="4" elements="35" coveredelements="6"/>
+        <line num="62" type="stmt" count="0"/>
+        <metrics loc="63" ncloc="63" classes="1" methods="9" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="32" coveredstatements="0" elements="41" coveredelements="0"/>
       </file>
     </package>
-    <metrics files="121" loc="3689" ncloc="3441" classes="100" methods="258" coveredmethods="32" conditionals="0" coveredconditionals="0" statements="1675" coveredstatements="150" elements="1933" coveredelements="182"/>
+    <metrics files="128" loc="3919" ncloc="3665" classes="106" methods="270" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="1830" coveredstatements="0" elements="2100" coveredelements="0"/>
   </project>
 </coverage>

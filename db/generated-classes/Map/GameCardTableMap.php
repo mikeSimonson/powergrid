@@ -171,9 +171,16 @@ class GameCardTableMap extends TableMap
   0 =>
   array (
     0 => ':card_id',
-    1 => ':card_id',
+    1 => ':id',
   ),
 ), null, null, 'AuctionCards', false);
+        $this->addRelation('PlayerCard', '\\PlayerCard', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':card_id',
+    1 => ':id',
+  ),
+), null, null, 'PlayerCards', false);
     } // buildRelations()
 
     /**
