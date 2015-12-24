@@ -242,13 +242,13 @@ class GameTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'ResourceStores', false);
-        $this->addRelation('TurnOrderGame', '\\TurnOrder', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('TurnOrder', '\\TurnOrder', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
     0 => ':game_id',
     1 => ':id',
   ),
-), null, null, 'TurnOrderGames', false);
+), null, null, 'TurnOrders', false);
         $this->addRelation('GameCard', '\\GameCard', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (
@@ -270,13 +270,6 @@ class GameTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'AuctionCards', false);
-        $this->addRelation('GameCity', '\\GameCity', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':game_id',
-    1 => ':id',
-  ),
-), null, null, 'GameCities', false);
         $this->addRelation('CurrentAuctionPlant', '\\CurrentAuctionPlant', RelationMap::ONE_TO_ONE, array (
   0 =>
   array (

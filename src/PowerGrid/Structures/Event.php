@@ -7,10 +7,11 @@ class Event {
   protected $namespace;
   protected $object;
 
-  public function __construct($name, $namespace = '', $object = NULL) {
+  public function __construct($name, $namespace = '', $object = NULL, $status = NULL) {
     $this->name = $name;
     $this->namespace = $namespace;
     $this->object = $object;
+    $this->status = $status;
   }
 
   public function getName() {
@@ -23,6 +24,10 @@ class Event {
 
   public function getObject() {
     return $this->object;
+  }
+
+  public function getStatus() {
+    return $this->status;
   }
 
   static public function create() {
