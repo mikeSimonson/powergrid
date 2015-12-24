@@ -6,6 +6,10 @@ use Monolog\Handler\StreamHandler;
 require_once('vendor/autoload.php');
 require_once('db/generated-conf/config.php');
 
+define('BASE_DIR', __DIR__);
+define('SRC_DIR', BASE_DIR . '/src');
+define('HTTPAPI_DIR', SRC_DIR . '/HTTPApi');
+
 // Propel basic logging
 $defaultLogger = new Logger('defaultLogger');
 $defaultLogger->pushHandler(new StreamHandler('/var/log/propel.log', Logger::WARNING));
