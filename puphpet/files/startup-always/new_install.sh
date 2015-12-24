@@ -7,7 +7,7 @@ cd /var/www/db
 # Upgrade composer and install packages
 cd /var/www
 ./composer self-update
-./composer install
+./composer install --ignore-platform-reqs
 
 # Install PowerGrid
 cd /var/www/deploy

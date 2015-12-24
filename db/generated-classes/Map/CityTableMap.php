@@ -160,13 +160,6 @@ class CityTableMap extends TableMap
     1 => ':id',
   ),
 ), null, null, 'PlayerCities', false);
-        $this->addRelation('GameCity', '\\GameCity', RelationMap::ONE_TO_MANY, array (
-  0 =>
-  array (
-    0 => ':city_id',
-    1 => ':id',
-  ),
-), null, null, 'GameCities', false);
         $this->addRelation('CityConnectionRelatedByCityFrom', '\\CityConnection', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

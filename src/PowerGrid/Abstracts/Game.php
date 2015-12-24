@@ -110,7 +110,7 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls, \PowerGrid\In
     $turnData = new \Ruler\Context($contextMap);
     $rules->execute($this->game, $turnData);
 
-    $this->completeAction($action, $contextMap);
+    $this->completeAction($action, $contextMap, $rules);
   }
 
   protected function getRules($action) {
@@ -137,17 +137,18 @@ abstract class Game implements \PowerGrid\Interfaces\GameControls, \PowerGrid\In
     $this->beginActionHook();
   }
 
-  protected function completeAction($action, $contextMap) {
-    $this->progressGame($action, $contextMap);
+  protected function completeAction($action, $contextMap, $rules) {
+    $this->progressGame($action, $contextMap, $rules);
     $this->notifyNextPlayer();
     $this->completeActionHook();
   }
 
-  protected function progressGame($action, $contextMap) {
+  protected function progressGame($action, $contextMap, $rules) {
     $event = \PowerGrid\Structures\Event::create(
       $action . static::ACTION_COMPLETE_EVENT_POSTFIX,
       static::EVENT_NAMESPACE,
-      $contextMap
+      $contextMap,
+      $rules->getLastExecutionStatus()
     );
 
     foreach ($this->observers AS $observer) {

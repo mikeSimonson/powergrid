@@ -6,6 +6,8 @@ abstract class ActionRuleset {
   protected $ruleSet;
   protected $game;
 
+  protected $lastRuleExecutedStatus;
+
   public function __construct() {
     $this->ruleSet = new \Ruler\RuleSet();
     $this->ruleBuilder = new \Ruler\RuleBuilder();
@@ -21,6 +23,14 @@ abstract class ActionRuleset {
     $this->ruleSet->executeRules($this->context);
 
     return $this->game;
+  }
+
+  public function getLastExecutionStatus() {
+    return $this->lastRuleExecutedStatus;
+  }
+
+  protected function setRuleExecuted($status = TRUE) {
+    $this->lastRuleExecutedStatus = $status;
   }
 
   /**
@@ -50,8 +60,20 @@ abstract class ActionRuleset {
    */
   protected function combineOperatorWithAction(\Ruler\Operator $operator, \Closure $action) {
     $action->bindTo($this);
-    $combinedRuleAction = $this->ruleBuilder->create($operator, $action);
+    $actionWithStatus = $this->makeActionWithStatus($action);
+    $actionWithStatus->bindTo($this);
+
+    $combinedRuleAction = $this->ruleBuilder->create($operator, $actionWithStatus);
     return $combinedRuleAction;
+  }
+
+  protected function makeActionWithStatus($action) {
+    $actionWithStatus = function() use ($action) {
+      $this->setRuleExecuted();
+      $action();
+    };
+
+    return $actionWithStatus;
   }
 
   /**
