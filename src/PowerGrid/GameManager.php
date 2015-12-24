@@ -5,10 +5,10 @@ namespace PowerGrid;
 class GameManager implements \PowerGrid\Interfaces\GameControls {
   protected $gameController;
 
-  public function __construct(\PowerGrid\Abstracts\Game $gameController, \PowerGrid\Abstracts\NextPlayerObserver $nextPlayerObserver, \PowerGrid\Abstracts\AuctionProgressObserver $auctionProgressObserver) {
+  public function __construct(\PowerGrid\Abstracts\Game $gameController, \PowerGrid\Abstracts\AuctionProgressObserver $auctionProgressObserver) {
     $this->gameController = $gameController;
-    $this->nextPlayerObserver = $nextPlayerObserver;
     $this->auctionProgressObserver = $auctionProgressObserver;
+    // @ todo add game progress observer
     $this->setUpObservers();
   }
 
