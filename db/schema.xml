@@ -136,6 +136,8 @@
     <column name="game_id" type="integer"/>
     <column name="player_id" type="integer"/>
     <column name="round_number" type="integer"/>
+    <column name="phase_number" type="integer"/>
+    <column name="has_acted" type="boolean"/>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="TurnOrder">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
@@ -183,7 +185,7 @@
       <reference local="game_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="game_card" phpName="GameCard" refPhpName="AuctionCard">
-      <reference local="card_id" foreign="card_id"/>
+      <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
   <table name="player_resource" phpName="PlayerResource">
@@ -213,7 +215,7 @@
     <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerCard">
       <reference local="player_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="card" phpName="Card" refPhpName="PlayerCard">
+    <foreign-key foreignTable="game_card" phpName="Card" refPhpName="PlayerCard">
       <reference local="card_id" foreign="id"/>
     </foreign-key>
   </table>
@@ -241,7 +243,7 @@
     <foreign-key foreignTable="game" phpName="Game" refPhpName="CurrentAuctionPlant">
       <reference local="game_id" foreign="id"/>
     </foreign-key>
-    <foreign-key foreignTable="card" phpName="Card" refPhpName="CurrentAuctionPlant">
+    <foreign-key foreignTable="game_auction_card" phpName="Card" refPhpName="CurrentAuctionPlant">
       <reference local="card_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="player" phpName="HighestBidder" refPhpName="CurrentAuctionPlant">
@@ -255,15 +257,11 @@
     <column name="has_bid" type="boolean"/>
     <column name="has_passed" type="boolean"/>
     <column name="round_number" type="integer"/>
-    <column name="current_auction_plant_id"/>
     <foreign-key foreignTable="player" phpName="Player" refPhpName="PlayerAuctionAction">
       <reference local="player_id" foreign="id"/>
     </foreign-key>
     <foreign-key foreignTable="game" phpName="Game" refPhpName="PlayerAuctionAction">
       <reference local="game_id" foreign="id"/>
-    </foreign-key>
-    <foreign-key foreignTable="current_auction_plant" phpName="CurrentAuctionPlant" refPhpName="PlayerAuctionAction">
-      <reference local="current_auction_plant_id" foreign="game_id"/>
     </foreign-key>
   </table>
 </database>

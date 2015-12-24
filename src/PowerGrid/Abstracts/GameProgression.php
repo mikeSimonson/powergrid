@@ -4,12 +4,16 @@ namespace PowerGrid\Abstracts;
 
 abstract class GameProgression {
 
-  public function __construct(\PowerGrid\Interfaces\GameData $game) {
+  const NUMBER_PHASES_PER_ROUND = 5;
+
+  public function __construct(\PowerGrid\Interfaces\GameData $game, \PowerGrid\Abstracts\TurnOrderUpdater $turnOrderUpdater) {
     $this->game = $game;
+    $this->turnOrderUpdater = $turnOrderUpdater;
   }
 
   public function progressGame() {
     $this->progressTurn();
+    $this->progressPhase();
     $this->progressRound();
     $this->progressStep();
   }
@@ -24,9 +28,10 @@ abstract class GameProgression {
     $this->game->setTurnNumber($currentTurnNumber + 1);
   }
 
-  protected function progressRound() {
-    
-  }
+  abstract protected function progressRound();
 
   abstract protected function setNextPlayer();
+
+  abstract protected function progressStep();
+
 }
