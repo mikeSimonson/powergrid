@@ -11,7 +11,7 @@ $manager->setConfiguration(array (
     array (
     ),
   ),
-  'dsn' => 'sqlite:integration_tests_sqlite3.db',
+  'dsn' => 'sqlite:/var/www/db/integration_tests_sqlite3.db',
   'user' => NULL,
   'password' => '',
   'classname' => '\\Propel\\Runtime\\Connection\\ConnectionWrapper',

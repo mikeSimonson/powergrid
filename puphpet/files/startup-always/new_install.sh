@@ -2,6 +2,7 @@
 
 # Build the database
 cd /var/www/db
+mv conf/.propel.json.mysql conf/propel.json
 ./reload.sh
 
 # Upgrade composer and install packages

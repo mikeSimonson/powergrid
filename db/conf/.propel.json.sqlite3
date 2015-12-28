@@ -7,7 +7,7 @@
                     "settings": {
                       "charset": "utf8"
                     },
-                    "dsn": "sqlite:integration_tests_sqlite3.db",
+                    "dsn": "sqlite:TEST_SQLITE3_DB_ABSOLUTE_PATH",
                     "user": null,
                     "password": null
                 }

@@ -3,6 +3,7 @@
 class PlayerTest extends PHPUnit_Extensions_Database_TestCase {
 
   public function testTest() {
+    xdebug_break();
     $user = new \User();
     $user->setName('eddie');
     $user->setUsername('eddie');
@@ -14,6 +15,7 @@ class PlayerTest extends PHPUnit_Extensions_Database_TestCase {
   }
 
   public function getConnection() {
+    xdebug_break();
     $dsn = 'sqlite:' . TEST_SQLITE3_DB_FILENAME;
     var_dump($dsn);
     $pdo = new PDO($dsn);

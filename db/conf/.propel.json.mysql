@@ -3,13 +3,12 @@
         "database": {
             "connections": {
                 "powergrid": {
-                    "adapter": "sqlite",
-                    "settings": {
-                      "charset": "utf8"
-                    },
-                    "dsn": "sqlite:/var/www/db/integration_tests_sqlite3.db",
-                    "user": null,
-                    "password": null
+                    "adapter": "mysql",
+                    "classname": "Propel\\Runtime\\Connection\\ConnectionWrapper",
+                    "dsn": "mysql:host=localhost;dbname=dbname",
+                    "user": "dbuser",
+                    "password": "123",
+                    "attributes": []
                 }
             }
         },
