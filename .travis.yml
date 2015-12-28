@@ -15,6 +15,6 @@ install:
   - composer install
 before_script:
   - mkdir -p build/logs
-script: ./tests/runtests.sh
+script: ./runtests.sh
 after_script:
   - php ./vendor/bin/coveralls -v
