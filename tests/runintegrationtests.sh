@@ -1,6 +1,5 @@
 #!/bin/bash
 
-printenv
 cd db
 pwd
 cp conf/.propel.json.sqlite3 conf/propel.json
@@ -11,8 +10,11 @@ sed -i "s|TEST_SQLITE3_DB_ABSOLUTE_PATH|$TEST_SQLITE3_DB_ABSOLUTE_PATH|g" conf/p
 
 cd ..
 pwd
+export $TEST_SQLITE3_DB_ABSOLUTE_PATH
 php ./phpunit --configuration ./tests/phpunit_config/integration_tests.xml tests/automated/integration
 
 cd db
 pwd
-./reload.sh
+echo "Cleaning up..."
+cp conf/.propel.json.mysql conf/propel.json
+./propel config:convert

@@ -15,3 +15,5 @@ deploy/new_install.sh
 composer.lock
 build/
 db/*.db
+db/conf/propel.json
+db/generated-conf/config.php
