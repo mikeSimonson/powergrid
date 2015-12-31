@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.4/phpunit.xsd"
-         bootstrap="../automated/bootstrap.php"
+         bootstrap="automated/bootstrap.php"
          backupGlobals="false"
          verbose="true"
-         processIsolation="false"
+         processIsolation="true"
          >
   <logging>
       <log type="coverage-clover" target="../../build/logs/clover.xml"/>

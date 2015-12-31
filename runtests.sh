@@ -11,5 +11,4 @@ TEST_SQLITE3_DB_ABSOLUTE_PATH=$BASE_DIR$DB_RELATIVE_PATH
 export BASE_DIR
 export TEST_SQLITE3_DB_ABSOLUTE_PATH
 
-./tests/rununittests.sh
-./tests/runintegrationtests.sh
+./tests/runautomatedtests.sh
