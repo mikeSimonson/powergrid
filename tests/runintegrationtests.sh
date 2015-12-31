@@ -10,7 +10,7 @@ sed -i "s|TEST_SQLITE3_DB_ABSOLUTE_PATH|$TEST_SQLITE3_DB_ABSOLUTE_PATH|g" conf/p
 
 cd ..
 pwd
-export $TEST_SQLITE3_DB_ABSOLUTE_PATH
+export TEST_SQLITE3_DB_ABSOLUTE_PATH
 php ./phpunit --configuration ./tests/phpunit_config/integration_tests.xml tests/automated/integration
 
 cd db
