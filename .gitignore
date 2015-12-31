@@ -1,11 +1,10 @@
-.vagrant
-vendor
+/.vagrant
+/vendor
 .idea/
-.phpcomplete_extended/
+.phpcomplete_extended
 id_rsa*
 root_id_rsa*
 composer.phar
-db/generated-classes/
 db/generated-sql/
 composer
 *.swp
