@@ -2,11 +2,10 @@
 set -e
 
 export TEST_SQLITE3_DB_ABSOLUTE_PATH
-./tests/build_test_db.sh
+$BASE_DIR/tests/build_test_db.sh
 
-cd ..
 pwd
-php ./phpunit --configuration ./tests/phpunit_config/integration_tests.xml tests/automated/integration
+php $BASE_DIR/phpunit --configuration $BASE_DIR/tests/phpunit_config/integration_tests.xml $BASE_DIR/tests/automated/integration
 
 cd db
 pwd
