@@ -16,3 +16,4 @@ build/
 db/*.db
 db/conf/propel.json
 db/generated-conf/config.php
+build/logs/clover.xml
