@@ -66,6 +66,7 @@ server:
     packages:
         - vim
         - ruby
+        - git
 users_groups:
     install: '1'
     groups: {  }
@@ -174,6 +175,7 @@ php:
             - intl
             - mcrypt
             - sqlite
+            - curl
         pear: {  }
         pecl:
             - pecl_http
